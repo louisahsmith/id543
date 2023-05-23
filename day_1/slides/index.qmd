@@ -2,8 +2,6 @@
 title: "Day 1"
 format: 
   revealjs:
-    # min-scale: 1.0
-    # max-scale: 1.0
     theme: 
       - default
       - ../../www/custom.scss

@@ -1,10 +1,10 @@
 ---
 title: "Day 1"
+filters:
+  - webr
 webr:
   show-startup-message: false
   packages: ["ggplot2"]
-filters:
-  - webr
 ---
 
 
