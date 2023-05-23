@@ -13,6 +13,7 @@ webr:
 This is a webr-enabled code cell in a Quarto HTML document.
 
 ```{webr-r}
+#| message: false
 webr::install("ggplot2")
 library(ggplot2)
 ```
@@ -30,5 +31,6 @@ You can create [Revealjs](https://revealjs.com/) presentations using the `reveal
 If you prefer to view the demo in a standalone browser you can do that [here](slides/){target="_blank"}.
 
 ```{webr-r}
+#| message: false
 ggplot(mtcars, aes(x = mpg)) + geom_histogram()
 ```

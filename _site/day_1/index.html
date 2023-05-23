@@ -325,7 +325,8 @@ ul.task-list li input[type="checkbox"] {
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `webr::install("ggplot2")
+      value: `#| message: false
+webr::install("ggplot2")
 library(ggplot2)`,
       language: 'r',
       theme: 'vs-light',
@@ -486,7 +487,8 @@ library(ggplot2)`,
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `ggplot(mtcars, aes(x = mpg)) + geom_histogram()`,
+      value: `#| message: false
+ggplot(mtcars, aes(x = mpg)) + geom_histogram()`,
       language: 'r',
       theme: 'vs-light',
       automaticLayout: true,           // TODO: Could be problematic for slide decks
