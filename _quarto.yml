@@ -1,0 +1,90 @@
+project:
+  type: website
+
+execute:
+  freeze: auto
+website:
+  navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Home"
+        file: index.qmd
+      - sidebar:pre_work
+      - day_1/index.qmd
+      - sidebar:day_2
+      - sidebar:day_3
+      - sidebar:day_4
+    right:
+      - text: "Resources"
+        file: resources.qmd
+
+  sidebar:
+    - id: pre_work
+      title: "Pre-work"
+      style: "floating"
+      background: light
+      collapse-level: 2
+      # contents: pre_work
+
+    - id: day_1
+      title: "Day 1"
+      contents: day_1
+
+    - id: day_2
+      title: "Day 2"
+      # contents: day_2
+
+    - id: day_3
+      title: "Day 3"
+      # contents: day_3
+
+    - id: day_4
+      title: "Day 4"
+      # contents: day_4
+    
+  # sidebar:
+  #   style: "floating"
+  #   search: true
+  #   contents:
+  #     - section: "Syllabus"
+  #       contents:
+  #         - index.qmd
+  #     - section: "Pre-work"
+  #       contents: pre_work
+  #     - section: "Day 1"
+  #       contents: day_1
+  #   tools:
+  #     - icon: twitter
+  #       href: https://twitter.com
+  #     - icon: github
+  #       menu:
+  #         - text: Source Code
+  #           url:  https://code.com
+  #         - text: Report a Bug
+  #           url:  https://bugs.com
+  #
+  #
+  #
+  #
+  # navbar:
+  #   left:
+  #     - href: index.qmd
+  #       text: Home
+  #     - about.qmd
+  #   right:
+  #     - text: Slides
+  #       menu: 
+  #         - 01-slides.qmd   
+  #     - text: Assignments
+  #       menu: 
+  #         - 01-assignment.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: www/styles.css
+    toc: true
+
+editor: source
+

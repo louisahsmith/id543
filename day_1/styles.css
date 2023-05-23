@@ -1,0 +1,153 @@
+/* css styles */
+
+/* Custom fonts */
+
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap);
+
+
+.huge-number {
+ font-family: "Raleway", sans-serif;
+ font-size: 1700%;
+ font-weight: 900;
+ color: #c88d90;
+ margin-top: 0;
+ margin-left: 50px;
+}
+
+/* Handwriting */
+.hand{
+  font-family: "Permanent Marker", cursive;
+  font-size: 125%;
+}
+.hand-large{
+  font-family: "Permanent Marker", cursive;
+  font-size: 300%;
+}
+/* Custom boxes */
+.discussion, .your-turn, .take-home {
+  padding: 5px 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.discussion{
+  border-left: solid 5px #A49E9D;
+  background-color: #A49E9D30;
+}
+.discussion:before{
+  content: "Discussion";
+  font-size: 150%;
+  font-weight: bold;
+  color: #7A8387;
+  margin-bottom: 10px;
+}
+.your-turn {
+  border-left: solid 5px #F4DBB3;
+  background-color: #F4DBB330;
+  font-size: 25px;
+}
+.your-turn:before{
+  content: "Your turn!";
+  font-size: 150%;
+  font-weight: bold;
+  color: #A58D7F;
+  margin-bottom: 10px;
+}
+.take-home {
+  border-left: solid 5px #A49E9D;
+  background-color: #A49E9D30;
+}
+.take-home:before{
+  content: "Take home";
+  font-size: 150%;
+  font-weight: bold;
+  color: #7A8387;
+  margin-bottom: 10px;
+}
+.go, .go-side{
+  padding: 10px;
+  border-left: solid 10px #c88d90;
+  background-color: #F2D7D890;
+  color: #c88d90;
+  margin-top: 25px;
+}
+.go {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+.exercise {
+  margin-top: 75px;
+  margin-bottom: 75px;
+  margin-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: table;
+  border-left: solid 20px #c88d90;
+  background-color: #FFFFFF;
+  font-size: 150%;
+  font-family: Montserrat;
+}
+.take-home {
+  border-left: solid 5px #A49E9D;
+  background-color: #A49E9D30;
+}
+.take-home:before{
+  content: "Take home";
+  font-size: 150%;
+  font-weight: bold;
+  color: #7A8387;
+  margin-bottom: 10px;
+}
+
+.demo{
+  font-family: "Permanent Marker";
+  border-left: solid 10px #756bb1;
+  background-color: #756bb130;
+  opacity:50%;
+  font-size:130%;
+  padding: 10px;
+  color: #756bb1;
+  margin-top: 25px;
+}
+
+.footnote {
+  position: absolute;
+  bottom: .05em;
+  padding-right: 4em;
+  font-size: 70%;
+  color: #777;
+  left:5%;
+}
+
+.footnote {
+  bottom: 5%;
+  left: 5%;
+  position: absolute;
+  color: #777; 
+}
+
+.pull-left {
+  float: left;
+  width: 49%;
+}
+.pull-right {
+  float: right;
+  width: 48%;
+}
+.pull-right ~ * {
+  clear: both;
+}
+.left-code {
+  width: 40%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 58%;
+  float: right;
+  padding-left: 1%;
+}

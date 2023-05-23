@@ -1,0 +1,16 @@
+/*-- scss:defaults --*/
+$r-block-margin: 0 0 0 0;
+$body-bg: white;
+$body-color: #3A3B3C;
+$link-color: #75AADB;
+
+/*-- scss:rules --*/
+
+.small-code{
+font-size: smaller;
+margin-left: -20px;
+    margin-right: -40px;
+}
+div.sourceCode {
+    height: fit-content !important;
+}
