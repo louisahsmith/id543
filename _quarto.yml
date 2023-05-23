@@ -89,8 +89,8 @@ format:
 editor: source
 
 webr: 
-  show-startup-message: true
-  show-header-message: true
+  show-startup-message: false
+  show-header-message: false
   service-worker-url: www/
 filters:
   - webr
