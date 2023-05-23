@@ -10,12 +10,29 @@ webr:
 
 ## Overview
 
-This is a webr-enabled code cell in a Quarto HTML document.
+```{=html}
+<script type="module">
+await globalThis.webR.evalRVoid(`
+download.file(
+  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
+  'nlsy_cc.csv'
+)
 
-```{webr-r}
-#| message: false
-webr::install("ggplot2")
+webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
+
 library(ggplot2)
+nlsy <- read_csv("nlsy_cc.csv") |> 
+  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
+               "Good", "Fair", "Poor")),
+    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
+                     "Wears glasses/contacts")),
+    race_eth_cat = forcats::fct_recode(as.character(race_eth),
+    "Hispanic" = "1",
+    "Black" = "2",
+    "Non-Black, Non-Hispanic" = "3"),
+    sex_cat = factor(sex, labels = c("Male", "Female")))
+`)
+</script>	
 ```
 
 You can create [Revealjs](https://revealjs.com/) presentations using the `revealjs` format. The best way to get a sense for the capabilities of Revealjs is this [demo](slides/){target="_blank"} presentation:
@@ -31,6 +48,5 @@ You can create [Revealjs](https://revealjs.com/) presentations using the `reveal
 If you prefer to view the demo in a standalone browser you can do that [here](slides/){target="_blank"}.
 
 ```{webr-r}
-#| message: false
-ggplot(mtcars, aes(x = mpg)) + geom_histogram()
+ggplot(nlsy, aes(x = eyesight_cat)) + geom_bar()
 ```
