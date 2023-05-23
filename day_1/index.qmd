@@ -21,7 +21,7 @@ download.file(
 webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
 
 library(ggplot2)
-nlsy <- read_csv("nlsy_cc.csv") |> 
+nlsy <- readr::read_csv("nlsy_cc.csv") |> 
   dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
                "Good", "Fair", "Poor")),
     glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
