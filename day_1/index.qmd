@@ -1,9 +1,9 @@
 ---
 title: "Day 1"
-webr: 
-  show-startup-message: true
-  show-header-message: true
-  packages: []
+webr:
+#   show-startup-message: true
+  # show-header-message: true
+  packages: ["ggplot2"]
 filters:
   - webr
 ---
