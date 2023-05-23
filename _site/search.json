@@ -1,0 +1,142 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Intro to R 2023",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "day_1/index.html",
+    "href": "day_1/index.html",
+    "title": "Day 1",
+    "section": "",
+    "text": "This is a webr-enabled code cell in a Quarto HTML document.\nLoading\n  webR...\n\n\n  \n\n\nYou can create Revealjs presentations using the revealjs format. The best way to get a sense for the capabilities of Revealjs is this demo presentation:\n\n\n\nIf you prefer to view the demo in a standalone browser you can do that here."
+  },
+  {
+    "objectID": "day_1/slides/index.html#section",
+    "href": "day_1/slides/index.html#section",
+    "title": "Day 1",
+    "section": "",
+    "text": "beautiful data"
+  },
+  {
+    "objectID": "day_1/slides/index.html#goals",
+    "href": "day_1/slides/index.html#goals",
+    "title": "Day 1",
+    "section": "#goals",
+    "text": "#goals"
+  },
+  {
+    "objectID": "day_1/slides/index.html#goals-1",
+    "href": "day_1/slides/index.html#goals-1",
+    "title": "Day 1",
+    "section": "#goals",
+    "text": "#goals"
+  },
+  {
+    "objectID": "day_1/slides/index.html#ggplot-builds-figures-by-adding-on-pieces-via-a-particular-grammar-of-graphics",
+    "href": "day_1/slides/index.html#ggplot-builds-figures-by-adding-on-pieces-via-a-particular-grammar-of-graphics",
+    "title": "Day 1",
+    "section": "ggplot builds figures by adding on pieces via a particular “grammar of graphics”",
+    "text": "ggplot builds figures by adding on pieces via a particular “grammar of graphics”"
+  },
+  {
+    "objectID": "day_1/slides/index.html#basic-structure-of-a-ggplot",
+    "href": "day_1/slides/index.html#basic-structure-of-a-ggplot",
+    "title": "Day 1",
+    "section": "Basic structure of a ggplot",
+    "text": "Basic structure of a ggplot\nggplot(data = {data}, aes(x = {xvar}, y = {yvar}, <characteristic> = {othvar}, ...)) +\n      <geom>(<characteristic> = \"value\", ...) + \n      ...\n\n{data}: must be a dataframe (or tibble!)\n{xvar} and {yvar} are the names (unquoted) of the variables on the x- and y-axes\n\nsome graphs may not require both, or may require other parameters\n\n{othvar} is some other unquoted variable name that defines a grouping or other characteristic you want to map to an aesthetic\n<characteristic>: you can map {othvar} (or a fixed \"value\") to any of a number of aesthetic features of the figure; e.g., color, shape, size, linetype, etc.\n<geom>: the geometric feature you want to use; e.g., point (scatterplot), line, histogram, bar, etc.\n\"value\": a fixed value that defines some characteristic of the figure; e.g., “red”, 10, “dashed”\n… : there are numerous other options to discover!"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-1",
+    "href": "day_1/slides/index.html#section-1",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat))\n\n\n\n\n\n\n\nggplot() doesn’t plot any data itself, it just sets up the data and variables"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-2",
+    "href": "day_1/slides/index.html#section-2",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar()\n\n\n\n\n\n\n\ngeom_bar() creates a bar graph for the number of observations with a certain value of the x variable\n\ndoes not need a y variable\n\n\n\n\n\n\n\n\nTip\n\n\nuse geom_col() if you have a y variable that you want to use as the height of the bars"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-3",
+    "href": "day_1/slides/index.html#section-3",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat))\n\n\n\n\n\n\n\nfacet_grid() creates a panel for each value of another variable\n\ncan also do rows =\nvariable name should be within vars() (for reasons we’ll get to later!)\n\n\n\n\n\n\n\n\nTip\n\n\nuse facet_wrap() if you want to create panels that expand along rows and columns (e.g., to facet by many countries)"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-4",
+    "href": "day_1/slides/index.html#section-4",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1)\n\n\n\n\n\n\n\nscale_{fill/color}_{...}() functions change the color palette\n\nsome are appropriate for continuous variables, others discrete\n\n\n\n\n\n\n\n\nTip\n\n\nscale_fill_viridis_d() good color-blind and black & white-friendly options"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-5",
+    "href": "day_1/slides/index.html#section-5",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\")\n\n\n\n\n\n\n\nscale_{x/y}_{...}() functions change the axis scale and/or labeling\n\n\n\n\n\n\n\nTip\n\n\nscale_y_log10() is helpful when plotting odds or risk ratios"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-6",
+    "href": "day_1/slides/index.html#section-6",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal()\n\n\n\n\n\n\n\ntheme_{...}() changes the “look” of the plot\n\nbut not the data color palette\n\n\n\n\n\n\n\n\nTip\n\n\nfind lots of themes and color palettes at https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-7",
+    "href": "day_1/slides/index.html#section-7",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1))\n\n\n\n\n\n\n\nyou can also specify any component of the theme directly\n\n\n\n\n\n\n\nTip\n\n\nlots of arguments can be set to element_blank() to get rid of them"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-8",
+    "href": "day_1/slides/index.html#section-8",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL)\n\n\n\n\n\n\n\nlabs() can add subtitles, caption, alt text, as well as label any aesthetics (fill, color, etc.)\n\n\n\n\n\n\n\nTip\n\n\nthere’s a lot of redundancy… we could have specified x = \"Eyesight quality\" here instead."
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-9",
+    "href": "day_1/slides/index.html#section-9",
+    "title": "Day 1",
+    "section": "",
+    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL) +\n  coord_cartesian(expand = FALSE)\n\n\n\n\n\n\n\ncoord_{...}() functions change the coordinate system\n\ncartesian is already the default, but expand = FALSE means there is no extra space beyond the axis limits\n\n\n\n\n\n\n\n\nTip\n\n\ncoord_fixed(ratio = 1) will ensure that 1 unit on the x-axis is the same length as one unit on the y-axis"
+  },
+  {
+    "objectID": "day_1/slides/index.html#how-close-can-we-get-to-this-one",
+    "href": "day_1/slides/index.html#how-close-can-we-get-to-this-one",
+    "title": "Day 1",
+    "section": "How close can we get to this one?",
+    "text": "How close can we get to this one?"
+  },
+  {
+    "objectID": "day_1/slides/index.html#section-10",
+    "href": "day_1/slides/index.html#section-10",
+    "title": "Day 1",
+    "section": "",
+    "text": "Image via https://nbisweden.github.io/RaukR-2019/ggplot/presentation/ggplot_presentation.html"
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "R for Data Science Slack learning group: https://www.rfordatasci.com/about/\nMore extensive Harvard course covering R and other aspects of computing: https://id529.github.io/\nRMarkdown book: https://bookdown.org/yihui/rmarkdown/\nQuarto: https://quarto.org/\nInstalling LateX to generate PDFs with RMarkdown or Quarto: https://bookdown.org/yihui/rmarkdown-cookbook/install-latex.html\nCheat sheets: https://posit.co/resources/cheatsheets/"
+  }
+]
