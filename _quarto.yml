@@ -87,10 +87,3 @@ format:
     toc: true
 
 editor: source
-
-webr: 
-  show-startup-message: false
-  show-header-message: false
-  service-worker-url: www/
-filters:
-  - webr
