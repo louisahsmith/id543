@@ -3,6 +3,7 @@ title: Basic R coding overview
 format:
   html:
     number-sections: true
+    toc-location: left
 ---
 
 This document aligns with the Stata cheat sheet.
@@ -405,7 +406,7 @@ You can also estimate arbitraty sumamry statistics using `dplyr::summarize()`:
 dplyr::summarize(dataset, mean = mean(varname), sd = sd(varname))
 ```
 
-One can estimate the standard errors and 95% CI of the mean using the \``ci` or `ci means` command.`t.test()` function:
+One can estimate the standard errors and 95% CI of the mean using the `ci` or `ci means` command.`t.test()` function:
 
 ``` r
 t.test(dataset$varname)
@@ -456,8 +457,6 @@ ggplot(dataset, aes(y = age, x = bmi)) +
     geom_point() +
     labs(x = "Age", y = "BMI")
 ```
-
-More examples and codes in: <http://www.R.com/support/faqs/graphics/gph/R-graphs/>
 
 ### Statistical Tests
 
