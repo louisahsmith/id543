@@ -1,6 +1,9 @@
 ---
 title: "Introduction to R"
 subtitle: ID 543
+format: 
+  html: 
+    toc: false
 about:
   template: broadside
 image: img/computer.png
