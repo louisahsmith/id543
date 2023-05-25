@@ -1,8 +1,106 @@
 /*-- scss:defaults --*/
-$r-block-margin: 0 0 0 0;
-$body-bg: white;
-$body-color: #3A3B3C;
-$link-color: #75AADB;
+
+
+@import url(https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700);
+
+//
+// Color system
+//
+
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #eee !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #aaa !default;
+$gray-600: #777 !default;
+$gray-700: #495057 !default;
+$gray-800: #333 !default;
+$gray-900: #222 !default;
+$black:    #000 !default;
+
+$blue:    #eb6864 !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #f57a00 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #f5e625 !default;
+$green:   #22b24c !default;
+$teal:    #20c997 !default;
+$cyan:    #369 !default;
+
+$bs-body-color: $gray-900 !default;
+$bs-link-color: $blue !default;
+$bs-code-color: $pink !default;
+
+$primary:       $blue !default;
+$secondary:     $gray-500 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-900 !default;
+
+$callout-color-note: $secondary !default;
+$callout-color-tip: $pink !default;
+$callout-color-caution: $yellow !default;
+$callout-color-warning: $danger !default;
+$callout-color-important: $primary !default;
+
+$min-contrast-ratio:   1.28 !default;
+
+// Fonts
+
+$headings-font-family:   "News Cycle", "Arial Narrow Bold", sans-serif !default;
+$headings-font-weight:    700 !default;
+$headings-line-height:    1.1 !default;
+
+// Buttons
+
+$input-btn-padding-x:         1rem !default;
+
+// Navbar
+
+$navbar-light-color:                rgba($black, .7) !default;
+$navbar-light-hover-color:          $black !default;
+$navbar-light-active-color:         $black !default;
+
+// Pagination
+
+$pagination-hover-color:            $white !default;
+$pagination-hover-bg:               $primary !default;
+$pagination-hover-border-color:     $primary !default;
+
+// fonts
+$font-family-sans-serif: $headings-font-family;
+
+// colors
+$body-bg: $white !default;
+$body-color: $bs-body-color !default;
+$link-color: $bs-link-color !default;
+
+// headings
+$presentation-heading-font: "News Cycle", sans-serif !default;
+$presentation-heading-font-weight: normal !default;
+$presentation-heading-letter-spacing: -0.08em;
+
+// code blocks
+$code-block-border-color: lighten($link-color, 50%) !default;
+$code-block-bg: transparent !default;
+
+// Buttons
+
+.btn {
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+
+  &-secondary,
+  &-warning {
+    color: $white;
+  }
+}
 
 /*-- scss:rules --*/
 
@@ -13,4 +111,11 @@ margin-left: -20px;
 }
 div.sourceCode {
     height: fit-content !important;
+}
+
+/*-- scss:rules --*/
+
+// Fix links so they are not cut off
+.reveal a {
+  line-height: 1.3em;
 }

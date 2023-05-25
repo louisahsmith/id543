@@ -10,12 +10,14 @@ website:
     left:
       - text: "Home"
         file: index.qmd
-      - sidebar:pre_work
+      - pre_work/index.qmd
       - day_1/index.qmd
-      - sidebar:day_2
-      - sidebar:day_3
-      - sidebar:day_4
+      - day_2/index.qmd
+      - day_3/index.qmd
+      - day_4/index.qmd
     right:
+      - text: "Cheat Sheet"
+        file: cheat_sheet/cheat_sheet.qmd
       - text: "Resources"
         file: resources.qmd
 
@@ -29,7 +31,7 @@ website:
 
     - id: day_1
       title: "Day 1"
-      contents: day_1
+      # contents: day_1
 
     - id: day_2
       title: "Day 2"
@@ -82,7 +84,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: journal
     css: www/styles.css
     toc: true
 

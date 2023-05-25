@@ -1,0 +1,32 @@
+---
+title: "Day 3"
+filters:
+  - webr
+webr:
+  show-startup-message: false
+---
+
+```{=html}
+<script type="module">
+await globalThis.webR.evalRVoid(`
+download.file(
+  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
+  'nlsy_cc.csv'
+)
+
+webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
+
+library(ggplot2)
+nlsy <- readr::read_csv("nlsy_cc.csv") |> 
+  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
+               "Good", "Fair", "Poor")),
+    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
+                     "Wears glasses/contacts")),
+    race_eth_cat = forcats::fct_recode(as.character(race_eth),
+    "Hispanic" = "1",
+    "Black" = "2",
+    "Non-Black, Non-Hispanic" = "3"),
+    sex_cat = factor(sex, labels = c("Male", "Female")))
+`)
+</script>	
+```

@@ -1,14 +1,39 @@
 ---
-title: "Intro to R 2023"
+title: "Introduction to R"
+subtitle: ID 543
 about:
   template: broadside
 image: img/computer.png
 ---
 
-This is a Quarto website.
+### June 6-9, 2023
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+#### 2-5 pm
 
-```{r}
-1 + 1
-```
+::: columns
+::: {.column width="50%"}
+*Faculty*
+
+Louisa Smith
+
+Assistant Professor
+
+Department of Health Sciences, Northeastern University
+
+l.smith\@northeastern.edu
+
+Office Hours: 1-2 pm Kresge 201
+
+:::
+
+::: {.column width="50%"}
+*Teaching Assistant*
+
+Sabine Friedrich 
+
+sfriedrich\@hsph.harvard.edu  
+
+Office hours: 12-1 pm Kresge 201
+
+:::
+:::

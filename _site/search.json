@@ -1,10 +1,276 @@
 [
   {
+    "objectID": "cheat_sheet/cheat_sheet.html",
+    "href": "cheat_sheet/cheat_sheet.html",
+    "title": "Basic R coding overview",
+    "section": "",
+    "text": "This document aligns with the Stata cheat sheet."
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#create-and-execute-an-r-script",
+    "href": "cheat_sheet/cheat_sheet.html#create-and-execute-an-r-script",
+    "title": "Basic R coding overview",
+    "section": "2.1 Create and execute an R script",
+    "text": "2.1 Create and execute an R script\nIn RStudio, you can run R code directly in the console. This is helpful for running quick one-off code. To save your code, write it as an .R script, which allows one to run the same commands in the future to reproduce your work. To open a new .R script, one can:\n\nClick on the “New File” icon in the top left of RStudio, then select “R Script”.\nFile -> New File -> R Script"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat",
+    "href": "cheat_sheet/cheat_sheet.html#read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat",
+    "title": "Basic R coding overview",
+    "section": "2.2 Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat )",
+    "text": "2.2 Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat )\nDatasets can be in various formats, such as .rds (R), .dta (Stata), .xlsx (Excel), .csv (Comma Separated Value), and .sas7bdat (SAS) files. Some of these datasets require additional packages to download into R. To install a package, run:\ninstall.packages(\"package_name\")\nWhen a function belongs to a package, you can use that function by running package_name::function_name() or by running library(package_name) at some point before function_name().\nYou will need to include the path to the dataset file in your code. To determine the location of a dataset stored on a Windows computer, you can right-click and click on ‘Properties’ and copy and paste the location path. On a Mac, right-click the file, then press so that “Copy filename as Pathname” appears in the menu.\nUnlike Stata, you can have multiple datasets open in the same R session. When reading in a dataset, you must store it as an object so that you can refer to it later. This is done in R using the “assignment arrow” <-.\nReading in datasets can also be done from File -> Import Dataset. This will bring up a window with options that will help you write the code that can be saved in an R script to use again.\n\n2.2.1 Reading an R .rds file\nThe readRDS() function is part of “base R” so does not need a separate package. The {readr} package includes many functions for reading in data that do the same things as the base R packages, often with better defaults.\ndataset <- readRDS(\"filepath/filename.rds\")\nor\ndataset <- readr::read_rds(\"filepath/filename.rds\")\n\n\n2.2.2 Reading a Stata .dta file\ndataset <- haven::read_stata(\"filepath/filename.dta\")\n\n\n2.2.3 Importing an Excel file\nBecause data in Excel can take many different forms (different sheets, extra rows with information, etc.), there are many arguments to this function to make sure you are reading in the right data. It will default to the first sheet, with the first row used as column names.\ndataset <- readxl::read_excel(\"filepath/filename.xlsx\")\n\n\n2.2.4 Importing a .csv file\ndataset <- read.csv(\"filepath/filename.csv\")\nor\ndataset <- readr::read_csv(\"filepath/filename.csv\")\n\n\n2.2.5 Reading in a SAS file\nhaven::read_sas(\"filepath/filename.sas7bdat\", \"filepath/catalog.sas7bcat\")"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#get-to-know-your-data",
+    "href": "cheat_sheet/cheat_sheet.html#get-to-know-your-data",
+    "title": "Basic R coding overview",
+    "section": "2.3 Get to know your data",
+    "text": "2.3 Get to know your data\nThere are a number of ways to summarize your dataset. The summary() function will print summary statistics for each variable.\nsummary(dataset)\nThe glimpse() function tells you the number of rows and columns, what type of variable each column contains, and shows you the first few observations.\ndplyr::glimpse(dataset)\nTo see what the entire dataset looks like, you can click on the name of the dataset in the Environment pane. This will open up a new tab with the dataset. You can also bring up this tab with:\nView(dataset)\nor\ntibble::view(dataset)\nTo compactly list the variable names:\nnames(dataset)\nTo count the number of observations (i.e. rows of data) in a dataset:\nnrow(dataset)\nTo count the number of observations in a subset of the data:\nCode for character variables:\nnrow(dataset[dataset$varname == \"Male\",])\nCode for numeric variables:\nnrow(dataset[dataset$varname == 1,])\nYou can also count the number of observations for each value of varname with:\ndplyr::count(dataset, varname)"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#generate-quadratic-term",
+    "href": "cheat_sheet/cheat_sheet.html#generate-quadratic-term",
+    "title": "Basic R coding overview",
+    "section": "3.1 Generate quadratic term",
+    "text": "3.1 Generate quadratic term\ndataset$newvar <- dataset$oldvar * dataset$newvar\nor\ndataset <- mutate(dataset, newvar = oldvar * oldvar)\nYou can also create a quadratic term directly in a model itself, bit it must be wrapped in I(): var + I(var^2) + other_vars ."
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#generate-a-categorical-variable-based-on-cut-points",
+    "href": "cheat_sheet/cheat_sheet.html#generate-a-categorical-variable-based-on-cut-points",
+    "title": "Basic R coding overview",
+    "section": "3.2 Generate a categorical variable based on cut-points",
+    "text": "3.2 Generate a categorical variable based on cut-points\nThere are a couple ways to create a categorical variable 'newvar' based on cutpoint values of 'oldvar' at cutpoints x and y.\n\nOne can use the cut() function to create a new categorical variable with cutpoints at the breaks = values. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values (0,x] (category 1), (x,y] (category 2), and (y,100] (category 3). For the breaks =argument, you will want to supply the left- hand breaks: a value lower than the minimum, x, y and then a value larger than the maximum. (You can use -Inf and Inf if you don’t know what the minimum and maximum are.) You can also use the include.lowest = and the right = arguments to change how the intervals are created.\ndataset$newvar <- cut(dataset$newvar, breaks = c(-Inf, x, y, Inf))\nYou can also use case_when() if you want to be more explicit. For example, to generate a new categorical variable based on a set of cutpoints (ex. 40, 60, 80):\nlibrary(dplyr)\ndataset <- mutate(dataset, newvar = case_when(\n  oldvar < 40 ~ 0,\n  oldvar >= 40 & oldvar < 60 ~ 1,\n  oldvar >= 60 & oldvar < 80 ~ 2,\n  oldvar >= 80 ~ 3\n))\nValues of oldvar that don’t meet any of the conditions will be assigned NA."
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#generate-quantiles",
+    "href": "cheat_sheet/cheat_sheet.html#generate-quantiles",
+    "title": "Basic R coding overview",
+    "section": "3.3 Generate quantiles",
+    "text": "3.3 Generate quantiles\nUse the quantile() function to generate a categorical variable based on quantile cutoffs. In the code below, set the number of desired quantiles (here, tertiles) by changing the value of nquantiles.\nnquantiles <- 3\ndataset$newvar <- cut(dataset$oldvar, breaks = quantile(dataset$oldvar, probs = seq(0, 1, length.out = nquantiles + 1)), include.lowest=TRUE)"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#generate-an-indicatordummy-variable",
+    "href": "cheat_sheet/cheat_sheet.html#generate-an-indicatordummy-variable",
+    "title": "Basic R coding overview",
+    "section": "3.4 Generate an indicator/dummy variable",
+    "text": "3.4 Generate an indicator/dummy variable\n\nYou generally don’t need to create indicator/dummy variables. In models, R will treat any factor variable as a series of indicator variables. If varname has numeric values, turn it into a factor variable (see next section):\n\ndataset$varname <- factor(dataset$varname)\nand then use varname directly in a model. 2) One could also code the indicator/dummy variables manually using case_when(). 3) In some scenarios, it may be helpful to generate the indicator variables used in a model with:\nnewvars <- as.data.frame(model.matrix(~varname + othervar, data = dataset))\nNote that this will also create an intercept (a column of ones) and will also only contain the variables varname and othervar, not any others in the dataset."
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#label-a-categorical-variable",
+    "href": "cheat_sheet/cheat_sheet.html#label-a-categorical-variable",
+    "title": "Basic R coding overview",
+    "section": "3.5 Label a categorical variable",
+    "text": "3.5 Label a categorical variable\nTo create a factor (categorical) variable, use the factor() function, with arguments levels = for the unique values and labels = for the names of those values. For example, if oldvar has values 0, 1, and 2, which should be named “small”, “medium”, “large”:\ndataset$newvar <- factor(dataset$oldvar, levels = c(0, 1, 2), labels = c(\"small\", \"medium\", \"large\"))\nThe reference level is always the first level (above, “small”). In models, R will treat character variables as factor variables, and the levels will be in alphabetical order. For example, if the variable in the example above was already labeled, but not a factor variable, putting it in a model or using the factor() function would result in levels “large”, “medium”, and “small” (“large” being the reference”).\nTo determine whether a variable is already a factor variable, or whether it is a character variable (or another type), use:\nclass(dataset$varname)\nTo see the levels in order of a factor variable, use:\nlevels(dataset$varname)\nThe {forcats} package is designed to make working with categorical variables easier. If a variable has levels “large”, “medium”, and “small” and you want to change the order, you can use:\ndataset$newvar <- forcats::fct_relevel(dataset$oldvar, \"small\", \"medium\", \"large\"))\nTo rename the levels “sm”, “md”, and “lg”:\ndataset <- forcats::fct_recode(dataset$oldvar, \"sm\" = \"small\", \"md\" = \"medium\", \"lg\" = \"large\"))\nIf the variable is numeric, you need to turn it into a character or factor variable before using fct_recode():\ndataset <- forcats::fct_recode(as.character(dataset$oldvar), \"sm\" = \"0\", \"md\" = \"1\", \"lg\" = \"2\"))"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#sort-the-data",
+    "href": "cheat_sheet/cheat_sheet.html#sort-the-data",
+    "title": "Basic R coding overview",
+    "section": "3.6 Sort the data",
+    "text": "3.6 Sort the data\nThe default of the arrange() function from the {dplyr} package is in ascending order.\ndataset <- dplyr::arrange(dataset, varname)\nTo sort in descending order:\nlibrary(dplyr)\ndataset <- arrange(dataset, desc(varname))\nYou can sort on multiple variables to arrange observations in to ascending order based on varname1, and within each varname1 category one can sort into descending order by varname2.\nlibrary(dplyr)\ndataset <- arrange(nlsy, varname1, desc(varname2))"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#merge-two-datasets",
+    "href": "cheat_sheet/cheat_sheet.html#merge-two-datasets",
+    "title": "Basic R coding overview",
+    "section": "3.7 Merge two datasets",
+    "text": "3.7 Merge two datasets\nTo merge two datasets, use a _join() function from the {dplyr} package: left_join(), right_join(), full_join(). The functions differ by how they treat rows without a match in the “left-hand side” dataset and the “right-hand side” dataset. This will keep all observations in dataset1 and merge with only observations in dataset2 with a matching id:\nlibrary(dplyr)\ndataset3 <- left_join(dataset1, dataset2, join_by(id))"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#keeping-and-dropping-observations",
+    "href": "cheat_sheet/cheat_sheet.html#keeping-and-dropping-observations",
+    "title": "Basic R coding overview",
+    "section": "3.8 Keeping and dropping observations",
+    "text": "3.8 Keeping and dropping observations\nTo create a dataset that is a subset of another dataset, use filter(). This code will retain all observations with both the age and sex requirement:\ndataset2 <- dplyr::filter(dataset1, age > 35, sex == \"F\")\nYou can also explictly use logic like & and | (or). To retain observations that are either over 35 or female:\ndataset2 <- dplyr::filter(dataset1, age > 35 | sex == \"F\")"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#categorical-data-frequencies-tests-and-association-measures",
+    "href": "cheat_sheet/cheat_sheet.html#categorical-data-frequencies-tests-and-association-measures",
+    "title": "Basic R coding overview",
+    "section": "4.1 Categorical data: frequencies, tests, and association measures",
+    "text": "4.1 Categorical data: frequencies, tests, and association measures\n\n4.1.1 One-way frequency table\nOne can get a frequency table using the count() function.\ndplyr::count(dataset, varname)\nThe tabyl() function from the {janitor} package is also helpful for frequency tables because it will also add percentages by default to a one-way frequency table.\njanitor::tabyl(dataset, varname)\nFor a binary variable, you can use prop.test() or binom.test() (exact intervals) to get confidence intervals for the proportion of 1’s (or the “higher” level for a factor variable):\nprop.test(table(dataset$binary_var))\n\n\n4.1.2 RxC frequency tables\nOne can easily extend the functions above to cross-tabulate two categorical variables.\ndplyr::count(dataset, varname1, varname2)\njanitor::tabyl(dataset, varname1, varname2)\nTo get proportions when using tabyl():\nlibrary(janitor)\ntabyl(dataset, varname1, varname2) |> adorn_percentages()\n\n\n4.1.3 Two-sample test of proportions\nTo compare proportions of varname2 stratified by varname1 and get a confidence interval for the difference in proportions;\nprop.test(table(dataset$varname1, dataset$varname2))\n\n\n4.1.4 Estimate measures of association\nThe {epitools} package contains a functions for estimating many simple epidemiologic quantities. For example, to estiamte a risk ratio (and the corresponding proportions):\nepitools::epitab(dataset$exposure, dataset$outcome, method = \"riskratio\")\n\n\n4.1.5 Stratified frequency tables\nYou can estimate any summary statistics of a variable (ex. varname1 or varname2) within each value of a categorical variable (ex. categoricalvariable):\ndplyr::summarize(dataset, mean_1 = mean(varname1), sd_2 = sd(varname2), .by = categoricalvariable)\nFor two-way frequency tables (varname1 x varname2) stratified by a third variable (categoricalvariable):\njanitor::tabyl(dataset, varname1, varname2, categoricalvariable)"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#continuous-data-summary-statistics-visualization-and-statistical-tests",
+    "href": "cheat_sheet/cheat_sheet.html#continuous-data-summary-statistics-visualization-and-statistical-tests",
+    "title": "Basic R coding overview",
+    "section": "4.2 Continuous data: summary statistics, visualization, and statistical tests",
+    "text": "4.2 Continuous data: summary statistics, visualization, and statistical tests\n\n4.2.1 Measures of location and variance\nUse the summary command to obtain summary statistics for continuous data (mean, minimum, maximum, median, IQR):\nsummary(dataset$varname)\nYou can also estimate arbitraty sumamry statistics using dplyr::summarize():\ndplyr::summarize(dataset, mean = mean(varname), sd = sd(varname))\nOne can estimate the standard errors and 95% CI of the mean using the `ci or ci means command.t.test() function:\nt.test(dataset$varname)\n\n\n4.2.2 Histogram\nA histogram graphic for continuous data:\nhist(dataset$age)\nWith the {ggplot2} package:\nggplot(dataset, aes(x = age)) + \n    geom_histogram() +\n    labs(title = \"Histogram of age\", \n         x = \"Age\")\n\n\n4.2.3 Box plots\nTo show a box-and-whisker plot of age and a box plot of age by a categorical variable (ex. sex):\nboxplot(dataset$age, dataset$sex)\nggplot(dataset, aes(y = age, x = sex)) + \n    geom_boxplot() +\n    labs(title = \"Boxplot of age by sex\", \n         x = \"Sex\", y = \"Age\")\n\n\n4.2.4 Scatterplot\nScatterplot of two continuous variables:\nplot(dataset$age, dataset$bmi)\nggplot(dataset, aes(y = age, x = bmi)) + \n    geom_point() +\n    labs(x = \"Age\", y = \"BMI\")\nMore examples and codes in: http://www.R.com/support/faqs/graphics/gph/R-graphs/\n\n\n4.2.5 Statistical Tests\nTo conduct a two-sample T-test (continuous variable by a binary variable), use the t.test() function with the var.equal = FALSE argument if desired:\nt.test(continuousvar ~ categoricalvar, data = dataset, var.equal = FALSE)\nTo conduct a one-way ANOVA (test differences of two or more means), use the aov() function:\naov(continuousvar ~ categoricalvar, data = dataset)\nTo conduct a non-parametric test Wilcoxon Rank-sum test (aka Mann-Whitney U test), use the wilcox.test() function:\nwilcox.test(continuousvar ~ categoricalvar, data = dataset)\n\n\n4.2.6 Correlation coefficients\nOne can estimate correlation coefficients using the cor() function. The default is Pearson, one can estimate the Spearman correlation coefficients using the method = \"spearman\" argument:\ncor(dataset[, c(\"varname1\", \"varname2\", \"varname3\")], method = \"spearman\")\nYou can also provide two vectors if a single correlation is desired. For confidence intervals and hypothesis tests, use cor.test().\ncor.test(dataset$varname1, dataset$varname2)"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#logistic-regression",
+    "href": "cheat_sheet/cheat_sheet.html#logistic-regression",
+    "title": "Basic R coding overview",
+    "section": "5.1 Logistic Regression",
+    "text": "5.1 Logistic Regression\n\n5.1.1 Using continuous or binary variables\nFit a logistic regression model:\nmodel <- glm(outcome ~ exposure + var1 + var2, data = dataset, family = binomial())\nCode to output the beta coefficients:\ncoef(model)\nCode to output the odds ratios:\nexp(coef(model))\nCoefficients, standard errors, p-values:\nsummary(model)\nCOnfidence intervals:\nconfint(model)\nThe {broom} package is helpful for getting model output:\nbroom::tidy(model, exponentiate = TRUE, conf.int = TRUE)\n\n\n5.1.2 Using indicator variables\nR automatically creates indicator variables for factor or character variables (see previous section). To force it to create indicator variables for a numeric variable, you can use factor():\nmodel <- glm(outcome ~ exposure + factor(var1) + var2, data = dataset, family = binomial())\nTo change the referent group, you can use fct_relevel() to move a new level to be the first level (the other levels will stay in their original order, unless you include them):\ndataset$newvar <- forcats::fct_relevel(dataset$oldvar, \"ref\"))\nmodel <- glm(outcome ~ exposure + newvar, data = dataset, family = binomial())\n\n\n5.1.3 Stratified Logistic Regression\nTo fit a logistic regression model within levels of categoricalvar:\nlibrary(dplyr)\nmodels <- dataset |> group_by(categoricalvar) |> group_map(~glm(outcome ~ exposure, data = .x))"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#linear-regression",
+    "href": "cheat_sheet/cheat_sheet.html#linear-regression",
+    "title": "Basic R coding overview",
+    "section": "5.2 Linear Regression",
+    "text": "5.2 Linear Regression\nOne can conduct a linear regression model using either the lm() function or the glm() function with family = gaussian(). All of the same functions work on these models to extract model output.\nmodel <- lm(outcome ~ exposure + var1 + var1)\nbroom::tidy(model, conf.int = TRUE)"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#survival-data",
+    "href": "cheat_sheet/cheat_sheet.html#survival-data",
+    "title": "Basic R coding overview",
+    "section": "5.3 Survival Data",
+    "text": "5.3 Survival Data\n\n5.3.1 Set-up\nThe {survival} package is used for this entire section.\nlibrary(survival)\nWithin that package, the Surv() function is used to “create” the outcome and is used in other functions:\nSurv(timetooutcome, outcome)\n\n\n5.3.2 Graphs\nKaplan-Meier curves overall:\nkm <- survfit(Surv(timetooutcome, outcome) ~ 1, data = dataset)\nplot(km)\nKM curves by exposure groups:\nkm <- survfit(Surv(timetooutcome, outcome) ~ exposure, data = dataset)\nplot(km)\nTo add 95% confidence intervals and censoring marks to the figure:\nplot(km, conf.int = TRUE, mark.time = TRUE)\nLog negative-log survivor plots:\nplot(km, fun = \"cloglog\")\nThe {survminer} package is useful for creating survival curves for publication and can also include risk tables:\nsurvminer::ggsurvplot(km, risk.table = TRUE)\n\n\n5.3.3 Summary statistics\nTo see survivor function at various time points (ex. 30, 60, 90 days):\nsummary(km, times = c(30, 60, 90))\nYou can also use the tidy() function to extract the estimates and confidence intervals over all times in a nicer format:\nbroom::tidy(km)\nTo get median and other percentile survival times with confidence intervals:\nquantile(km, probs = c(0.25, 0.5, 0.75))\n\n\n5.3.4 Statistical tests\nLog-rank test:\nsurvdiff(Surv(timetooutcome, outcome) ~ exposure, data = dataset)\nSee the {survminer} vignette for details on plotting survival curves with p-values from weighted log-rank tests (here, Tarone-Ware):\nsurvmire::ggsurvplot(km, data = dataset, pval = TRUE, pval.method = TRUE,\n    log.rank.weights = \"sqrtN\", pval.method.coord = c(3, 0.1),\n    pval.method.size = 4)\n\n\n5.3.5 Cox Regression\nOne can conduct a Cox regression model using the coxph() function from the {survival} package.\ncox <- coxph(Surv(timetooutcome, outcome) ~ exposure, data = dataset)\nThe functions from the logistic regression section can be used to extract model output.\nCompeting Risk Analysis: In carrying out a competing risk analysis, the “outcome” variable can take on three values. There must be a value for the actual event of interest (outcome=1); a value for censoring (outcome=0); and a value for the competing risk event (outcome=2).\nfg_data <- finegray(Surv(timetooutcome, outcome) ~ exposure, data = dataset)\nfg_model <- coxph(Surv(fgstart, fgstop, fgstatus) ~ exposure, weight = fgwt, data = fg_data)"
+  },
+  {
+    "objectID": "cheat_sheet/cheat_sheet.html#goodness-of-fit-statistics",
+    "href": "cheat_sheet/cheat_sheet.html#goodness-of-fit-statistics",
+    "title": "Basic R coding overview",
+    "section": "5.4 Goodness of Fit Statistics",
+    "text": "5.4 Goodness of Fit Statistics\nTo get log Likelihood/AIC/BIC for most recent regression model:\nloglik(model)\nAIC(model)\nBIC(model)\nTo run a likelihood ratio test comparing two nested models:\nlmtest::lrtest(mod_full, mod_nested)"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html",
+    "href": "cheat_sheet/STATACheatSheet.html",
+    "title": "Basic Stata Coding Overview",
+    "section": "",
+    "text": "There is a lot of documentation and support available at your fingertips both within Stata and outside of Stata on blogs, other educational websites, YouTube and more.\n\nWithin Stata, use the help command to get an overview, more options and examples for a specific command. There is also the search command where you can type in key words and Stata will search for these key words.\n\n\nhelp(command_name)\nhelp command_name\nsearch [keyword search terms here]\n\nWithin the Stata Help menu, you can select ‘PDF Documentation’ to access the manuals.\nThere are also plenty of resources on the Stata Support site: http://www.Stata.com/support/\n\nStata is case sensitive (e.g. if a variable is ‘ID’, you must refer to it as ‘ID’, not ‘id’). ? It is best to save and write your Stata code in a .do file.\nNotes/comments can be added for easy annotation of the program. An asterisk at the beginning of the line denotes a comment that can be used interactively. For example:\n*This is a note that\n*Stata will not read\nWhen coding in Stata, Stata does not like to read in location paths or datasets that have a space in the name (e.g. Stata does not like to read in \"Your path here/name of dataset.dta\", and would prefer a file name without spaces, such as: \"Your_path_here/name_of_dataset.dta\").\nIf you only want to run a command for a subset of the data, add if varname==value to the end of the command statement (e.g. summarize age, if gender==1).\nIf you start to run a command and need to stop the command or prevent more output from appearing, you can select the Break icon in the top-right corner to stop the command.\nIn Stata 14 and older versions, while executing a command, Stata will display --more-- and pause until any key is pressed. To turn off the more message, use the command set more off. To turn the message on: set more on. From Stata 15, set more off is now the default option (help whatsnew14to15 => 71. Set more off now the default)"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#create-and-execute-a-.do-file",
+    "href": "cheat_sheet/STATACheatSheet.html#create-and-execute-a-.do-file",
+    "title": "Basic Stata Coding Overview",
+    "section": "2.1 Create and execute a .do file",
+    "text": "2.1 Create and execute a .do file\nA do-file is a file containing a list of commands that can be saved, which allows one to run the same commands in the future to reproduce your work. To open a new .do file, one can:\n\nClick on the “Do-file Editor” icon located at the top Stata bar:\nOr, go to the menu options: File/New/Do-file, or Window/Do-file Editor/New Do-file Editor. A .do file will open:\n\nThe Do-File Editor acts just like Word or any text editor so that we can type any Stata commands.\nNote that do-file editor has different text colors for specific parts of the Stata commands:\n\nGreen: Comments (green arrow)\nRed: Character (ex. \"filename\", red arrow)\nBlue: Stata commands (ex. use, clear, summarize, histogram, graph, tabulate, regress, blue arrow)\nBlack: Other aspects of the command (black arrow)\n\nAdditional colors are added to other aspects of the commands. For example, if a command is misspelled (tablate rather than tabulate), this will not turn blue in the Do-File Editor and you can easily identify the spelling error.\nTo run all or a subset of the commands in the Do-File Editor, we can push the button at the top of the Do-File Editor that is labeled “Execute (Do)” if you hover over it (orange arrow). If you click this button, all of the commands in the do file will be executed. If you would like to execute only a subset of the commands, you can highlight the commands you would like to execute and then click the button.\nTo learn even more details about .do files (ex. more ways to write comments, long lines, error handling, logging the output, preventing -more- conditions, calling other do-files, creating and running do-files for Mac/Windows/Unix, or suppressing output), go the Stata manual (see Table 1)."
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#read-in-a-dataset-.dta-.xlsx-.csv-and-.xpt",
+    "href": "cheat_sheet/STATACheatSheet.html#read-in-a-dataset-.dta-.xlsx-.csv-and-.xpt",
+    "title": "Basic Stata Coding Overview",
+    "section": "2.2 Read in a Dataset (.dta, .xlsx, .csv, and .xpt)",
+    "text": "2.2 Read in a Dataset (.dta, .xlsx, .csv, and .xpt)\nDatasets can be in various formats, such as .dta (Stata), .xls (Excel), .csv (Comma Separated Value), and .sas7bdat (SAS) files. There are a few ways to read in these types of dataset files, some of which require you to know the location of the dataset on your computer. To determine the location of a dataset stored on a Windows computer, can right-click and click on ‘Properties’ and copy and paste the location path.\nThe option , clear will clear out a dataset if one is already open. If a dataset is open and you do not use the clear option and, you will get an error. If you need help or would like to learn more options, you can use the Stata help command by typing in help nameofcommandhere; for example, help use or help import or help insheet. Helpful video link: https://www.youtube.com/watch?v=3CjXMC2hFEA\nAnother option is to use the Stat/Transfer software to convert dataset from various formats into an .dta (Stata) file. Stat/Transfer is available within the HSPH student’s Virtual Desktop Infrastructure (VDI) system https://www.hsph.harvard.edu/information-technology/service/virtual-desktop-infrastructure/ https://www.hsph.harvard.edu/information-technology/frequently-asked-questions/vdifaq/student-vdi-software-inventory/\n\n2.2.1 Reading a Stata .dta file\n1) Use the use command followed by the data location in quotations. The option , clear will clear out a dataset if one is already open. If a dataset is open and you do not use the ‘clear’ option and, you will get an error.\nuse \"Yourpathhere/folder/nameofdataset.dta\", clear\nOr, 2) tell Stata the name of your working directory using the ‘cd’ command and then use the ‘use’ command to open the .dta file:\ncd \"Yourpathhere/folder\"\nuse nameofdataset, clear\nOr, 3) Use the drop-down menu: File/Open/ and then Browse for the Stata .dta file.\n\n\n2.2.2 Importing an Excel file\nThe data should be on the first Excel sheet tab. Use the import command to import an Excel file. The option , firstrow will tell Stata to treat the first row of Excel data as variable names. Alternatively, you can use the drop-down menu: File/Import/Excel Spreadsheet/ and browse for the Excel file and select the ‘Import first row as variable names’ option.\nimport excel Yourpathhere/nameofdataset.xlsx, firstrow\n\n\n2.2.3 Importing a .csv file\nUse the insheet command to import a .csv file.\ninsheet using \"Yourpathhere/nameofdataset.csv\", clear\n\n\n2.2.4 Reading in a SAS file\nCompared to Excel files, it is not as simple to read in a SAS file to Stata. Stata can easily import a SAS XPORT (*.xpt) file using the drop-down menu: File/Import/SAS XPORT and Browse for the .xpt file. Or you can use the import command below.\nimport sasxport \"Yourpathhere/nameofdataset.xpt\", clear\nIf you have SAS, you can use the proc export command in SAS to output a .dta file or an Excel file.\nIf you do not have SAS, then you may need to use the Stat/Transfer software that easily converts a SAS file to a Stata file. Stat/Transfer is available within the HSPH student’s Virtual Desktop Infrastructure (VDI) system:\n\nhttps://www.hsph.harvard.edu/information-technology/service/virtual-desktop-infrastructure/\nhttps://www.hsph.harvard.edu/information-technology/frequently-asked-questions/vdi-faq/studentvdi-software-inventory/\n\nHelpful link: https://stats.idre.ucla.edu/other/mult-pkg/faq/how-do-i-use-a-sas-data-file-in-stata/"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#get-to-know-your-data",
+    "href": "cheat_sheet/STATACheatSheet.html#get-to-know-your-data",
+    "title": "Basic Stata Coding Overview",
+    "section": "2.3 Get to know your data",
+    "text": "2.3 Get to know your data\nOne can get a brief overview of your dataset on the number of observations, the number of variables, variable names, formats, and labels using the describe command. This is highly recommended to do!\ndescribe\nTo see what the entire dataset looks like, one can select on the “Data Browser” icon or use the “browse” command. This will open the data browser that will look a lot like an Excel spreadsheet.\nbrowse\nTo compactly list the variable names:\nds\nTo count the number of observations (i.e. rows of data) in a dataset:\ncount\nTo count the number of observations in a subset of the data:\nCode for character variables:\ncount if varname=='Male'\nCode for numeric variables:\ncount if varname==1\nOne can use the codebook command to print the variable name, label, variable type, range, number of unique values, and some descriptive information. This is very useful for categorical variables. If you do not include a variable name after the codebook command, then you will get output for every variable in the dataset.\ncodebook varname1 varname2 varname3"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#generate-quadratic-term",
+    "href": "cheat_sheet/STATACheatSheet.html#generate-quadratic-term",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.1 Generate quadratic term",
+    "text": "3.1 Generate quadratic term\ngenerate newvar=oldvar*oldvar"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#generate-a-categorical-variable-based-on-cut-points",
+    "href": "cheat_sheet/STATACheatSheet.html#generate-a-categorical-variable-based-on-cut-points",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.2 Generate a categorical variable based on cut-points",
+    "text": "3.2 Generate a categorical variable based on cut-points\nThere are a couple ways to create a categorical variable 'newvar' based on cutpoint values of 'oldvar' at cutpoints x and y.\n\nOne can use the cut function of the egen command to create a new categorical variable with the left-hand ends of the intervals specified in that at() option. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values [0,x] (category 1), [x,y] (category 2), and [y,100] (category 3). In the at() option of the egen and cut commands, you will want to supply the left- hand breaks: 0, x, y and then a value larger than the maximum. The label option will label each of the levels of the categorical variable with the left-hand break value. http://www.stata.com/manuals13/degen.pdf\n\n\negen newvar = cut(oldvar), at(0,x,y,101) label\n\nExample:\negen agecat= cut(age), at(0,40,60,80,101) label \n\ntabulate agecat \n\n     agecat |      Freq.     Percent        Cum. \n------------+----------------------------------- \n          0-|        180        2.65        2.65 \n         40-|      2,007       29.51       32.16 \n         60-|      4,271       62.81       94.97 \n         80-|        342        5.03      100.00 \n------------+----------------------------------- \n      Total |      6,800      100.00 \n\n\nUse the generate and replace commands but be aware that Stata will bin those with missing values in the category with an open-ended greatest than sign unless clearly specified. To generate a new categorical variable based on a set of cutpoints (ex. 40, 60, 80):\n\n\ngenerate newvar=0 if oldvar!=. \nreplace newvar=1 if oldvar >= 40 & oldvar < 60 \nreplace newvar=2 if oldvar >=60 & oldvar < 80 \nreplace newvar=3 if oldvar >=80 & oldvar != . \n \n*The syntax '!=' means not equal. This line must be included or else \n*those with missing will be binned in the newvar=3 category \n \ntabulate newvar \n\nAnother way:\ngenerate newvar=0 \nreplace newvar=1 if oldvar >= 40 & oldvar < 60\nreplace newvar=2 if oldvar \n>=60 & oldvar < 80 replace newvar=3 if oldvar >=80 \n replace newvar=. if oldvar==. \n*Without this line, those with missing values will be included\n*in the newvar=3 category \n\ntabulate newvar"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#generate-quantiles",
+    "href": "cheat_sheet/STATACheatSheet.html#generate-quantiles",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.3 Generate quantiles",
+    "text": "3.3 Generate quantiles\nUse the xtile command to generate a categorical variable based on quantiles cutoffs (for tertiles, usenquantile(3); for quartiles, use nquantile(4); etc. the default is nquantile(2)):\nxtile newvar=oldvar, nquantiles(#)"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#generate-an-indicatordummy-variable",
+    "href": "cheat_sheet/STATACheatSheet.html#generate-an-indicatordummy-variable",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.4 Generate an indicator/dummy variable",
+    "text": "3.4 Generate an indicator/dummy variable\n\nTo generate indicator or dummy variables for a categorical variable, one can use the generate() option of the tabulate command, where a stem name is included within the parentheses to generate X number of dummy variables. Stata will use the stem name to create X number of dummy variables starting from stemname1-stemnameX.\n\n\ntabulate newvar, gen(newvar_dummy)  \ntabulate newvar_dummy1 \ntabulate newvar_dummy2  \ntabulate newvar_dummy3  \ntabulate newvar_dummy4  \ntabulate newvar_dummy5 \n\nOne could also code the indicator/dummy variables manually using the generate and replace commands. Again, be aware the Stata will bin those with missing values in a category and you must specify how to handle those with missing.\n\n\ngenerate indicator1 = 0 if oldvar !=. *the syntax '!=' means not equal. \nreplace indicator1=1 if oldvar < 100 & oldvar !=. \n \ngenerate indicator2 = 0 if oldvar !=. \nreplace indicator2=1 if oldvar>=100 & oldvar<200 & oldvar !=. \n \ngenerate indicator3 = 0 if oldvar !=. replace indicator3=1 if  oldvar>=200 &     oldvar !=. \n... \ntabulate indicator1  \ntabulate indicator2 \ntabulate indicator3"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#label-a-new-variable",
+    "href": "cheat_sheet/STATACheatSheet.html#label-a-new-variable",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.5 Label a new variable",
+    "text": "3.5 Label a new variable\nOne can use the label variable command to give a label to a variable:\nlabel variable newvar \"Add your label description here\"\nOne can also add labels to each level of a categorical variable using both the label define and the label values commands. Say we have a variable called newvar that takes on the values 1, 2, 3, 4, and 5 to represent quintiles. We will define each of the levels of newvar and store that information to newvar_f; then, we will assign the values of newvar_f to the variable newvar. We will check that this worked by using the codebook command to see that labels were assigned correctly to the variable and to each level of the categorical variable.\nlabel define newvar_f 1 \"Quintile 1\" 2 \"Quintile 2\" 3 \"Quintile 3\" 4 \"Quintile 4\" 5 \"Quintile 5\"  \n\nlabel values newvar newvar_f \n \ncodebook newvar"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#sort-the-data",
+    "href": "cheat_sheet/STATACheatSheet.html#sort-the-data",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.6 Sort the data",
+    "text": "3.6 Sort the data\nThe default of the sort command is in ascending order.\nsort varname\nYou can sort on multiple variables to arrange observations in to ascending order based on varname1, and within each varname1 category one can sort into ascending order by varname2.\nsort varname1 varname2"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#merge-two-datasets-with-a-single-row-for-each-individual",
+    "href": "cheat_sheet/STATACheatSheet.html#merge-two-datasets-with-a-single-row-for-each-individual",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.7 Merge two datasets with a single row for each individual",
+    "text": "3.7 Merge two datasets with a single row for each individual\nTo merge two datasets, both datasets should be sorted by the identification variable (ex. idvar). After running the merge command line, a variable _merge is created; this can complicate matters if you are merging more than 2 datasets.\nuse \"Yourpathhere/nameofdataset1.dta\", clear sort idvar \nmerge 1:1 idvar using \"Yourpathhere/nameofdataset2.dta\"\nIf both datasets are saved in the same folder location:\ncd \"YourDataLocationFolder/\" use nameofdataset1.dta, clear  sort idvar \nmerge 1:1 idvar using nameofdataset2.dta \nIf you only want to retain observations that appear in both datasets, one can add the keep(match) option to the merge command:\nmerge 1:1 idvar using nameofdataset2.dta, keep(match)"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#keeping-and-dropping-observations",
+    "href": "cheat_sheet/STATACheatSheet.html#keeping-and-dropping-observations",
+    "title": "Basic Stata Coding Overview",
+    "section": "3.8 Keeping and dropping observations",
+    "text": "3.8 Keeping and dropping observations\nPlease note that if you keep or drop certain observations, these observations will not be included in any future data management or analyses.\nkeep if age>35  \nkeep if sex==\"F\"\ndrop if age<=35  drop if sex==\"M\""
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#categorical-data-frequencies-tests-and-association-measures",
+    "href": "cheat_sheet/STATACheatSheet.html#categorical-data-frequencies-tests-and-association-measures",
+    "title": "Basic Stata Coding Overview",
+    "section": "4.1 Categorical data: frequencies, tests, and association measures",
+    "text": "4.1 Categorical data: frequencies, tests, and association measures\n\n4.1.1 One-way frequency table\nOne can get a frequency table as well as the percentages and cumulative percentages for categorical data using the tabulate command. To check for those with missing data (i.e. varname==.), one can add the missing option to the tabulate command.\ntabulate varname  tab varname \ntabulate varname, missing\nOne can estimate the proportions, standard errors and 95% CI of the proportions using the proportions command.\nproportion varname1 varname2 varnameX\n\n\n4.1.2 RxC frequency tables\nOne can easily extend the tabulate command to cross-tabulate two categorical variables. There are options in the tabulate command to obtain the Pearson’s Chi-squared statistic and the Fisher’s exact test.\ntabulate varname1 varname2 \ntabulate varname1 varname2, missing \n \ntabulate varname1 varname2, chi2 \ntabulate varname1 varname2, exact \n\n\n4.1.3 Two-sample test of proportions\nNote that the binary variable, varname1, should be coded 0/1.\nprtest varname1, by(varname2)\n\n\n4.1.4 Estimate measures of association\nOne can estimate the Risk Difference, Risk Ratio, Odds Ratio between two binary variables (coded as 0/1) using the cs (i.e. cohort study) command with the or (i.e. Odds Ratio) option.\ncs varname1 varname2, or\n\n\n4.1.5 Stratified frequency tables\nIf you want to see frequencies or summary statistics of a variable (ex. varname1 or varname3) within each value of a categorical variable (ex. categoricalvariable):\nbysort categoricalvariable: tabulate varname1  \nbysort categoricalvariable: summarize varname3 \nAnother way to code:\nsort categoricalvariable \nby categoricalvariable: tabulate varname1 \nby categoricalvariable: summarize varname3 \n \nby categoricalvariable, sort: tabulate varname 1"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#continuous-data-summary-statistics-visualization-and-statistical-tests",
+    "href": "cheat_sheet/STATACheatSheet.html#continuous-data-summary-statistics-visualization-and-statistical-tests",
+    "title": "Basic Stata Coding Overview",
+    "section": "4.2 Continuous data: summary statistics, visualization, and statistical tests",
+    "text": "4.2 Continuous data: summary statistics, visualization, and statistical tests\n\n4.2.1 Measures of location and variance\nUse the summarize command to obtain summary statistics for continuous data (ex. mean, minimum, maximum, standard deviation). The detail option provides additional information on the median, variance, the interquartile range values, and the 4 smallest and 4 largest values.\nsummarize varname  \nsummarize varname, detail \nOne can estimate the standard errors and 95% CI of the mean using the ci or ci means command.\nci means varname1 varname2 varnameX\n\n\n4.2.2 Histogram\nA histogram graphics for continuous data\nhistogram age, frequency xtitle(Age) title(Histogram of age)\n\n\n4.2.3 Box plots\nTo show a box-and-whisker plot of age and a box plot of age by a categorical variable (ex. sex)\ngraph box age, ytitle(Age) title(Box plot of age) \ngraph box age, over(sex) ytitle(Age) title(Box plot of age by sex)\n\n\n4.2.4 Scatterplot\nScatterplot of two continuous variables\ntwoway (scatter age bmi), ytitle(Age) xtitle(BMI)\nMore examples and codes in: http://www.Stata.com/support/faqs/graphics/gph/Stata-graphs/\n\n\n4.2.5 Statistical Tests\nTo conduct a two-sample T-test (normally distributed continuous variable by a binary variable), use the ttest command and select the ‘unequal’ variance option if desired:\nttest continuousvar, by(binaryvar) unequal  \nttest continuousvar, by(binaryvar)\nTo conduct a one-way ANOVA (test differences of two or more means), use the anova or oneway commands:\nanova continuousvar categoricalvar  \noneway continuousvar categoricalvar\nTo conduct a non-parametric test Wilcoxon Rank-sum test (aka Mann-Whitney U test) for non- normally distributed data, use the ranksum command:\nranksum continuousvar, by(categoricalvar)\n\n\n4.2.6 Correlation coefficients\nOne can estimate the Pearson correlation coeffecients using either the correlate or the pwcorr commands, though the output options vary between the two commands. The correlate command has several options including to print out the variable descriptive statistics and if you prefer the covariance matrix, you can use the covariance option. The pwcorr commands has options to output the number of observations for each comparison and the p-values.\ncorrelate varname1 varname2 varname3 varname4, means \ncorrelate varname1 varname2 varname3 varname4, means covariance \npwcorr varname1 varname2 varname3 varname4, obs sig\nOne can estimate the Spearman correlation coefficients using the spearman command. With the stats() option, one can output the Spearman correlation coefficients, number of observations and the p-values.\nspearman varname1 varname2 varname3 varname4, stats(rho obs p)"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#logistic-regression",
+    "href": "cheat_sheet/STATACheatSheet.html#logistic-regression",
+    "title": "Basic Stata Coding Overview",
+    "section": "5.1 Logistic Regression",
+    "text": "5.1 Logistic Regression\n\n5.1.1 Using continuous or binary variables\nCode to output the beta coefficients:\nlogit outcome exposure var1 var2 varx \nlogistic outcome exposure var1 var2 varx, coef\nCode to output the Odds Ratios:\nlogit outcome exposure var1 var2 varx, or  \nlogistic outcome exposure var1 var2 varx\n\n\n5.1.2 Using indicator variables\nTo model the categorical predictors with indicator variables, one can use the ‘i.’ function. The default when you use the ‘i.’ function for indicator variables is that the smallest value is the referent group (i.e. the base level is set to first).\nlogit outcome i.exposure i.var1 var2 varx  \nlogit outcome i.exposure i.var1 var2 varx, or\nTo change the referent group, you can 1) use the fvset command, 2) use the ib#. operator, or 3) manually generate new indicator variables.\n\nUsing the fvset command, you have the option to specify the referent group as the lowest level value (first; the default), the highest level value (last), or the most frequent level value (frequent).\n\n\n\nCode to change the referent group:\n\n\nfvset base [first/last/frequent] var1  \nfvset base first var1 \nfvset base last var1  \nfvset base frequent var1  \nlogistic outcome i.var1\n\nUsing the ib#. operator, you can specify the base level of a factor variable by using the ib. operator.\n\n\n\nFor more information: http://www.Stata.com/manuals13/u11.pdf#u11.4.3.2Baselevels\n\nFor example, if you have a 3-level exposure variable (low, medium, high), the default referent group is ‘low’ and would be the same as using the ib0.varname operator. To have ‘medium’ as the referent group, you can use the ib1.varname operator.\n\nCode to change the referent group using the ib# operator:\n\n\nlogistic outcome ib1.exposure var1 var2 varx, or \n\nYou can also manually code the indicator variables to code the desired referent group.\n\n\nCode to change the referent group manually:\n\n\ngenerate low=0 \nreplace low = 1 if exposure=0  \ngenerate medium=0 \nreplace medium = 1 if exposure=1  \ngenerate high=0 \nreplace high= 1 if exposure=2 \nlogistic outcome low high var1 var2 varx, or\n\n\n5.1.3 Stratified Logistic Regression\nby stratificationvar, sort: logistic outcome exposure"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#linear-regression",
+    "href": "cheat_sheet/STATACheatSheet.html#linear-regression",
+    "title": "Basic Stata Coding Overview",
+    "section": "5.2 Linear Regression",
+    "text": "5.2 Linear Regression\nOne can conduct a linear regression model using the regress command with continuous, binary, categorical and indicator variables (see the Logistic Regression section for more information about using indicator variables).\nregress outcome exposure var1 var2 varx  \nregress outcome exposure var1 var2 varx"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#survival-data",
+    "href": "cheat_sheet/STATACheatSheet.html#survival-data",
+    "title": "Basic Stata Coding Overview",
+    "section": "5.3 Survival Data",
+    "text": "5.3 Survival Data\n\n5.3.1 Set-up\nTell Stata that the dataset is survival data:\nstset timetooutcome, failure(outcome==1) \n\n\n5.3.2 Graphs\nKM Curves Overall:\nsts graph \nKM Curves by exposure groups:\nsts graph, by(exposure) \nTo add 95% Confidence Interval band and information sample sizes to the figure\nsts graph, by(exposure) ci risktable \nLog negative-log survivor plots\nstphplot, by(exposure)\n\n\n5.3.3 Summary statistics\nTo see survivor function at various time points overall and by groups:\nsts list \nsts list, by(exposure) compare \nTo get median and other percentile survival times with confidence intervals:\nstci, by(exposure) median  \nstci, by(exposure) p(25)  \nstci, by(exposure) p(75)  \nstsum, by(exposure)\n\n\n5.3.4 Statistical tests\nLog-Rank Test\nsts test exposure, logrank \nWeighted Log-Rank tests (Wilcoxon, Tarone-Ware):\nsts test exposure, wilcoxon  \nsts test exposure, tware\n\n\n5.3.5 Cox Regression\nOne can conduct a Cox regression model using the stcox command to estimate Hazard Ratios with continuous, binary, categorical and indicator variables (see the Logistic Regression section for more information about using indicator variables). In order for the stcox command to work, you must tell Stata that you are working with survival data by using the stset command. The option ‘nohr’ will output the beta coefficients, not the Hazard Ratios.\nstset timetooutcome, failure(outcome==1)  stcox i.var1 var2 var3 \nstcox i.var1 var2 var3, nohr\nCox Regression with time-varying covariates:\nstcox i.var1 var2 var3, tvc(i.var1) texp(_t) nohr\nCompeting Risk Analysis: In carrying out a competing risk analysis, the “outcome” variable can take on three values. There must be a value for the actual event of interest (outcome=1); a value for censoring (outcome=0); and a value for the competing risk event (outcome=2). The stset command needs to be given first, in the usual way to identify the event of interest.\nCumulative Incidence Curve (you must run the Cox regression first with at least one predictor)\nstcrreg var1, compete(outcome==2) stcurve, cif\nCox Regression with a Competing Risk\nstcrreg i.var1 var2 var3, compete(outcome==2)"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#goodness-of-fit-statistics",
+    "href": "cheat_sheet/STATACheatSheet.html#goodness-of-fit-statistics",
+    "title": "Basic Stata Coding Overview",
+    "section": "5.4 Goodness of Fit Statistics",
+    "text": "5.4 Goodness of Fit Statistics\nTo get log Likelihood/AIC/BIC for most recent regression model:\nestat ic \nTo run Likelihood Ratio Test comparing two nested models:\nlogit outcome exposure var1  estimates store nicknameformodel1 \n \nlogit outcome exposure var1 var2  estimates store nicknameformodel2 \n \nlrtest nicknameformodel2 nicknameformodel1 lrtest nicknameformodel2 nicknameformodel1, stats"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#creating-table-1-in-stata",
+    "href": "cheat_sheet/STATACheatSheet.html#creating-table-1-in-stata",
+    "title": "Basic Stata Coding Overview",
+    "section": "6.1 Creating table 1 in stata",
+    "text": "6.1 Creating table 1 in stata\nThese packages may be useful to you for creating a Table 1 in Stata (showing summary/descriptive statistics.). They are very helpful for your group project and data presentation for publication\n\nMake a Table 1 in Stata in no time with “table1_mc” package\n\nhttps://blog.uvm.edu/tbplante/2019/07/11/make-a-table-1-in-stata-in-no-time-with-table1_mc/\n\nMake a Table 1 in Stata with “basetable” package\n\nhttp://www.bruunisejs.dk/StataHacks/basetable/basetable_demo/"
+  },
+  {
+    "objectID": "cheat_sheet/STATACheatSheet.html#table-of-links-to-helpful-manuals-and-youtube-videos",
+    "href": "cheat_sheet/STATACheatSheet.html#table-of-links-to-helpful-manuals-and-youtube-videos",
+    "title": "Basic Stata Coding Overview",
+    "section": "6.2 Table of links to helpful manuals and YouTube videos",
+    "text": "6.2 Table of links to helpful manuals and YouTube videos\n\n\n\n\nStata Manual\nHelpful YouTube Videos\n\n\n\n\nGetting Started with Stata\n\n6 very nice, short and helpful EdX videos for Stata beginners: https://www.youtube.com/playlist?list=PL6p7gIm6aWd-Y1htnfC9QN57fACk8PiCo\n\n\n.do files\nhttp://www.stata.com/manuals13/u16.pdf\nhttps://www.youtube.com/watch?v=6syxC5jJz-s\n\n\nReading in datasets\nhttp://www.stata.com/manuals13/u21.pdf\nhttps://www.youtube.com/watch?v=3CjXMC2hFEA\n\n\nBasic Data Management\nCreating new variables: http://www.stata.com/manuals13/gsw11.pdf\nCreating new variables and labels: https://www.youtube.com/watch?v=geN1eI64rQU&list=PL6p7gIm6aWd-Y1htnfC9QN57fACk8PiCo&index=5\n\n\n\negen - Extensions to generate: http://www.stata.com/manuals13/degen.pdf\nGenerating variables using the generate, replace, and label commands: https://www.youtube.com/watch?v=WX5vbQgfkSc\n\n\n\npctile - Create variable containing percentiles: http://www.stata.com/manuals13/dpc tile.pdf\n\n\n\n\nHow do I create dummy variables?: https://www.stata.com/support/faqs/data-management/creating-dummyvariables/\n\n\n\n\nmerge - Merge datasets: http://www.stata.com/manuals13/dmerge.pdf\n\n\n\nDescriptives, basic graphs\n\nExploratory data analysis: https://www.youtube.com/watch?v=zt8eX9xcbCo&t=2s&list=PL6p7gIm6aWd-Y1htnfC9QN57fACk8PiCo&index=4\n\n\n\n\nGraphing in stata: https://www.youtube.com/watch?v=dnnUOCVjF8s&list=PL6p7gIm6aWd-Y1htnfC9QN57fACk8PiCo&index=6\n\n\n\n\nSTATA The Very Basics: https://www.youtube.com/watch?v=kepM_tbQokw"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Intro to R 2023",
+    "title": "Introduction to R",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "June 6-9, 2023\n\n2-5 pm\n\n\nFaculty\nLouisa Smith\nAssistant Professor\nDepartment of Health Sciences, Northeastern University\nl.smith@northeastern.edu\nOffice Hours: 1-2 pm Kresge 201\n\nTeaching Assistant\nSabine Friedrich\nsfriedrich@hsph.harvard.edu\nOffice hours: 12-1 pm Kresge 201"
   },
   {
     "objectID": "about.html",
@@ -14,123 +280,11 @@
     "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
-    "objectID": "day_1/index.html",
-    "href": "day_1/index.html",
-    "title": "Day 1",
+    "objectID": "pre_work/index.html",
+    "href": "pre_work/index.html",
+    "title": "Pre-work",
     "section": "",
-    "text": "You can create Revealjs presentations using the revealjs format. The best way to get a sense for the capabilities of Revealjs is this demo presentation:\n\n\n\nIf you prefer to view the demo in a standalone browser you can do that here.\nLoading\n  webR..."
-  },
-  {
-    "objectID": "day_1/slides/index.html#section",
-    "href": "day_1/slides/index.html#section",
-    "title": "Day 1",
-    "section": "",
-    "text": "beautiful data"
-  },
-  {
-    "objectID": "day_1/slides/index.html#goals",
-    "href": "day_1/slides/index.html#goals",
-    "title": "Day 1",
-    "section": "#goals",
-    "text": "#goals"
-  },
-  {
-    "objectID": "day_1/slides/index.html#goals-1",
-    "href": "day_1/slides/index.html#goals-1",
-    "title": "Day 1",
-    "section": "#goals",
-    "text": "#goals"
-  },
-  {
-    "objectID": "day_1/slides/index.html#ggplot-builds-figures-by-adding-on-pieces-via-a-particular-grammar-of-graphics",
-    "href": "day_1/slides/index.html#ggplot-builds-figures-by-adding-on-pieces-via-a-particular-grammar-of-graphics",
-    "title": "Day 1",
-    "section": "ggplot builds figures by adding on pieces via a particular “grammar of graphics”",
-    "text": "ggplot builds figures by adding on pieces via a particular “grammar of graphics”"
-  },
-  {
-    "objectID": "day_1/slides/index.html#basic-structure-of-a-ggplot",
-    "href": "day_1/slides/index.html#basic-structure-of-a-ggplot",
-    "title": "Day 1",
-    "section": "Basic structure of a ggplot",
-    "text": "Basic structure of a ggplot\nggplot(data = {data}, aes(x = {xvar}, y = {yvar}, <characteristic> = {othvar}, ...)) +\n      <geom>(<characteristic> = \"value\", ...) + \n      ...\n\n{data}: must be a dataframe (or tibble!)\n{xvar} and {yvar} are the names (unquoted) of the variables on the x- and y-axes\n\nsome graphs may not require both, or may require other parameters\n\n{othvar} is some other unquoted variable name that defines a grouping or other characteristic you want to map to an aesthetic\n<characteristic>: you can map {othvar} (or a fixed \"value\") to any of a number of aesthetic features of the figure; e.g., color, shape, size, linetype, etc.\n<geom>: the geometric feature you want to use; e.g., point (scatterplot), line, histogram, bar, etc.\n\"value\": a fixed value that defines some characteristic of the figure; e.g., “red”, 10, “dashed”\n… : there are numerous other options to discover!"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-1",
-    "href": "day_1/slides/index.html#section-1",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat))\n\n\n\n\n\n\n\nggplot() doesn’t plot any data itself, it just sets up the data and variables"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-2",
-    "href": "day_1/slides/index.html#section-2",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar()\n\n\n\n\n\n\n\ngeom_bar() creates a bar graph for the number of observations with a certain value of the x variable\n\ndoes not need a y variable\n\n\n\n\n\n\n\n\nTip\n\n\nuse geom_col() if you have a y variable that you want to use as the height of the bars"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-3",
-    "href": "day_1/slides/index.html#section-3",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat))\n\n\n\n\n\n\n\nfacet_grid() creates a panel for each value of another variable\n\ncan also do rows =\nvariable name should be within vars() (for reasons we’ll get to later!)\n\n\n\n\n\n\n\n\nTip\n\n\nuse facet_wrap() if you want to create panels that expand along rows and columns (e.g., to facet by many countries)"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-4",
-    "href": "day_1/slides/index.html#section-4",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1)\n\n\n\n\n\n\n\nscale_{fill/color}_{...}() functions change the color palette\n\nsome are appropriate for continuous variables, others discrete\n\n\n\n\n\n\n\n\nTip\n\n\nscale_fill_viridis_d() good color-blind and black & white-friendly options"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-5",
-    "href": "day_1/slides/index.html#section-5",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\")\n\n\n\n\n\n\n\nscale_{x/y}_{...}() functions change the axis scale and/or labeling\n\n\n\n\n\n\n\nTip\n\n\nscale_y_log10() is helpful when plotting odds or risk ratios"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-6",
-    "href": "day_1/slides/index.html#section-6",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal()\n\n\n\n\n\n\n\ntheme_{...}() changes the “look” of the plot\n\nbut not the data color palette\n\n\n\n\n\n\n\n\nTip\n\n\nfind lots of themes and color palettes at https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-7",
-    "href": "day_1/slides/index.html#section-7",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1))\n\n\n\n\n\n\n\nyou can also specify any component of the theme directly\n\n\n\n\n\n\n\nTip\n\n\nlots of arguments can be set to element_blank() to get rid of them"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-8",
-    "href": "day_1/slides/index.html#section-8",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL)\n\n\n\n\n\n\n\nlabs() can add subtitles, caption, alt text, as well as label any aesthetics (fill, color, etc.)\n\n\n\n\n\n\n\nTip\n\n\nthere’s a lot of redundancy… we could have specified x = \"Eyesight quality\" here instead."
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-9",
-    "href": "day_1/slides/index.html#section-9",
-    "title": "Day 1",
-    "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL) +\n  coord_cartesian(expand = FALSE)\n\n\n\n\n\n\n\ncoord_{...}() functions change the coordinate system\n\ncartesian is already the default, but expand = FALSE means there is no extra space beyond the axis limits\n\n\n\n\n\n\n\n\nTip\n\n\ncoord_fixed(ratio = 1) will ensure that 1 unit on the x-axis is the same length as one unit on the y-axis"
-  },
-  {
-    "objectID": "day_1/slides/index.html#how-close-can-we-get-to-this-one",
-    "href": "day_1/slides/index.html#how-close-can-we-get-to-this-one",
-    "title": "Day 1",
-    "section": "How close can we get to this one?",
-    "text": "How close can we get to this one?"
-  },
-  {
-    "objectID": "day_1/slides/index.html#section-10",
-    "href": "day_1/slides/index.html#section-10",
-    "title": "Day 1",
-    "section": "",
-    "text": "Image via https://nbisweden.github.io/RaukR-2019/ggplot/presentation/ggplot_presentation.html"
+    "text": "Install R and RStudio\n\nDownload R from CRAN. Choose the link at the top that corresponds to your operating system.  Unless you downloaded R within the past month or two, do so again – you want the most up-to-date version (≥ R 4.3) for this class.\nDownload RStudio (step 2 on that page – you already completed step 1 above!). It should automatically recognize your operating system, but if not, choose the correct link at the bottom.\n\nIf you have a Mac, make sure you choose correctly between the Apple Silicon (M1/M2) and Intel options.Which version of RStudio you have is not as important, but it’s nice to stay up-to-date for the newest features!\n\nReadings\n\nSections 1.4-1.5 of R for Data Science. Run the code in your RStudio console as you go.\nChapter 3 of R for Data Science. Again, run the code in your RStudio console as you read. Try the exercises.\nOptional, but helpful: Chapter 2 of Hands-On Programming with R. For the purposes of this class, we will necessarily skip some of the R basics to focus on the skills you’ll need most. This is a good resource if you want to learn more about them, so it’s highly recommended, you just don’t need to master it as part of your pre-work.\n\nIn particular, make sure you install the packages in the text.If you’re wondering what happened to chapter 2, we’ll be doing that one together!\n\nHomework"
   },
   {
     "objectID": "resources.html",

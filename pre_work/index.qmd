@@ -1,0 +1,50 @@
+---
+title: "Pre-work"
+filters:
+  - webr
+webr:
+  show-startup-message: false
+---
+
+```{=html}
+<script type="module">
+await globalThis.webR.evalRVoid(`
+download.file(
+  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
+  'nlsy_cc.csv'
+)
+
+webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
+
+library(ggplot2)
+nlsy <- readr::read_csv("nlsy_cc.csv") |> 
+  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
+               "Good", "Fair", "Poor")),
+    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
+                     "Wears glasses/contacts")),
+    race_eth_cat = forcats::fct_recode(as.character(race_eth),
+    "Hispanic" = "1",
+    "Black" = "2",
+    "Non-Black, Non-Hispanic" = "3"),
+    sex_cat = factor(sex, labels = c("Male", "Female")))
+`)
+</script>	
+```
+
+
+# Install R and RStudio
+
+1. Download R from [CRAN](https://cloud.r-project.org/). Choose the link at the top that corresponds to your operating system. [If you have a Mac, make sure you [choose correctly](https://support.apple.com/en-us/HT211814) between the Apple Silicon (M1/M2) and Intel options.]{.aside} Unless you downloaded R within the past month or two, do so again -- you want the most up-to-date version (≥ R 4.3) for this class.
+
+2. Download [RStudio](https://posit.co/download/rstudio-desktop/) (step 2 on that page -- you already completed step 1 above!). It should automatically recognize your operating system, but if not, choose the correct link at the bottom.[Which version of RStudio you have is not as important, but it's nice to stay up-to-date for the newest features!]{.aside}
+
+# Readings
+
+1. [Sections 1.4-1.5](https://r4ds.hadley.nz/intro.html#prerequisites) of *R for Data Science*. Run the code in your RStudio console as you go.[In particular, make sure you install the packages in the text.]{.aside}
+
+2. [Chapter 3](https://r4ds.hadley.nz/workflow-basics.html) of *R for Data Science*. Again, run the code in your RStudio console as you read. Try the exercises.[If you're wondering what happened to chapter 2, we'll be doing that one together!]{.aside}
+
+3. Optional, but helpful: [Chapter 2](https://rstudio-education.github.io/hopr/basics.html) of *Hands-On Programming with R*. For the purposes of this class, we will necessarily skip some of the R basics to focus on the skills you'll need most. This is a good resource if you want to learn more about them, so it's highly recommended, you just don't need to master it as part of your pre-work.
+
+# Homework
+
