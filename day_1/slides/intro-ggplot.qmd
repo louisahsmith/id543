@@ -1,0 +1,352 @@
+---
+title: "Introduction to ggplot"
+format: revealjs
+---
+
+## #goals
+
+::: {style="height: 0px;"}
+{{< include ../../www/_scss.qmd >}}
+:::
+
+```{r data, include = FALSE}
+library(tidyverse)
+nlsy <- read_csv(here::here("data", "nlsy_cc.csv")) |> 
+  mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
+               "Good", "Fair", "Poor")),
+    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
+                     "Wears glasses/contacts")),
+    race_eth_cat = fct_recode(as.character(race_eth),
+    "Hispanic" = "1",
+    "Black" = "2",
+    "Non-Black, Non-Hispanic" = "3"),
+    sex_cat = factor(sex, labels = c("Male", "Female")))
+```
+
+
+```{r goals-plot-1}
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1) +
+  scale_x_discrete(breaks = c("Excellent", 
+                              "Good", "Poor"),
+                   name = "Eyesight quality") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(
+          angle = 45, vjust = 1, hjust = 1)) +
+  labs(title = "Eyesight in NLSY",
+       y = NULL) +
+  coord_cartesian(expand = FALSE)
+```
+
+## #goals
+
+```{r goals-plot-2}
+ggplot(data = nlsy, 
+       aes(x = income, y = age_bir, 
+           color = sex_cat)) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(palette = "Set1") +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(aes(group = sex_cat), 
+              method = "lm") +
+  facet_grid(rows = vars(race_eth_cat)) +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  labs(title = "Relationship between income and age at first birth",
+    subtitle = "by sex and race/ethnicity",
+    color = "Sex",
+    x = "Income",
+    y = "Age at first birth")
+```
+
+## Why ggplot?
+
+- Incredibly flexible
+- Tons of resources
+
+## ggplot builds figures by adding on pieces via a particular "*g*rammar of *g*raphics"
+
+::: center
+![](../../img/grammar.png)
+:::
+
+## Basic structure of a ggplot {.smaller}
+
+```         
+ggplot(data = {data}, aes(x = {xvar}, y = {yvar}, <characteristic> = {othvar}, ...)) +
+      <geom>(<characteristic> = "value", ...) + 
+      ...
+```
+-   `{data}`: must be a dataframe (or tibble!)
+-   `{xvar}` and `{yvar}` are the names (unquoted) of the variables on the x- and y-axes
+    - some graphs may not require both, or may require other parameters
+-   `{othvar}` is some other unquoted variable name that defines a grouping or other characteristic you want to map to an aesthetic
+-   `<characteristic>`: you can map `{othvar}` (or a fixed `"value"`) to any of a number of aesthetic features of the figure; e.g., color, shape, size, linetype, etc.
+-   `<geom>`: the geometric feature you want to use; e.g., point (scatterplot), line, histogram, bar, etc.
+-   `"value"`: a fixed value that defines some characteristic of the figure; e.g., "red", 10, "dashed"
+-   ... : there are numerous other options to discover!
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: true
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat))
+```
+
+- `ggplot()` doesn't plot any data itself, it just sets up the data and variables
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "3"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar()
+```
+
+- `geom_bar()` creates a bar graph for the number of observations with a certain value of the `x` variable
+  - does not need a `y` variable
+  
+::: {.callout-tip}
+use `geom_col()` if you have a `y` variable that you want to use as the height of the bars
+:::
+
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "4"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat))
+```
+
+- `facet_grid()` creates a panel for each value of another variable
+  - can also do `rows = `
+  - variable name should be within `vars()` (for reasons we'll get to later!)
+
+::: {.callout-tip}
+use `facet_wrap()` if you want to create panels that expand along rows and columns (e.g., to facet by many countries)
+:::
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "5-6"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1)
+```
+
+- `scale_{fill/color}_{...}()` functions change the color palette
+  - some are appropriate for continuous variables, others discrete
+  
+::: {.callout-tip}
+`scale_fill_viridis_d()` good color-blind and black & white-friendly options
+:::
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "7-9"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1) +
+  scale_x_discrete(breaks = c("Excellent", 
+                              "Good", "Poor"),
+                   name = "Eyesight quality")
+```
+
+- `scale_{x/y}_{...}()` functions change the axis scale and/or labeling
+
+::: {.callout-tip}
+`scale_y_log10()` is helpful when plotting odds or risk ratios
+:::
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "10"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1) +
+  scale_x_discrete(breaks = c("Excellent", 
+                              "Good", "Poor"),
+                   name = "Eyesight quality") +
+  theme_minimal()
+```
+
+- `theme_{...}()` changes the "look" of the plot
+  - but not the data color palette
+
+::: {.callout-tip}
+find lots of themes and color palettes at <https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/>
+:::
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "11-13"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1) +
+  scale_x_discrete(breaks = c("Excellent", 
+                              "Good", "Poor"),
+                   name = "Eyesight quality") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(
+          angle = 45, vjust = 1, hjust = 1))
+```
+
+- you can also specify any component of the theme directly
+
+::: {.callout-tip}
+lots of arguments can be set to `element_blank()` to get rid of them
+:::
+
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "14-15"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1) +
+  scale_x_discrete(breaks = c("Excellent", 
+                              "Good", "Poor"),
+                   name = "Eyesight quality") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(
+          angle = 45, vjust = 1, hjust = 1)) +
+  labs(title = "Eyesight in NLSY",
+       y = NULL)
+```
+
+- `labs()` can add subtitles, caption, alt text, as well as label any aesthetics (fill, color, etc.)
+
+::: {.callout-tip}
+there's a lot of redundancy... we could have specified `x = "Eyesight quality"` here instead.
+:::
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "16"
+#| echo: true
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, aes(x = eyesight_cat, 
+                        fill = eyesight_cat)) +
+  geom_bar() +
+  facet_grid(cols = vars(glasses_cat)) +
+  scale_fill_brewer(palette = "Spectral",
+                    direction = -1) +
+  scale_x_discrete(breaks = c("Excellent", 
+                              "Good", "Poor"),
+                   name = "Eyesight quality") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(
+          angle = 45, vjust = 1, hjust = 1)) +
+  labs(title = "Eyesight in NLSY",
+       y = NULL) +
+  coord_cartesian(expand = FALSE)
+```
+
+- `coord_{...}()` functions change the coordinate system
+  - cartesian is already the default, but `expand = FALSE` means there is no extra space beyond the axis limits
+
+::: {.callout-tip}
+`coord_fixed(ratio = 1)` will ensure that 1 unit on the x-axis is the same length as one unit on the y-axis
+:::
+
+
+## How close can we get to this one?
+
+```{r}
+ggplot(data = nlsy, 
+       aes(x = income, y = age_bir, 
+           color = sex_cat)) +
+  geom_point(alpha = 0.1) +
+  scale_color_brewer(palette = "Set1") +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(aes(group = sex_cat), 
+              method = "lm") +
+  facet_grid(rows = vars(race_eth_cat)) +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  labs(title = "Relationship between income and age at first birth",
+    subtitle = "by sex and race/ethnicity",
+    color = "Sex",
+    x = "Income",
+    y = "Age at first birth")
+```
+
+##
+
+::: center
+![](../../img/geoms.png)
+:::
+
+<!-- - A helpful reference can also be found here: http://sape.inf.usi.ch/quick-reference/ggplot2/geom -->
+
+::: aside
+Image via <https://nbisweden.github.io/RaukR-2019/ggplot/presentation/ggplot_presentation.html>
+:::

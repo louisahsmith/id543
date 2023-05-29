@@ -4,6 +4,10 @@ format:
   html:
     number-sections: true
     toc-location: left
+    code-overflow: wrap
+execute: 
+  eval: false
+  echo: true
 ---
 
 This document aligns with the Stata cheat sheet.
@@ -14,7 +18,7 @@ This document aligns with the Stata cheat sheet.
 
     -   Within R, use `help(function_name)` to get an overview, more options and examples for a specific function. You can also use a question mark.
 
-        ``` r
+        ```{r}
         help(function_name)
         ?function_name
         ```
@@ -27,7 +31,7 @@ This document aligns with the Stata cheat sheet.
 
 -   Notes/comments can be added for easy annotation of the program. A pound sign/hash at the beginning of the line denotes a comment that can be used interactively. For example:
 
-    ``` r
+    ```{r}
     # This is a note that
     # R will not read
     ```
@@ -50,11 +54,11 @@ In RStudio, you can run R code directly in the console. This is helpful for runn
 2.  File -\> New File -\> R Script
 3.  {{< kbd mac=Shift-Command-N win=Shift-Control-N linux=Shift-Ctrl-N >}}
 
-## Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat )
+## Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat)
 
 Datasets can be in various formats, such as .rds (R), .dta (Stata), .xlsx (Excel), .csv (Comma Separated Value), and .sas7bdat (SAS) files. Some of these datasets require additional packages to download into R. To install a package, run:
 
-``` r
+```{r}
 install.packages("package_name")
 ```
 
@@ -70,19 +74,19 @@ Reading in datasets can also be done from File -\> Import Dataset. This will bri
 
 The `readRDS()` function is part of "base R" so does not need a separate package. The `{readr}` package includes many functions for reading in data that do the same things as the base R packages, often with better defaults.
 
-``` r
+```{r}
 dataset <- readRDS("filepath/filename.rds")
 ```
 
 or
 
-``` r
+```{r}
 dataset <- readr::read_rds("filepath/filename.rds")
 ```
 
 ### Reading a Stata .dta file
 
-``` r
+```{r}
 dataset <- haven::read_stata("filepath/filename.dta")
 ```
 
@@ -90,63 +94,64 @@ dataset <- haven::read_stata("filepath/filename.dta")
 
 Because data in Excel can take many different forms (different sheets, extra rows with information, etc.), there are many arguments to this function to make sure you are reading in the right data. It will default to the first sheet, with the first row used as column names.
 
-``` r
+```{r}
 dataset <- readxl::read_excel("filepath/filename.xlsx")
 ```
 
 ### Importing a .csv file
 
-``` r
+```{r}
 dataset <- read.csv("filepath/filename.csv")
 ```
 
 or
 
-``` r
+```{r}
 dataset <- readr::read_csv("filepath/filename.csv")
 ```
 
 ### Reading in a SAS file
 
-``` r
-haven::read_sas("filepath/filename.sas7bdat", "filepath/catalog.sas7bcat")
+```{r}
+haven::read_sas("filepath/filename.sas7bdat",
+                "filepath/catalog.sas7bcat")
 ```
 
 ## Get to know your data
 
 There are a number of ways to summarize your dataset. The `summary()` function will print summary statistics for each variable.
 
-``` r
+```{r}
 summary(dataset)
 ```
 
 The `glimpse()` function tells you the number of rows and columns, what type of variable each column contains, and shows you the first few observations.
 
-``` r
+```{r}
 dplyr::glimpse(dataset)
 ```
 
 To see what the entire dataset looks like, you can click on the name of the dataset in the Environment pane. This will open up a new tab with the dataset. You can also bring up this tab with:
 
-``` r
+```{r}
 View(dataset)
 ```
 
 or
 
-``` r
+```{r}
 tibble::view(dataset)
 ```
 
 To compactly list the variable names:
 
-``` r
+```{r}
 names(dataset)
 ```
 
 To count the number of observations (i.e. rows of data) in a dataset:
 
-``` r
+```{r}
 nrow(dataset)
 ```
 
@@ -154,19 +159,19 @@ To count the number of observations in a subset of the data:
 
 Code for character variables:
 
-``` r
+```{r}
 nrow(dataset[dataset$varname == "Male",])
 ```
 
 Code for numeric variables:
 
-``` r
+```{r}
 nrow(dataset[dataset$varname == 1,])
 ```
 
 You can also count the number of observations for each value of `varname` with:
 
-``` r
+```{r}
 dplyr::count(dataset, varname)
 ```
 
@@ -174,13 +179,13 @@ dplyr::count(dataset, varname)
 
 ## Generate quadratic term
 
-``` r
+```{r}
 dataset$newvar <- dataset$oldvar * dataset$newvar
 ```
 
 or
 
-``` r
+```{r}
 dataset <- mutate(dataset, newvar = oldvar * oldvar)
 ```
 
@@ -192,13 +197,14 @@ There are a couple ways to create a categorical variable `'newvar'` based on cut
 
 1)  One can use the `cut()` function to create a new categorical variable with cutpoints at the `breaks =` values. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values (0,x\] (category 1), (x,y\] (category 2), and (y,100\] (category 3). For the `breaks =`argument, you will want to supply the left- hand breaks: a value lower than the minimum, x, y and then a value larger than the maximum. (You can use `-Inf` and `Inf` if you don't know what the minimum and maximum are.) You can also use the `include.lowest =` and the `right =` arguments to change how the intervals are created.
 
-    ``` r
-    dataset$newvar <- cut(dataset$newvar, breaks = c(-Inf, x, y, Inf))
+    ```{r}
+    dataset$newvar <- cut(dataset$newvar, 
+                          breaks = c(-Inf, x, y, Inf))
     ```
 
 2)  You can also use `case_when()` if you want to be more explicit. For example, to generate a new categorical variable based on a set of cutpoints (ex. 40, 60, 80):
 
-    ``` r
+    ```{r}
     library(dplyr)
     dataset <- mutate(dataset, newvar = case_when(
       oldvar < 40 ~ 0,
@@ -214,23 +220,28 @@ There are a couple ways to create a categorical variable `'newvar'` based on cut
 
 Use the `quantile()` function to generate a categorical variable based on quantile cutoffs. In the code below, set the number of desired quantiles (here, tertiles) by changing the value of `nquantiles`.
 
-``` r
+```{r}
 nquantiles <- 3
-dataset$newvar <- cut(dataset$oldvar, breaks = quantile(dataset$oldvar, probs = seq(0, 1, length.out = nquantiles + 1)), include.lowest=TRUE)
+dataset$newvar <- cut(dataset$oldvar, 
+                      breaks = quantile(dataset$oldvar, 
+                                        probs = seq(0, 1, 
+                                                    length.out = nquantiles + 1)), 
+                      include.lowest=TRUE)
 ```
 
 ## Generate an indicator/dummy variable
 
 1)  You generally don't need to create indicator/dummy variables. In models, R will treat any factor variable as a series of indicator variables. If `varname` has numeric values, turn it into a factor variable (see next section):
 
-``` r
+```{r}
 dataset$varname <- factor(dataset$varname)
 ```
 
 and then use `varname` directly in a model. 2) One could also code the indicator/dummy variables manually using `case_when()`. 3) In some scenarios, it may be helpful to generate the indicator variables used in a model with:
 
-``` r
-newvars <- as.data.frame(model.matrix(~varname + othervar, data = dataset))
+```{r}
+newvars <- as.data.frame(model.matrix(~varname + othervar, 
+                                      data = dataset))
 ```
 
 Note that this will also create an intercept (a column of ones) and will also only contain the variables `varname` and `othervar`, not any others in the dataset.
@@ -239,60 +250,64 @@ Note that this will also create an intercept (a column of ones) and will also on
 
 To create a factor (categorical) variable, use the `factor()` function, with arguments `levels =` for the unique values and `labels =` for the names of those values. For example, if `oldvar` has values 0, 1, and 2, which should be named "small", "medium", "large":
 
-``` r
-dataset$newvar <- factor(dataset$oldvar, levels = c(0, 1, 2), labels = c("small", "medium", "large"))
+```{r}
+dataset$newvar <- factor(dataset$oldvar, levels = c(0, 1, 2), 
+                         labels = c("small", "medium", "large"))
 ```
 
 The reference level is always the first level (above, "small"). In models, R will treat character variables as factor variables, and the levels will be in alphabetical order. For example, if the variable in the example above was already labeled, but not a factor variable, putting it in a model or using the `factor()` function would result in levels "large", "medium", and "small" ("large" being the reference").
 
 To determine whether a variable is already a factor variable, or whether it is a character variable (or another type), use:
 
-``` r
+```{r}
 class(dataset$varname)
 ```
 
 To see the levels in order of a factor variable, use:
 
-``` r
+```{r}
 levels(dataset$varname)
 ```
 
 The `{forcats}` package is designed to make working with categorical variables easier. If a variable has levels "large", "medium", and "small" and you want to change the order, you can use:
 
-``` r
-dataset$newvar <- forcats::fct_relevel(dataset$oldvar, "small", "medium", "large"))
+```{r}
+dataset$newvar <- forcats::fct_relevel(dataset$oldvar, 
+                                       "small", "medium", "large"))
 ```
 
 To rename the levels "sm", "md", and "lg":
 
-``` r
-dataset <- forcats::fct_recode(dataset$oldvar, "sm" = "small", "md" = "medium", "lg" = "large"))
+```{r}
+dataset <- forcats::fct_recode(dataset$oldvar, 
+                               "sm" = "small", "md" = "medium", "lg" = "large"))
 ```
 
 If the variable is numeric, you need to turn it into a character or factor variable before using `fct_recode()`:
 
-``` r
-dataset <- forcats::fct_recode(as.character(dataset$oldvar), "sm" = "0", "md" = "1", "lg" = "2"))
+```{r}
+dataset <- forcats::fct_recode(as.character(dataset$oldvar), 
+                               "sm" = "0", "md" = "1", "lg" = "2"))
 ```
 
 ## Sort the data
 
 The default of the `arrange()` function from the `{dplyr}` package is in ascending order.
 
-``` r
+```{r}
 dataset <- dplyr::arrange(dataset, varname)
 ```
 
 To sort in descending order:
 
-``` r
+```{r}
 library(dplyr)
 dataset <- arrange(dataset, desc(varname))
 ```
 
 You can sort on multiple variables to arrange observations in to ascending order based on `varname1`, and within each `varname1` category one can sort into descending order by `varname2`.
 
-``` r
+```{r}
 library(dplyr)
 dataset <- arrange(nlsy, varname1, desc(varname2))
 ```
@@ -301,7 +316,7 @@ dataset <- arrange(nlsy, varname1, desc(varname2))
 
 To merge two datasets, use a `_join()` function from the `{dplyr}` package: `left_join()`, `right_join()`, `full_join()`. The functions differ by how they treat rows without a match in the "left-hand side" dataset and the "right-hand side" dataset. This will keep all observations in `dataset1` and merge with only observations in `dataset2` with a matching `id`:
 
-``` r
+```{r}
 library(dplyr)
 dataset3 <- left_join(dataset1, dataset2, join_by(id))
 ```
@@ -310,13 +325,13 @@ dataset3 <- left_join(dataset1, dataset2, join_by(id))
 
 To create a dataset that is a subset of another dataset, use `filter()`. This code will retain all observations with both the age and sex requirement:
 
-``` r
+```{r}
 dataset2 <- dplyr::filter(dataset1, age > 35, sex == "F")
 ```
 
 You can also explictly use logic like `&` and `|` (or). To retain observations that are *either* over 35 or female:
 
-``` r
+```{r}
 dataset2 <- dplyr::filter(dataset1, age > 35 | sex == "F")
 ```
 
@@ -328,19 +343,19 @@ dataset2 <- dplyr::filter(dataset1, age > 35 | sex == "F")
 
 One can get a frequency table using the `count()` function.
 
-``` r
+```{r}
 dplyr::count(dataset, varname)
 ```
 
 The `tabyl()` function from the `{janitor}` package is also helpful for frequency tables because it will also add percentages by default to a one-way frequency table.
 
-``` r
+```{r}
 janitor::tabyl(dataset, varname)
 ```
 
 For a binary variable, you can use `prop.test()` or `binom.test()` (exact intervals) to get confidence intervals for the proportion of 1's (or the "higher" level for a factor variable):
 
-``` r
+```{r}
 prop.test(table(dataset$binary_var))
 ```
 
@@ -348,14 +363,14 @@ prop.test(table(dataset$binary_var))
 
 One can easily extend the functions above to cross-tabulate two categorical variables.
 
-``` r
+```{r}
 dplyr::count(dataset, varname1, varname2)
 janitor::tabyl(dataset, varname1, varname2)
 ```
 
 To get proportions when using `tabyl()`:
 
-``` r
+```{r}
 library(janitor)
 tabyl(dataset, varname1, varname2) |> adorn_percentages()
 ```
@@ -364,7 +379,7 @@ tabyl(dataset, varname1, varname2) |> adorn_percentages()
 
 To compare proportions of `varname2` stratified by `varname1` and get a confidence interval for the difference in proportions;
 
-``` r
+```{r}
 prop.test(table(dataset$varname1, dataset$varname2))
 ```
 
@@ -372,21 +387,23 @@ prop.test(table(dataset$varname1, dataset$varname2))
 
 The `{epitools}` package contains a functions for estimating many simple epidemiologic quantities. For example, to estiamte a risk ratio (and the corresponding proportions):
 
-``` r
-epitools::epitab(dataset$exposure, dataset$outcome, method = "riskratio")
+```{r}
+epitools::epitab(dataset$exposure, dataset$outcome, 
+                 method = "riskratio")
 ```
 
 ### Stratified frequency tables
 
 You can estimate any summary statistics of a variable (ex. `varname1` or `varname2`) within each value of a categorical variable (ex. `categoricalvariable`):
 
-``` r
-dplyr::summarize(dataset, mean_1 = mean(varname1), sd_2 = sd(varname2), .by = categoricalvariable)
+```{r}
+dplyr::summarize(dataset, mean_1 = mean(varname1), 
+                 sd_2 = sd(varname2), .by = categoricalvariable)
 ```
 
 For two-way frequency tables (`varname1` x `varname2`) stratified by a third variable (`categoricalvariable`):
 
-``` r
+```{r}
 janitor::tabyl(dataset, varname1, varname2, categoricalvariable)
 ```
 
@@ -396,19 +413,19 @@ janitor::tabyl(dataset, varname1, varname2, categoricalvariable)
 
 Use the `summary` command to obtain summary statistics for continuous data (mean, minimum, maximum, median, IQR):
 
-``` r
+```{r}
 summary(dataset$varname)
 ```
 
 You can also estimate arbitraty sumamry statistics using `dplyr::summarize()`:
 
-``` r
+```{r}
 dplyr::summarize(dataset, mean = mean(varname), sd = sd(varname))
 ```
 
 One can estimate the standard errors and 95% CI of the mean using the `ci` or `ci means` command.`t.test()` function:
 
-``` r
+```{r}
 t.test(dataset$varname)
 ```
 
@@ -416,13 +433,13 @@ t.test(dataset$varname)
 
 A histogram graphic for continuous data:
 
-``` r
+```{r}
 hist(dataset$age)
 ```
 
 With the `{ggplot2}` package:
 
-``` r
+```{r}
 ggplot(dataset, aes(x = age)) + 
     geom_histogram() +
     labs(title = "Histogram of age", 
@@ -433,11 +450,11 @@ ggplot(dataset, aes(x = age)) +
 
 To show a box-and-whisker plot of age and a box plot of age by a categorical variable (ex. sex):
 
-``` r
+```{r}
 boxplot(dataset$age, dataset$sex)
 ```
 
-``` r
+```{r}
 ggplot(dataset, aes(y = age, x = sex)) + 
     geom_boxplot() +
     labs(title = "Boxplot of age by sex", 
@@ -448,11 +465,11 @@ ggplot(dataset, aes(y = age, x = sex)) +
 
 Scatterplot of two continuous variables:
 
-``` r
+```{r}
 plot(dataset$age, dataset$bmi)
 ```
 
-``` r
+```{r}
 ggplot(dataset, aes(y = age, x = bmi)) + 
     geom_point() +
     labs(x = "Age", y = "BMI")
@@ -462,19 +479,20 @@ ggplot(dataset, aes(y = age, x = bmi)) +
 
 To conduct a two-sample T-test (continuous variable by a binary variable), use the `t.test()` function with the `var.equal = FALSE` argument if desired:
 
-``` r
-t.test(continuousvar ~ categoricalvar, data = dataset, var.equal = FALSE)
+```{r}
+t.test(continuousvar ~ categoricalvar, 
+       data = dataset, var.equal = FALSE)
 ```
 
 To conduct a one-way ANOVA (test differences of two or more means), use the `aov()` function:
 
-``` r
+```{r}
 aov(continuousvar ~ categoricalvar, data = dataset)
 ```
 
 To conduct a non-parametric test Wilcoxon Rank-sum test (aka Mann-Whitney U test), use the `wilcox.test()` function:
 
-``` r
+```{r}
 wilcox.test(continuousvar ~ categoricalvar, data = dataset)
 ```
 
@@ -482,13 +500,14 @@ wilcox.test(continuousvar ~ categoricalvar, data = dataset)
 
 One can estimate correlation coefficients using the `cor()` function. The default is Pearson, one can estimate the Spearman correlation coefficients using the `method = "spearman"` argument:
 
-``` r
-cor(dataset[, c("varname1", "varname2", "varname3")], method = "spearman")
+```{r}
+cor(dataset[, c("varname1", "varname2", "varname3")], 
+    method = "spearman")
 ```
 
 You can also provide two vectors if a single correlation is desired. For confidence intervals and hypothesis tests, use `cor.test()`.
 
-``` r
+```{r}
 cor.test(dataset$varname1, dataset$varname2)
 ```
 
@@ -500,37 +519,38 @@ cor.test(dataset$varname1, dataset$varname2)
 
 Fit a logistic regression model:
 
-``` r
-model <- glm(outcome ~ exposure + var1 + var2, data = dataset, family = binomial())
+```{r}
+model <- glm(outcome ~ exposure + var1 + var2, 
+             data = dataset, family = binomial())
 ```
 
 Code to output the beta coefficients:
 
-``` r
+```{r}
 coef(model)
 ```
 
 Code to output the odds ratios:
 
-``` r
+```{r}
 exp(coef(model))
 ```
 
 Coefficients, standard errors, p-values:
 
-``` r
+```{r}
 summary(model)
 ```
 
 COnfidence intervals:
 
-``` r
+```{r}
 confint(model)
 ```
 
 The `{broom}` package is helpful for getting model output:
 
-``` r
+```{r}
 broom::tidy(model, exponentiate = TRUE, conf.int = TRUE)
 ```
 
@@ -538,31 +558,35 @@ broom::tidy(model, exponentiate = TRUE, conf.int = TRUE)
 
 R automatically creates indicator variables for factor or character variables (see previous section). To force it to create indicator variables for a numeric variable, you can use `factor()`:
 
-``` r
-model <- glm(outcome ~ exposure + factor(var1) + var2, data = dataset, family = binomial())
+```{r}
+model <- glm(outcome ~ exposure + factor(var1) + var2, 
+             data = dataset, family = binomial())
 ```
 
 To change the referent group, you can use `fct_relevel()` to move a new level to be the first level (the other levels will stay in their original order, unless you include them):
 
-``` r
+```{r}
 dataset$newvar <- forcats::fct_relevel(dataset$oldvar, "ref"))
-model <- glm(outcome ~ exposure + newvar, data = dataset, family = binomial())
+model <- glm(outcome ~ exposure + newvar, 
+             data = dataset, family = binomial())
 ```
 
 ### Stratified Logistic Regression
 
 To fit a logistic regression model within levels of `categoricalvar`:
 
-``` r
+```{r}
 library(dplyr)
-models <- dataset |> group_by(categoricalvar) |> group_map(~glm(outcome ~ exposure, data = .x))
+models <- dataset |> 
+  group_by(categoricalvar) |> 
+  group_map(~glm(outcome ~ exposure, data = .x))
 ```
 
 ## Linear Regression
 
 One can conduct a linear regression model using either the `lm()` function or the `glm()` function with `family = gaussian()`. All of the same functions work on these models to extract model output.
 
-``` r
+```{r}
 model <- lm(outcome ~ exposure + var1 + var1)
 broom::tidy(model, conf.int = TRUE)
 ```
@@ -573,13 +597,13 @@ broom::tidy(model, conf.int = TRUE)
 
 The `{survival}` package is used for this entire section.
 
-``` r
+```{r}
 library(survival)
 ```
 
 Within that package, the `Surv()` function is used to "create" the outcome and is used in other functions:
 
-``` r
+```{r}
 Surv(timetooutcome, outcome)
 ```
 
@@ -587,33 +611,35 @@ Surv(timetooutcome, outcome)
 
 Kaplan-Meier curves overall:
 
-``` r
-km <- survfit(Surv(timetooutcome, outcome) ~ 1, data = dataset)
+```{r}
+km <- survfit(Surv(timetooutcome, outcome) ~ 1, 
+              data = dataset)
 plot(km)
 ```
 
 KM curves by exposure groups:
 
-``` r
-km <- survfit(Surv(timetooutcome, outcome) ~ exposure, data = dataset)
+```{r}
+km <- survfit(Surv(timetooutcome, outcome) ~ exposure, 
+              data = dataset)
 plot(km)
 ```
 
 To add 95% confidence intervals and censoring marks to the figure:
 
-``` r
+```{r}
 plot(km, conf.int = TRUE, mark.time = TRUE)
 ```
 
 Log negative-log survivor plots:
 
-``` r
+```{r}
 plot(km, fun = "cloglog")
 ```
 
 The `{survminer}` package is useful for creating survival curves for publication and can also include risk tables:
 
-``` r
+```{r}
 survminer::ggsurvplot(km, risk.table = TRUE)
 ```
 
@@ -621,19 +647,19 @@ survminer::ggsurvplot(km, risk.table = TRUE)
 
 To see survivor function at various time points (ex. 30, 60, 90 days):
 
-``` r
+```{r}
 summary(km, times = c(30, 60, 90))
 ```
 
 You can also use the `tidy()` function to extract the estimates and confidence intervals over all times in a nicer format:
 
-``` r
+```{r}
 broom::tidy(km)
 ```
 
 To get median and other percentile survival times with confidence intervals:
 
-``` r
+```{r}
 quantile(km, probs = c(0.25, 0.5, 0.75))
 ```
 
@@ -641,40 +667,46 @@ quantile(km, probs = c(0.25, 0.5, 0.75))
 
 Log-rank test:
 
-``` r
-survdiff(Surv(timetooutcome, outcome) ~ exposure, data = dataset)
+```{r}
+survdiff(Surv(timetooutcome, outcome) ~ exposure, 
+         data = dataset)
 ```
 
 See the [`{survminer}` vignette](https://cran.r-project.org/web/packages/survminer/vignettes/Specifiying_weights_in_log-rank_comparisons.html#tharone-ware) for details on plotting survival curves with p-values from weighted log-rank tests (here, Tarone-Ware):
 
-``` r
-survmire::ggsurvplot(km, data = dataset, pval = TRUE, pval.method = TRUE,
-    log.rank.weights = "sqrtN", pval.method.coord = c(3, 0.1),
-    pval.method.size = 4)
+```{r}
+survmire::ggsurvplot(km, data = dataset, 
+                     pval = TRUE, pval.method = TRUE,
+                     log.rank.weights = "sqrtN",
+                     pval.method.coord = c(3, 0.1),
+                     pval.method.size = 4)
 ```
 
 ### Cox Regression
 
 One can conduct a Cox regression model using the `coxph()` function from the `{survival}` package.
 
-``` r
-cox <- coxph(Surv(timetooutcome, outcome) ~ exposure, data = dataset)
+```{r}
+cox <- coxph(Surv(timetooutcome, outcome) ~ exposure, 
+             data = dataset)
 ```
 
 The functions from the logistic regression section can be used to extract model output.
 
 Competing Risk Analysis: In carrying out a competing risk analysis, the "outcome" variable can take on three values. There must be a value for the actual event of interest (outcome=1); a value for censoring (outcome=0); and a value for the competing risk event (outcome=2).
 
-``` r
-fg_data <- finegray(Surv(timetooutcome, outcome) ~ exposure, data = dataset)
-fg_model <- coxph(Surv(fgstart, fgstop, fgstatus) ~ exposure, weight = fgwt, data = fg_data)
+```{r}
+fg_data <- finegray(Surv(timetooutcome, outcome) ~ exposure, 
+                    data = dataset)
+fg_model <- coxph(Surv(fgstart, fgstop, fgstatus) ~ exposure, 
+                  weight = fgwt, data = fg_data)
 ```
 
 ## Goodness of Fit Statistics
 
 To get log Likelihood/AIC/BIC for most recent regression model:
 
-``` r
+```{r}
 loglik(model)
 AIC(model)
 BIC(model)
@@ -682,6 +714,6 @@ BIC(model)
 
 To run a likelihood ratio test comparing two nested models:
 
-``` r
+```{r}
 lmtest::lrtest(mod_full, mod_nested)
 ```

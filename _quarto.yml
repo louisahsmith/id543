@@ -31,7 +31,7 @@ website:
 
     - id: day_1
       title: "Day 1"
-      # contents: day_1
+      contents: day_1
 
     - id: day_2
       title: "Day 2"
@@ -84,8 +84,22 @@ website:
 
 format:
   html:
-    theme: journal
+    theme: [journal, www/custom.scss]
     css: www/styles.css
     toc: true
-
+  revealjs:
+    slide-number: c/t
+    preview-links: auto
+    hash-type: number
+    hash-one-based-index: true
+    theme: 
+      - www/custom.scss
+    pointer:
+      color: '#32cd32'
+      pointerSize: 12
+revealjs-plugins:
+  - pointer
+  
+format-links: false
+highlight-style: nord
 editor: source
