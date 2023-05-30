@@ -54,25 +54,32 @@ In RStudio, you can run R code directly in the console. This is helpful for runn
 2.  File -\> New File -\> R Script
 3.  {{< kbd mac=Shift-Command-N win=Shift-Control-N linux=Shift-Ctrl-N >}}
 
-## Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat)
+## Installing packages {.unnumbered}
 
-Datasets can be in various formats, such as .rds (R), .dta (Stata), .xlsx (Excel), .csv (Comma Separated Value), and .sas7bdat (SAS) files. Some of these datasets require additional packages to download into R. To install a package, run:
+To utilize certain functions in R, additional packages often need to be downloaded into R. To install a package, run:
 
 ```{r}
 install.packages("package_name")
 ```
 
+You can also click on the "Packages" tab in the bottom right window in RStudio. Next click "install" and a small window will pop up, enter the package's name and hit "install".
+
 When a function belongs to a package, you can use that function by running `package_name::function_name()` or by running `library(package_name)` at some point before `function_name()`.
+
+## Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat)
+
+Datasets can be in various formats, such as ".rds" (R), ".dta" (Stata), ".xlsx" (Excel), ".csv" (Comma Separated Value), and ".sas7bdat" (SAS) files. Some of these datasets require additional packages to download into R. 
 
 You will need to include the path to the dataset file in your code. To determine the location of a dataset stored on a Windows computer, you can right-click and click on 'Properties' and copy and paste the location path. On a Mac, right-click the file, then press {{< kbd Option >}} so that "Copy filename as Pathname" appears in the menu.
 
 Unlike Stata, you can have multiple datasets open in the same R session. When reading in a dataset, you must store it as an object so that you can refer to it later. This is done in R using the "assignment arrow" `<-`.
 
-Reading in datasets can also be done from File -\> Import Dataset. This will bring up a window with options that will help you write the code that can be saved in an R script to use again.
+Reading in datasets can also be done from "File" -\> "Import Dataset". This will bring up a window with options that will help you write the code that can be saved in an R script to use again. 
+The "files" tab in the bottom right window of RStudio may also be helpful to import datasets. It operates similarly to Windows Explorer or the Finder on a Mac.
 
-### Reading an R .rds file
+### Reading an R ".rds"-file
 
-The `readRDS()` function is part of "base R" so does not need a separate package. The `{readr}` package includes many functions for reading in data that do the same things as the base R packages, often with better defaults.
+The `readRDS()` function is part of "base R". This means it does not need a separate package. The `{readr}` package includes many functions for reading in data that do the same things as the base R packages, often with better defaults.
 
 ```{r}
 dataset <- readRDS("filepath/filename.rds")
@@ -84,7 +91,7 @@ or
 dataset <- readr::read_rds("filepath/filename.rds")
 ```
 
-### Reading a Stata .dta file
+### Reading a Stata ".dta"-file
 
 ```{r}
 dataset <- haven::read_stata("filepath/filename.dta")
@@ -98,7 +105,7 @@ Because data in Excel can take many different forms (different sheets, extra row
 dataset <- readxl::read_excel("filepath/filename.xlsx")
 ```
 
-### Importing a .csv file
+### Importing a ".csv"-file
 
 ```{r}
 dataset <- read.csv("filepath/filename.csv")
@@ -119,7 +126,8 @@ haven::read_sas("filepath/filename.sas7bdat",
 
 ## Get to know your data
 
-There are a number of ways to summarize your dataset. The `summary()` function will print summary statistics for each variable.
+There are a number of ways to summarize your dataset. 
+The `summary()` function will print summary statistics for each variable.
 
 ```{r}
 summary(dataset)
@@ -189,13 +197,13 @@ or
 dataset <- mutate(dataset, newvar = oldvar * oldvar)
 ```
 
-You can also create a quadratic term directly in a model itself, bit it must be wrapped in `I()`: `var + I(var^2) + other_vars` .
+You can also create a quadratic term directly in a model itself, but it must be wrapped in `I()`: `var + I(var^2) + other_vars` .
 
 ## Generate a categorical variable based on cut-points
 
-There are a couple ways to create a categorical variable `'newvar'` based on cutpoint values of `'oldvar'` at cutpoints `x` and `y`.
+There are a couple ways to create a categorical variable `'newvar'` based on cutpoint values of a continuous variable `'oldvar'` at cutpoints `x` and `y`.
 
-1)  One can use the `cut()` function to create a new categorical variable with cutpoints at the `breaks =` values. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values (0,x\] (category 1), (x,y\] (category 2), and (y,100\] (category 3). For the `breaks =`argument, you will want to supply the left- hand breaks: a value lower than the minimum, x, y and then a value larger than the maximum. (You can use `-Inf` and `Inf` if you don't know what the minimum and maximum are.) You can also use the `include.lowest =` and the `right =` arguments to change how the intervals are created.
+1)  One can use the `cut()` function to create a new categorical variable with cutpoints at the `breaks =` values. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values (0,x\] (category 1), (x,y\] (category 2), and (y,100\] (category 3). For the `breaks =`argument, you will want to supply the left-hand breaks: a value lower than the minimum, x, y and then a value larger than the maximum. (You can use `-Inf` and `Inf` if you don't know what the minimum and maximum are.) You can also use the `include.lowest =` and the `right =` arguments to change how the intervals are created.
 
     ```{r}
     dataset$newvar <- cut(dataset$newvar, 
@@ -237,25 +245,28 @@ dataset$newvar <- cut(dataset$oldvar,
 dataset$varname <- factor(dataset$varname)
 ```
 
-and then use `varname` directly in a model. 2) One could also code the indicator/dummy variables manually using `case_when()`. 3) In some scenarios, it may be helpful to generate the indicator variables used in a model with:
+and then use `varname` directly in a model. 
+
+2) One could also code the indicator/dummy variables manually using `case_when()`. 
+3) In some scenarios, it may be helpful to generate the indicator variables used in a model with:
 
 ```{r}
 newvars <- as.data.frame(model.matrix(~varname + othervar, 
                                       data = dataset))
 ```
 
-Note that this will also create an intercept (a column of ones) and will also only contain the variables `varname` and `othervar`, not any others in the dataset.
+Note that this will also create an intercept (a column of ones) and will only contain the variables `varname` and `othervar`, no other variables from the dataset.
 
 ## Label a categorical variable
 
-To create a factor (categorical) variable, use the `factor()` function, with arguments `levels =` for the unique values and `labels =` for the names of those values. For example, if `oldvar` has values 0, 1, and 2, which should be named "small", "medium", "large":
+To create a factor (categorical) variable, use the `factor()` function, with arguments `levels =` for the unique values and `labels =` for the names of those values. The labels wil be assigned to the level in the same order they are specified. For example, if `oldvar` has values 0, 1, and 2, which should be named "small" (0), "medium" (1), "large" (2):
 
 ```{r}
 dataset$newvar <- factor(dataset$oldvar, levels = c(0, 1, 2), 
                          labels = c("small", "medium", "large"))
 ```
 
-The reference level is always the first level (above, "small"). In models, R will treat character variables as factor variables, and the levels will be in alphabetical order. For example, if the variable in the example above was already labeled, but not a factor variable, putting it in a model or using the `factor()` function would result in levels "large", "medium", and "small" ("large" being the reference").
+The reference level is always the first level (e.g. "small"). In models, R will treat character variables as factor variables, and the levels will be in alphabetical order. For example, if the variable in the example above was already labeled, but not a factor variable, putting it in a model or using the `factor()` function would result in levels "large", "medium", and "small" ("large" being the reference).
 
 To determine whether a variable is already a factor variable, or whether it is a character variable (or another type), use:
 
@@ -268,6 +279,7 @@ To see the levels in order of a factor variable, use:
 ```{r}
 levels(dataset$varname)
 ```
+
 
 The `{forcats}` package is designed to make working with categorical variables easier. If a variable has levels "large", "medium", and "small" and you want to change the order, you can use:
 
@@ -290,7 +302,7 @@ dataset <- forcats::fct_recode(as.character(dataset$oldvar),
                                "sm" = "0", "md" = "1", "lg" = "2"))
 ```
 
-## Sort the data
+## Sorting data
 
 The default of the `arrange()` function from the `{dplyr}` package is in ascending order.
 
@@ -305,16 +317,18 @@ library(dplyr)
 dataset <- arrange(dataset, desc(varname))
 ```
 
-You can sort on multiple variables to arrange observations in to ascending order based on `varname1`, and within each `varname1` category one can sort into descending order by `varname2`.
+You can sort on multiple variables to arrange observations into ascending order based on `varname1`, and within each `varname1` category one can sort into descending order by `varname2`.
 
 ```{r}
 library(dplyr)
-dataset <- arrange(nlsy, varname1, desc(varname2))
+dataset <- arrange(dataset, varname1, desc(varname2))
 ```
 
 ## Merge two datasets
 
-To merge two datasets, use a `_join()` function from the `{dplyr}` package: `left_join()`, `right_join()`, `full_join()`. The functions differ by how they treat rows without a match in the "left-hand side" dataset and the "right-hand side" dataset. This will keep all observations in `dataset1` and merge with only observations in `dataset2` with a matching `id`:
+To merge two datasets, use a `_join()` function from the `{dplyr}` package: `left_join()`, `right_join()`, `full_join()`. The functions differ by how they treat rows without a match in the "left-hand side" dataset and the "right-hand side" dataset. 
+
+This will keep all observations in `dataset1` and merge only with observations from `dataset2` with a matching `id` in `dataset1`:
 
 ```{r}
 library(dplyr)
@@ -329,7 +343,7 @@ To create a dataset that is a subset of another dataset, use `filter()`. This co
 dataset2 <- dplyr::filter(dataset1, age > 35, sex == "F")
 ```
 
-You can also explictly use logic like `&` and `|` (or). To retain observations that are *either* over 35 or female:
+You can also explicitly use logic operators such as `&` (and) and `|` (or). To retain observations that are *either* older than 35 *or* female (or both):
 
 ```{r}
 dataset2 <- dplyr::filter(dataset1, age > 35 | sex == "F")
@@ -385,7 +399,7 @@ prop.test(table(dataset$varname1, dataset$varname2))
 
 ### Estimate measures of association
 
-The `{epitools}` package contains a functions for estimating many simple epidemiologic quantities. For example, to estiamte a risk ratio (and the corresponding proportions):
+The `{epitools}` package contains functions for estimating various simple epidemiologic quantities. For example, to estimate a risk ratio (and the corresponding proportions):
 
 ```{r}
 epitools::epitab(dataset$exposure, dataset$outcome, 
@@ -394,17 +408,17 @@ epitools::epitab(dataset$exposure, dataset$outcome,
 
 ### Stratified frequency tables
 
-You can estimate any summary statistics of a variable (ex. `varname1` or `varname2`) within each value of a categorical variable (ex. `categoricalvariable`):
+You can estimate any summary statistic of one variable (ex. `varname1` or `varname2`) within different levels of a categorical variable (ex. `categorical_variable`):
 
 ```{r}
 dplyr::summarize(dataset, mean_1 = mean(varname1), 
-                 sd_2 = sd(varname2), .by = categoricalvariable)
+                 sd_2 = sd(varname2), .by = categorical_variable)
 ```
 
 For two-way frequency tables (`varname1` x `varname2`) stratified by a third variable (`categoricalvariable`):
 
 ```{r}
-janitor::tabyl(dataset, varname1, varname2, categoricalvariable)
+janitor::tabyl(dataset, varname1, varname2, categorical_variable)
 ```
 
 ## Continuous data: summary statistics, visualization, and statistical tests
@@ -417,13 +431,14 @@ Use the `summary` command to obtain summary statistics for continuous data (mean
 summary(dataset$varname)
 ```
 
-You can also estimate arbitraty sumamry statistics using `dplyr::summarize()`:
+You can also estimate arbitrary summary statistics using `dplyr::summarize()`:
 
 ```{r}
 dplyr::summarize(dataset, mean = mean(varname), sd = sd(varname))
 ```
 
-One can estimate the standard errors and 95% CI of the mean using the `ci` or `ci means` command.`t.test()` function:
+One can estimate the standard errors and 95% CI of the mean using the `ci` or `ci means` command.
+`t.test()` function:
 
 ```{r}
 t.test(dataset$varname)
@@ -480,25 +495,25 @@ ggplot(dataset, aes(y = age, x = bmi)) +
 To conduct a two-sample T-test (continuous variable by a binary variable), use the `t.test()` function with the `var.equal = FALSE` argument if desired:
 
 ```{r}
-t.test(continuousvar ~ categoricalvar, 
+t.test(continuous_var ~ categorical_var, 
        data = dataset, var.equal = FALSE)
 ```
 
 To conduct a one-way ANOVA (test differences of two or more means), use the `aov()` function:
 
 ```{r}
-aov(continuousvar ~ categoricalvar, data = dataset)
+aov(continuous_var ~ categorical_var, data = dataset)
 ```
 
 To conduct a non-parametric test Wilcoxon Rank-sum test (aka Mann-Whitney U test), use the `wilcox.test()` function:
 
 ```{r}
-wilcox.test(continuousvar ~ categoricalvar, data = dataset)
+wilcox.test(continuous_var ~ categorical_var, data = dataset)
 ```
 
 ### Correlation coefficients
 
-One can estimate correlation coefficients using the `cor()` function. The default is Pearson, one can estimate the Spearman correlation coefficients using the `method = "spearman"` argument:
+One can estimate correlation coefficients using the `cor()` function. The default is Pearson; one can estimate the Spearman correlation coefficients using the `method = "spearman"` argument:
 
 ```{r}
 cor(dataset[, c("varname1", "varname2", "varname3")], 
@@ -573,12 +588,12 @@ model <- glm(outcome ~ exposure + newvar,
 
 ### Stratified Logistic Regression
 
-To fit a logistic regression model within levels of `categoricalvar`:
+To fit a logistic regression model within levels of `categorical_var`:
 
 ```{r}
 library(dplyr)
 models <- dataset |> 
-  group_by(categoricalvar) |> 
+  group_by(categorical_var) |> 
   group_map(~glm(outcome ~ exposure, data = .x))
 ```
 
@@ -604,7 +619,7 @@ library(survival)
 Within that package, the `Surv()` function is used to "create" the outcome and is used in other functions:
 
 ```{r}
-Surv(timetooutcome, outcome)
+Surv(time_to_outcome, outcome)
 ```
 
 ### Graphs
@@ -612,7 +627,7 @@ Surv(timetooutcome, outcome)
 Kaplan-Meier curves overall:
 
 ```{r}
-km <- survfit(Surv(timetooutcome, outcome) ~ 1, 
+km <- survfit(Surv(time_to_outcome, outcome) ~ 1, 
               data = dataset)
 plot(km)
 ```
@@ -620,7 +635,7 @@ plot(km)
 KM curves by exposure groups:
 
 ```{r}
-km <- survfit(Surv(timetooutcome, outcome) ~ exposure, 
+km <- survfit(Surv(time_to_outcome, outcome) ~ exposure, 
               data = dataset)
 plot(km)
 ```
@@ -668,7 +683,7 @@ quantile(km, probs = c(0.25, 0.5, 0.75))
 Log-rank test:
 
 ```{r}
-survdiff(Surv(timetooutcome, outcome) ~ exposure, 
+survdiff(Surv(time_to_outcome, outcome) ~ exposure, 
          data = dataset)
 ```
 
@@ -687,7 +702,7 @@ survmire::ggsurvplot(km, data = dataset,
 One can conduct a Cox regression model using the `coxph()` function from the `{survival}` package.
 
 ```{r}
-cox <- coxph(Surv(timetooutcome, outcome) ~ exposure, 
+cox <- coxph(Surv(time_to_outcome, outcome) ~ exposure, 
              data = dataset)
 ```
 
@@ -696,7 +711,7 @@ The functions from the logistic regression section can be used to extract model 
 Competing Risk Analysis: In carrying out a competing risk analysis, the "outcome" variable can take on three values. There must be a value for the actual event of interest (outcome=1); a value for censoring (outcome=0); and a value for the competing risk event (outcome=2).
 
 ```{r}
-fg_data <- finegray(Surv(timetooutcome, outcome) ~ exposure, 
+fg_data <- finegray(Surv(time_to_outcome, outcome) ~ exposure, 
                     data = dataset)
 fg_model <- coxph(Surv(fgstart, fgstop, fgstatus) ~ exposure, 
                   weight = fgwt, data = fg_data)
@@ -704,7 +719,7 @@ fg_model <- coxph(Surv(fgstart, fgstop, fgstatus) ~ exposure,
 
 ## Goodness of Fit Statistics
 
-To get log Likelihood/AIC/BIC for most recent regression model:
+To get the log Likelihood/AIC/BIC for the most recent regression model:
 
 ```{r}
 loglik(model)

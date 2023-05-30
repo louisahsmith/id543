@@ -164,12 +164,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#getting-started-with-r" id="toc-getting-started-with-r" class="nav-link" data-scroll-target="#getting-started-with-r"><span class="header-section-number">2</span> Getting started with R</a>
   <ul class="collapse">
   <li><a href="#create-and-execute-an-r-script" id="toc-create-and-execute-an-r-script" class="nav-link" data-scroll-target="#create-and-execute-an-r-script"><span class="header-section-number">2.1</span> Create and execute an R script</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">Installing packages</a></li>
   <li><a href="#read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat" id="toc-read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat" class="nav-link" data-scroll-target="#read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat"><span class="header-section-number">2.2</span> Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat)</a>
   <ul class="collapse">
-  <li><a href="#reading-an-r-.rds-file" id="toc-reading-an-r-.rds-file" class="nav-link" data-scroll-target="#reading-an-r-.rds-file"><span class="header-section-number">2.2.1</span> Reading an R .rds file</a></li>
-  <li><a href="#reading-a-stata-.dta-file" id="toc-reading-a-stata-.dta-file" class="nav-link" data-scroll-target="#reading-a-stata-.dta-file"><span class="header-section-number">2.2.2</span> Reading a Stata .dta file</a></li>
+  <li><a href="#reading-an-r-.rds-file" id="toc-reading-an-r-.rds-file" class="nav-link" data-scroll-target="#reading-an-r-.rds-file"><span class="header-section-number">2.2.1</span> Reading an R “.rds”-file</a></li>
+  <li><a href="#reading-a-stata-.dta-file" id="toc-reading-a-stata-.dta-file" class="nav-link" data-scroll-target="#reading-a-stata-.dta-file"><span class="header-section-number">2.2.2</span> Reading a Stata “.dta”-file</a></li>
   <li><a href="#importing-an-excel-file" id="toc-importing-an-excel-file" class="nav-link" data-scroll-target="#importing-an-excel-file"><span class="header-section-number">2.2.3</span> Importing an Excel file</a></li>
-  <li><a href="#importing-a-.csv-file" id="toc-importing-a-.csv-file" class="nav-link" data-scroll-target="#importing-a-.csv-file"><span class="header-section-number">2.2.4</span> Importing a .csv file</a></li>
+  <li><a href="#importing-a-.csv-file" id="toc-importing-a-.csv-file" class="nav-link" data-scroll-target="#importing-a-.csv-file"><span class="header-section-number">2.2.4</span> Importing a “.csv”-file</a></li>
   <li><a href="#reading-in-a-sas-file" id="toc-reading-in-a-sas-file" class="nav-link" data-scroll-target="#reading-in-a-sas-file"><span class="header-section-number">2.2.5</span> Reading in a SAS file</a></li>
   </ul></li>
   <li><a href="#get-to-know-your-data" id="toc-get-to-know-your-data" class="nav-link" data-scroll-target="#get-to-know-your-data"><span class="header-section-number">2.3</span> Get to know your data</a></li>
@@ -181,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#generate-quantiles" id="toc-generate-quantiles" class="nav-link" data-scroll-target="#generate-quantiles"><span class="header-section-number">3.3</span> Generate quantiles</a></li>
   <li><a href="#generate-an-indicatordummy-variable" id="toc-generate-an-indicatordummy-variable" class="nav-link" data-scroll-target="#generate-an-indicatordummy-variable"><span class="header-section-number">3.4</span> Generate an indicator/dummy variable</a></li>
   <li><a href="#label-a-categorical-variable" id="toc-label-a-categorical-variable" class="nav-link" data-scroll-target="#label-a-categorical-variable"><span class="header-section-number">3.5</span> Label a categorical variable</a></li>
-  <li><a href="#sort-the-data" id="toc-sort-the-data" class="nav-link" data-scroll-target="#sort-the-data"><span class="header-section-number">3.6</span> Sort the data</a></li>
+  <li><a href="#sorting-data" id="toc-sorting-data" class="nav-link" data-scroll-target="#sorting-data"><span class="header-section-number">3.6</span> Sorting data</a></li>
   <li><a href="#merge-two-datasets" id="toc-merge-two-datasets" class="nav-link" data-scroll-target="#merge-two-datasets"><span class="header-section-number">3.7</span> Merge two datasets</a></li>
   <li><a href="#keeping-and-dropping-observations" id="toc-keeping-and-dropping-observations" class="nav-link" data-scroll-target="#keeping-and-dropping-observations"><span class="header-section-number">3.8</span> Keeping and dropping observations</a></li>
   </ul></li>
@@ -285,22 +286,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Click on the “New File” icon in the top left of RStudio, then select “R Script”.</li>
 <li>File -&gt; New File -&gt; R Script</li>
-<li><p><kbd data-windows="Shift-Control-N" data-mac="Shift-Command-N" data-linux="Shift-Ctrl-N"></kbd></p></li>
+<li><p><kbd data-mac="Shift-Command-N" data-windows="Shift-Control-N" data-linux="Shift-Ctrl-N"></kbd></p></li>
 </ol>
 </section>
-<section id="read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat"><span class="header-section-number">2.2</span> Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat)</h2>
-<p>Datasets can be in various formats, such as .rds (R), .dta (Stata), .xlsx (Excel), .csv (Comma Separated Value), and .sas7bdat (SAS) files. Some of these datasets require additional packages to download into R. To install a package, run:</p>
+<section id="installing-packages" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="installing-packages">Installing packages</h2>
+<p>To utilize certain functions in R, additional packages often need to be downloaded into R. To install a package, run:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"package_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>You can also click on the “Packages” tab in the bottom right window in RStudio. Next click “install” and a small window will pop up, enter the package’s name and hit “install”.</p>
 <p>When a function belongs to a package, you can use that function by running <code>package_name::function_name()</code> or by running <code>library(package_name)</code> at some point before <code>function_name()</code>.</p>
+</section>
+<section id="read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="read-in-a-dataset-.rds-.dta-.xlsx-.csv-.sas7bdat"><span class="header-section-number">2.2</span> Read in a Dataset (.rds, .dta, .xlsx, .csv, .sas7bdat)</h2>
+<p>Datasets can be in various formats, such as “.rds” (R), “.dta” (Stata), “.xlsx” (Excel), “.csv” (Comma Separated Value), and “.sas7bdat” (SAS) files. Some of these datasets require additional packages to download into R.</p>
 <p>You will need to include the path to the dataset file in your code. To determine the location of a dataset stored on a Windows computer, you can right-click and click on ‘Properties’ and copy and paste the location path. On a Mac, right-click the file, then press <kbd>Option</kbd> so that “Copy filename as Pathname” appears in the menu.</p>
 <p>Unlike Stata, you can have multiple datasets open in the same R session. When reading in a dataset, you must store it as an object so that you can refer to it later. This is done in R using the “assignment arrow” <code>&lt;-</code>.</p>
-<p>Reading in datasets can also be done from File -&gt; Import Dataset. This will bring up a window with options that will help you write the code that can be saved in an R script to use again.</p>
+<p>Reading in datasets can also be done from “File” -&gt; “Import Dataset”. This will bring up a window with options that will help you write the code that can be saved in an R script to use again. The “files” tab in the bottom right window of RStudio may also be helpful to import datasets. It operates similarly to Windows Explorer or the Finder on a Mac.</p>
 <section id="reading-an-r-.rds-file" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="reading-an-r-.rds-file"><span class="header-section-number">2.2.1</span> Reading an R .rds file</h3>
-<p>The <code>readRDS()</code> function is part of “base R” so does not need a separate package. The <code>{readr}</code> package includes many functions for reading in data that do the same things as the base R packages, often with better defaults.</p>
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="reading-an-r-.rds-file"><span class="header-section-number">2.2.1</span> Reading an R “.rds”-file</h3>
+<p>The <code>readRDS()</code> function is part of “base R”. This means it does not need a separate package. The <code>{readr}</code> package includes many functions for reading in data that do the same things as the base R packages, often with better defaults.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"filepath/filename.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -310,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="reading-a-stata-.dta-file" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="reading-a-stata-.dta-file"><span class="header-section-number">2.2.2</span> Reading a Stata .dta file</h3>
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="reading-a-stata-.dta-file"><span class="header-section-number">2.2.2</span> Reading a Stata “.dta”-file</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_stata</span>(<span class="st">"filepath/filename.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -323,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="importing-a-.csv-file" class="level3" data-number="2.2.4">
-<h3 data-number="2.2.4" class="anchored" data-anchor-id="importing-a-.csv-file"><span class="header-section-number">2.2.4</span> Importing a .csv file</h3>
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="importing-a-.csv-file"><span class="header-section-number">2.2.4</span> Importing a “.csv”-file</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"filepath/filename.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -392,13 +398,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dataset, <span class="at">newvar =</span> oldvar <span class="sc">*</span> oldvar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can also create a quadratic term directly in a model itself, bit it must be wrapped in <code>I()</code>: <code>var + I(var^2) + other_vars</code> .</p>
+<p>You can also create a quadratic term directly in a model itself, but it must be wrapped in <code>I()</code>: <code>var + I(var^2) + other_vars</code> .</p>
 </section>
 <section id="generate-a-categorical-variable-based-on-cut-points" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="generate-a-categorical-variable-based-on-cut-points"><span class="header-section-number">3.2</span> Generate a categorical variable based on cut-points</h2>
-<p>There are a couple ways to create a categorical variable <code>'newvar'</code> based on cutpoint values of <code>'oldvar'</code> at cutpoints <code>x</code> and <code>y</code>.</p>
+<p>There are a couple ways to create a categorical variable <code>'newvar'</code> based on cutpoint values of a continuous variable <code>'oldvar'</code> at cutpoints <code>x</code> and <code>y</code>.</p>
 <ol type="1">
-<li><p>One can use the <code>cut()</code> function to create a new categorical variable with cutpoints at the <code>breaks =</code> values. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values (0,x] (category 1), (x,y] (category 2), and (y,100] (category 3). For the <code>breaks =</code>argument, you will want to supply the left- hand breaks: a value lower than the minimum, x, y and then a value larger than the maximum. (You can use <code>-Inf</code> and <code>Inf</code> if you don’t know what the minimum and maximum are.) You can also use the <code>include.lowest =</code> and the <code>right =</code> arguments to change how the intervals are created.</p>
+<li><p>One can use the <code>cut()</code> function to create a new categorical variable with cutpoints at the <code>breaks =</code> values. For example, say you have a variable with a minimum of 0 and a maximum of 100 with some missing values and you would like to make three categories defined by the values (0,x] (category 1), (x,y] (category 2), and (y,100] (category 3). For the <code>breaks =</code>argument, you will want to supply the left-hand breaks: a value lower than the minimum, x, y and then a value larger than the maximum. (You can use <code>-Inf</code> and <code>Inf</code> if you don’t know what the minimum and maximum are.) You can also use the <code>include.lowest =</code> and the <code>right =</code> arguments to change how the intervals are created.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>newvar <span class="ot">&lt;-</span> <span class="fu">cut</span>(dataset<span class="sc">$</span>newvar, </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, x, y, <span class="cn">Inf</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -436,21 +442,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>varname <span class="ot">&lt;-</span> <span class="fu">factor</span>(dataset<span class="sc">$</span>varname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>and then use <code>varname</code> directly in a model. 2) One could also code the indicator/dummy variables manually using <code>case_when()</code>. 3) In some scenarios, it may be helpful to generate the indicator variables used in a model with:</p>
+<p>and then use <code>varname</code> directly in a model.</p>
+<ol start="2" type="1">
+<li>One could also code the indicator/dummy variables manually using <code>case_when()</code>.</li>
+<li>In some scenarios, it may be helpful to generate the indicator variables used in a model with:</li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>newvars <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span>varname <span class="sc">+</span> othervar, </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">data =</span> dataset))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that this will also create an intercept (a column of ones) and will also only contain the variables <code>varname</code> and <code>othervar</code>, not any others in the dataset.</p>
+<p>Note that this will also create an intercept (a column of ones) and will only contain the variables <code>varname</code> and <code>othervar</code>, no other variables from the dataset.</p>
 </section>
 <section id="label-a-categorical-variable" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="label-a-categorical-variable"><span class="header-section-number">3.5</span> Label a categorical variable</h2>
-<p>To create a factor (categorical) variable, use the <code>factor()</code> function, with arguments <code>levels =</code> for the unique values and <code>labels =</code> for the names of those values. For example, if <code>oldvar</code> has values 0, 1, and 2, which should be named “small”, “medium”, “large”:</p>
+<p>To create a factor (categorical) variable, use the <code>factor()</code> function, with arguments <code>levels =</code> for the unique values and <code>labels =</code> for the names of those values. The labels wil be assigned to the level in the same order they are specified. For example, if <code>oldvar</code> has values 0, 1, and 2, which should be named “small” (0), “medium” (1), “large” (2):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>newvar <span class="ot">&lt;-</span> <span class="fu">factor</span>(dataset<span class="sc">$</span>oldvar, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The reference level is always the first level (above, “small”). In models, R will treat character variables as factor variables, and the levels will be in alphabetical order. For example, if the variable in the example above was already labeled, but not a factor variable, putting it in a model or using the <code>factor()</code> function would result in levels “large”, “medium”, and “small” (“large” being the reference”).</p>
+<p>The reference level is always the first level (e.g.&nbsp;“small”). In models, R will treat character variables as factor variables, and the levels will be in alphabetical order. For example, if the variable in the example above was already labeled, but not a factor variable, putting it in a model or using the <code>factor()</code> function would result in levels “large”, “medium”, and “small” (“large” being the reference).</p>
 <p>To determine whether a variable is already a factor variable, or whether it is a character variable (or another type), use:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dataset<span class="sc">$</span>varname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -475,8 +485,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"sm"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"md"</span> <span class="ot">=</span> <span class="st">"1"</span>, <span class="st">"lg"</span> <span class="ot">=</span> <span class="st">"2"</span>)<span class="er">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sort-the-data" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="sort-the-data"><span class="header-section-number">3.6</span> Sort the data</h2>
+<section id="sorting-data" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sorting-data"><span class="header-section-number">3.6</span> Sorting data</h2>
 <p>The default of the <code>arrange()</code> function from the <code>{dplyr}</code> package is in ascending order.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">arrange</span>(dataset, varname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -486,15 +496,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">arrange</span>(dataset, <span class="fu">desc</span>(varname))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can sort on multiple variables to arrange observations in to ascending order based on <code>varname1</code>, and within each <code>varname1</code> category one can sort into descending order by <code>varname2</code>.</p>
+<p>You can sort on multiple variables to arrange observations into ascending order based on <code>varname1</code>, and within each <code>varname1</code> category one can sort into descending order by <code>varname2</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">arrange</span>(nlsy, varname1, <span class="fu">desc</span>(varname2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">arrange</span>(dataset, varname1, <span class="fu">desc</span>(varname2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="merge-two-datasets" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="merge-two-datasets"><span class="header-section-number">3.7</span> Merge two datasets</h2>
-<p>To merge two datasets, use a <code>_join()</code> function from the <code>{dplyr}</code> package: <code>left_join()</code>, <code>right_join()</code>, <code>full_join()</code>. The functions differ by how they treat rows without a match in the “left-hand side” dataset and the “right-hand side” dataset. This will keep all observations in <code>dataset1</code> and merge with only observations in <code>dataset2</code> with a matching <code>id</code>:</p>
+<p>To merge two datasets, use a <code>_join()</code> function from the <code>{dplyr}</code> package: <code>left_join()</code>, <code>right_join()</code>, <code>full_join()</code>. The functions differ by how they treat rows without a match in the “left-hand side” dataset and the “right-hand side” dataset.</p>
+<p>This will keep all observations in <code>dataset1</code> and merge only with observations from <code>dataset2</code> with a matching <code>id</code> in <code>dataset1</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dataset3 <span class="ot">&lt;-</span> <span class="fu">left_join</span>(dataset1, dataset2, <span class="fu">join_by</span>(id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -506,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>dataset2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset1, age <span class="sc">&gt;</span> <span class="dv">35</span>, sex <span class="sc">==</span> <span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can also explictly use logic like <code>&amp;</code> and <code>|</code> (or). To retain observations that are <em>either</em> over 35 or female:</p>
+<p>You can also explicitly use logic operators such as <code>&amp;</code> (and) and <code>|</code> (or). To retain observations that are <em>either</em> older than 35 <em>or</em> female (or both):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>dataset2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset1, age <span class="sc">&gt;</span> <span class="dv">35</span> <span class="sc">|</span> sex <span class="sc">==</span> <span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -553,7 +564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="estimate-measures-of-association" class="level3" data-number="4.1.4">
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="estimate-measures-of-association"><span class="header-section-number">4.1.4</span> Estimate measures of association</h3>
-<p>The <code>{epitools}</code> package contains a functions for estimating many simple epidemiologic quantities. For example, to estiamte a risk ratio (and the corresponding proportions):</p>
+<p>The <code>{epitools}</code> package contains functions for estimating various simple epidemiologic quantities. For example, to estimate a risk ratio (and the corresponding proportions):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>epitools<span class="sc">::</span><span class="fu">epitab</span>(dataset<span class="sc">$</span>exposure, dataset<span class="sc">$</span>outcome, </span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"riskratio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -561,14 +572,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="stratified-frequency-tables" class="level3" data-number="4.1.5">
 <h3 data-number="4.1.5" class="anchored" data-anchor-id="stratified-frequency-tables"><span class="header-section-number">4.1.5</span> Stratified frequency tables</h3>
-<p>You can estimate any summary statistics of a variable (ex. <code>varname1</code> or <code>varname2</code>) within each value of a categorical variable (ex. <code>categoricalvariable</code>):</p>
+<p>You can estimate any summary statistic of one variable (ex. <code>varname1</code> or <code>varname2</code>) within different levels of a categorical variable (ex. <code>categorical_variable</code>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">summarize</span>(dataset, <span class="at">mean_1 =</span> <span class="fu">mean</span>(varname1), </span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd_2 =</span> <span class="fu">sd</span>(varname2), <span class="at">.by =</span> categoricalvariable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd_2 =</span> <span class="fu">sd</span>(varname2), <span class="at">.by =</span> categorical_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For two-way frequency tables (<code>varname1</code> x <code>varname2</code>) stratified by a third variable (<code>categoricalvariable</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>janitor<span class="sc">::</span><span class="fu">tabyl</span>(dataset, varname1, varname2, categoricalvariable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>janitor<span class="sc">::</span><span class="fu">tabyl</span>(dataset, varname1, varname2, categorical_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -580,11 +591,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dataset<span class="sc">$</span>varname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can also estimate arbitraty sumamry statistics using <code>dplyr::summarize()</code>:</p>
+<p>You can also estimate arbitrary summary statistics using <code>dplyr::summarize()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">summarize</span>(dataset, <span class="at">mean =</span> <span class="fu">mean</span>(varname), <span class="at">sd =</span> <span class="fu">sd</span>(varname))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>One can estimate the standard errors and 95% CI of the mean using the <code>ci</code> or <code>ci means</code> command.<code>t.test()</code> function:</p>
+<p>One can estimate the standard errors and 95% CI of the mean using the <code>ci</code> or <code>ci means</code> command. <code>t.test()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dataset<span class="sc">$</span>varname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -632,21 +643,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="4.2.5" class="anchored" data-anchor-id="statistical-tests"><span class="header-section-number">4.2.5</span> Statistical Tests</h3>
 <p>To conduct a two-sample T-test (continuous variable by a binary variable), use the <code>t.test()</code> function with the <code>var.equal = FALSE</code> argument if desired:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(continuousvar <span class="sc">~</span> categoricalvar, </span>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(continuous_var <span class="sc">~</span> categorical_var, </span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> dataset, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To conduct a one-way ANOVA (test differences of two or more means), use the <code>aov()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(continuousvar <span class="sc">~</span> categoricalvar, <span class="at">data =</span> dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(continuous_var <span class="sc">~</span> categorical_var, <span class="at">data =</span> dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To conduct a non-parametric test Wilcoxon Rank-sum test (aka Mann-Whitney U test), use the <code>wilcox.test()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(continuousvar <span class="sc">~</span> categoricalvar, <span class="at">data =</span> dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(continuous_var <span class="sc">~</span> categorical_var, <span class="at">data =</span> dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="correlation-coefficients" class="level3" data-number="4.2.6">
 <h3 data-number="4.2.6" class="anchored" data-anchor-id="correlation-coefficients"><span class="header-section-number">4.2.6</span> Correlation coefficients</h3>
-<p>One can estimate correlation coefficients using the <code>cor()</code> function. The default is Pearson, one can estimate the Spearman correlation coefficients using the <code>method = "spearman"</code> argument:</p>
+<p>One can estimate correlation coefficients using the <code>cor()</code> function. The default is Pearson; one can estimate the Spearman correlation coefficients using the <code>method = "spearman"</code> argument:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dataset[, <span class="fu">c</span>(<span class="st">"varname1"</span>, <span class="st">"varname2"</span>, <span class="st">"varname3"</span>)], </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -706,11 +717,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="stratified-logistic-regression" class="level3" data-number="5.1.3">
 <h3 data-number="5.1.3" class="anchored" data-anchor-id="stratified-logistic-regression"><span class="header-section-number">5.1.3</span> Stratified Logistic Regression</h3>
-<p>To fit a logistic regression model within levels of <code>categoricalvar</code>:</p>
+<p>To fit a logistic regression model within levels of <code>categorical_var</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> dataset <span class="sc">|&gt;</span> </span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(categoricalvar) <span class="sc">|&gt;</span> </span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(categorical_var) <span class="sc">|&gt;</span> </span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_map</span>(<span class="sc">~</span><span class="fu">glm</span>(outcome <span class="sc">~</span> exposure, <span class="at">data =</span> .x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -733,20 +744,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Within that package, the <code>Surv()</code> function is used to “create” the outcome and is used in other functions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Surv</span>(timetooutcome, outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Surv</span>(time_to_outcome, outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="graphs" class="level3" data-number="5.3.2">
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="graphs"><span class="header-section-number">5.3.2</span> Graphs</h3>
 <p>Kaplan-Meier curves overall:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(timetooutcome, outcome) <span class="sc">~</span> <span class="dv">1</span>, </span>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time_to_outcome, outcome) <span class="sc">~</span> <span class="dv">1</span>, </span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dataset)</span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(km)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>KM curves by exposure groups:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(timetooutcome, outcome) <span class="sc">~</span> exposure, </span>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time_to_outcome, outcome) <span class="sc">~</span> exposure, </span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dataset)</span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(km)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -782,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.3.4" class="anchored" data-anchor-id="statistical-tests-1"><span class="header-section-number">5.3.4</span> Statistical tests</h3>
 <p>Log-rank test:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(timetooutcome, outcome) <span class="sc">~</span> exposure, </span>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time_to_outcome, outcome) <span class="sc">~</span> exposure, </span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>See the <a href="https://cran.r-project.org/web/packages/survminer/vignettes/Specifiying_weights_in_log-rank_comparisons.html#tharone-ware"><code>{survminer}</code> vignette</a> for details on plotting survival curves with p-values from weighted log-rank tests (here, Tarone-Ware):</p>
@@ -798,13 +809,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.3.5" class="anchored" data-anchor-id="cox-regression"><span class="header-section-number">5.3.5</span> Cox Regression</h3>
 <p>One can conduct a Cox regression model using the <code>coxph()</code> function from the <code>{survival}</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>cox <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(timetooutcome, outcome) <span class="sc">~</span> exposure, </span>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>cox <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time_to_outcome, outcome) <span class="sc">~</span> exposure, </span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The functions from the logistic regression section can be used to extract model output.</p>
 <p>Competing Risk Analysis: In carrying out a competing risk analysis, the “outcome” variable can take on three values. There must be a value for the actual event of interest (outcome=1); a value for censoring (outcome=0); and a value for the competing risk event (outcome=2).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>fg_data <span class="ot">&lt;-</span> <span class="fu">finegray</span>(<span class="fu">Surv</span>(timetooutcome, outcome) <span class="sc">~</span> exposure, </span>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>fg_data <span class="ot">&lt;-</span> <span class="fu">finegray</span>(<span class="fu">Surv</span>(time_to_outcome, outcome) <span class="sc">~</span> exposure, </span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> dataset)</span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>fg_model <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> exposure, </span>
 <span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weight =</span> fgwt, <span class="at">data =</span> fg_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -813,7 +824,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="goodness-of-fit-statistics" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="goodness-of-fit-statistics"><span class="header-section-number">5.4</span> Goodness of Fit Statistics</h2>
-<p>To get log Likelihood/AIC/BIC for most recent regression model:</p>
+<p>To get the log Likelihood/AIC/BIC for the most recent regression model:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loglik</span>(model)</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(model)</span>
