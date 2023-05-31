@@ -170,7 +170,6 @@ div.sourceCode pre code {
 div.sourceCode {
   border: none;
   border-radius: 5px;
-  margin-bottom: 10px !important;
   box-shadow: 4px 4px 20px 0px rgba(0,0,0,.45);
   height: fit-content !important;
   //margin: auto !important;
@@ -213,25 +212,25 @@ table td {
 table th {
   border-bottom: 2px solid;
 }
-/// reveal
-.reveal div.cell {
-  padding-bottom: 15px;
-  padding-top: 10px;
-}
 
-.reveal div.sourceCode pre code {
-  padding: 15px;
+/// reveal-specific
+.reveal div.cell { // goes around input and output
   padding-bottom: 10px;
   padding-top: 10px;
 }
 
-.reveal div.sourceCode {
+.reveal div.sourceCode pre code { // code within dark box
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 0;
+  font-size: .8em;
+}
+
+.reveal div.sourceCode { // dark box
   border: none;
   border-radius: 5px;
-  margin-bottom: 10px !important;
   box-shadow: 4px 4px 20px 0px rgba(0,0,0,.45);
   height: fit-content !important;
-  margin: auto !important;
 }
 
 .reveal code {
@@ -247,14 +246,23 @@ code span.er {
 code span.co {
   color: #7c8ba9;
 }
-.reveal pre code {
-  background-color: #ebeef2;
-  color: #7c8ba9;
-  padding-left: 15px;
+
+.reveal pre {
+    background-color: transparent;
 }
 
-.reveal div.cell-output pre code {
+.reveal pre code { // code within output block
+  background-color: #ebeef2;
+  color: #7c8ba9;
+  // padding-left: 15px;
+}
+
+.reveal div.cell-output {// output block
+    padding-top: 0.35em;
+}
+.reveal div.cell-output pre code { 
   font-size: .9em;
+  padding-left:0;
 }
 
 .reveal table td {
@@ -263,4 +271,16 @@ code span.co {
 
 .reveal table th {
   border-bottom: 2px solid;
+}
+
+.reveal .slide ul, .reveal .slide ol {
+    margin-bottom: 0 !important;
+}
+
+.reveal div.cell {
+  padding-top: 0 !important;
+}
+
+.reveal div.cell :first-child {
+  padding-top: 0 !important;
 }

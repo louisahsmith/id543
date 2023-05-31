@@ -53,9 +53,6 @@ $callout-color-caution-light: #5e81ac80 !default;
 $callout-color-warning-light: #ebcb8b80 !default;
 $callout-color-important-light: #d0877080 !default;
 
-/*-- scss:defaults --*/
-$icon: url('https://upload.wikimedia.org/wikipedia/commons/d/d9/Icon-round-Question_mark.svg') !default;
-
 /*-- scss:rules --*/
 
 /* Callout Types */

@@ -23,7 +23,9 @@ nlsy <- read_csv(here::here("data", "nlsy_cc.csv")) |>
     "Hispanic" = "1",
     "Black" = "2",
     "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female")))
+    sex_cat = factor(sex, labels = c("Male", "Female"))) |> 
+  select(id, samp, sex_cat, race_eth_cat, everything())
+dat <- data.frame(nlsy)
 ```
 
 -   Quick! Intense!
@@ -97,7 +99,7 @@ Why start with figures?
 
 # Using R Studio
 
-## 
+## An IDE for R
 
 ::: columns
 ::: {.column width="50%"}
@@ -105,7 +107,6 @@ Why start with figures?
 :::
 
 ::: {.column width="50%"}
-### An IDE for R
 
 An *integrated development environment* is software that makes coding easier
 
@@ -116,12 +117,11 @@ An *integrated development environment* is software that makes coding easier
 :::
 :::
 
-## 
-
+---
 ::: r-stack
-![](../../img/rstudio.png)
+![](../../img/rstudio.png){height=650}
 
-![](../../img/rstudio-markup.png){.fragment}
+![](../../img/rstudio-markup.png){.fragment height=650}
 :::
 
 # Demo
@@ -235,14 +235,16 @@ Now `vals` holds those values
 No assignment arrow means that the object will be printed to the console (and lost forever!)
 :::
 
-##
+## Objects
 
 We can retrieve those values by running just the name of the object
+
 ```{r}
 vals
 ```
 
 We can also perform operations on them
+
 ```{r}
 mean(vals)
 ```
@@ -279,6 +281,7 @@ We'll see more options as we go along!
 We created *vectors* with the `c()` function (`c` stands for concatenate)
 
 We could also create a *matrix* of values with the `matrix()` function:
+
 ```{r}
 # turn the vector of numbers into a 2-row matrix
 mat <- matrix(c(234, 7456, 12, 654, 183, 753), nrow = 2)
@@ -299,19 +302,83 @@ mat[2, ]
 mat[, 1]
 ```
 
+# Demo
+
+# Dataframes
+
 ## Dataframes
 
-We usually do analysis in R with dataframes (or some variant).
+- We usually do analysis in R with dataframes (or some variant)
+- Dataframes basically work like spreadsheets: here, columns are variables, and rows are observations
+- Here's some data from the National Longitudinal Survey of Youth:
 
-Dataframes are basically like spreadsheets: columns are variables, and rows are observations.
 ```{r}
-gss_cat
+#| eval: false
+dat
 ```
 
-## *tibble*??? 
+```{r}
+#| echo: false
+head(dat, n = 20)
+```
 
+## Indices in dataframes
+
+We can also pull out data from dataframes using "square bracket notation":
+
+```{r}
+dat[3, ]
+```
+
+```{r}
+#| eval: false
+dat[, 3]
+```
+
+```{r}
+#| echo: false
+dat[1:100, 3]
+```
+
+## Dollar sign notation
+
+It's much more useful to be able to pull out a variable by its name, though:
+
+```{r}
+#| eval: false
+dat$sex_cat
+```
+```{r}
+#| echo: false
+dat$sex_cat[1:200]
+```
+
+## Variables as strings
+
+We can also pull out one or more variables by quoting their names in square brackets:
+
+```{r}
+#| eval: false
+dat[, "sex_cat"]
+```
+```{r}
+#| echo: false
+dat[, "sex_cat"][1:200]
+```
+
+## Variables
+
+- Variables can also be different types, including numeric, character, logical, and factor.
+- You can check what type of variable you're dealing with: `class(dat$sex_cat)` (factor!)
+- A special type of dataframe called a "tibble" will show you at the top:
+
+```{r}
+nlsy
+```
+
+## 
 ::: center
-![](https://ih1.redbubble.net/image.543363717.2207/pp,840x830.jpg)
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/tibble.png?raw=true){height=650}
 :::
 
 ## tibbles are basically just pretty dataframes
@@ -320,7 +387,7 @@ gss_cat
 ::: {.column width="50%"}
 ```{r}
 #| comment: "" 
-as_tibble(gss_cat)[, 1:4]
+as_tibble(nlsy)[, 1:4]
 ```
 :::
 
@@ -328,17 +395,19 @@ as_tibble(gss_cat)[, 1:4]
 ```{r}
 #| eval: false
 #| comment: ""
-as.data.frame(gss_cat)[, 1:4]
+as.data.frame(nlsy)[, 1:4]
 ```
 ```{r}
 #| echo: false
 #| comment: ""
-as.data.frame(gss_cat)[1:20, 1:4]
+as.data.frame(nlsy)[1:20, 1:4]
 ```
 :::
 ::::
 
-## tibbles are the quickest and most intuitive way to make and read a dataset
+## You can make your own tibble!
+
+We'll be using existing data, but you might want to create a mini-dataset to test on:
 
 :::: {.columns}
 
@@ -366,4 +435,15 @@ dat2
 ```
 :::
 ::::
+
+## Different ways to do the same thing
+
+There are usually multiple ways to achieve a task in R. Ideally we'd like solutions that are:
+
+- **readable**: If you share your code with someone, can they figure out what you're doing?
+- **reliable**: Is this way always going to work, even if the data is slightly different?
+- **safe**: Is this way going to introduce errors into your code without you noticing?
+- **fast**: Is this an efficient way to do things, given all of the above?
+
+We'll focus on the *tidyverse* because I think it's the optimal mix of those characteristics
 
