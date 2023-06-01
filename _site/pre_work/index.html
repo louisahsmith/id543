@@ -63,7 +63,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../www/styles.css">
 </head>
 
-<body class="floating nav-fixed slimcontent">
+<body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -115,16 +115,76 @@ ul.task-list li input[type="checkbox"] {
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pre_work/index.html">Pre-work</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../pre_work/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Pre-work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Homework</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pre_work/homework/homework_1.docx" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pre_work/slides/intro-to-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to R</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#install-r-and-rstudio" id="toc-install-r-and-rstudio" class="nav-link active" data-scroll-target="#install-r-and-rstudio">Install R and RStudio</a></li>
+  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video">Video</a></li>
   <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
   <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
   </ul>
@@ -154,28 +214,6 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female")))
-`)
-</script>   
 <section id="install-r-and-rstudio" class="level1 page-columns page-full">
 <h1>Install R and RStudio</h1>
 <ol type="1">
@@ -183,6 +221,12 @@ nlsy <- readr::read_csv("nlsy_cc.csv") |>
 <li><p>Download <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> (step 2 on that page – you already completed step 1 above!). It should automatically recognize your operating system, but if not, choose the correct link at the bottom.</p></li>
 </ol>
 <div class="no-row-height column-margin column-container"><span class="">If you have a Mac, make sure you <a href="https://support.apple.com/en-us/HT211814">choose correctly</a> between the Apple Silicon (M1/M2) and Intel options.</span><span class="">Which version of RStudio you have is not as important, but it’s nice to stay up-to-date for the newest features!</span></div></section>
+<section id="video" class="level1">
+<h1>Video</h1>
+<div>
+<iframe class="slide-deck" src="slides/intro-to-R.html"></iframe>
+</div>
+</section>
 <section id="readings" class="level1 page-columns page-full">
 <h1>Readings</h1>
 <ol type="1">
@@ -193,6 +237,17 @@ nlsy <- readr::read_csv("nlsy_cc.csv") |>
 <div class="no-row-height column-margin column-container"><span class="">In particular, make sure you install the packages in the text.</span><span class="">If you’re wondering what happened to chapter 2, we’ll be doing that one together!</span></div></section>
 <section id="homework" class="level1">
 <h1>Homework</h1>
+<p>Complete the following exercises, showing your code for each. You can download the homework as a Word document <a href="homework_1.docx">here</a> or on Canvas. Please copy and paste your code and answers into the document and submit on Canvas.</p>
+<ol type="a">
+<li>Install R and RStudio as well as the packages described in Section 1.4 of of R for Data Science. Paste the code you used to install those packages below.</li>
+<li>Create a vector named <code>temp</code> with the average low temperatures in December for London, Shanghai, Sydney, Boston, Mexico City and Johannesburg which are 40, 38, 64, 28, 42 and 57° Fahrenheit.</li>
+<li>Create a second vector with the city names called <code>city</code>.</li>
+<li>Use the <code>setNames()</code> function to assign the city names to the corresponding temperatures using the two objects create above. (Hint: <code>help(setNames)</code>). You should overwrite your original <code>temp</code> vector with the named vector. Print the <code>temp</code> vector.</li>
+<li>Recall that you can use the <code>[]</code> operator directly following a vector name to select specific values contained within that vector (e.g.&nbsp;<code>temp[1]</code> should return <code>40</code>). Use this <code>[]</code> operator and the <code>sum()</code> function to calculate the sum of the temperatures for Sydney, Mexico City and Johannesburg.</li>
+<li>Create a vector of all positive even numbers smaller than 75 using the <code>seq()</code> function. (Hint: <code>help(seq)</code>)</li>
+<li>Create a vector of numbers. Let the first value of the vector be 4, with a maximum value &lt; 80, adding numbers in increments of 2/3. How many elements are in this vector?</li>
+<li>Using your answer to the previous question, find another solution to create the same vector as the previous question.</li>
+</ol>
 
 
 </section>

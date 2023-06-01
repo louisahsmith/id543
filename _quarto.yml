@@ -23,12 +23,11 @@ website:
 
   sidebar:
     - id: pre_work
-      title: "Pre-work"
-      style: "floating"
+      title: "Resources"
+      style: "docked"
       background: light
-      collapse-level: 2
-      # contents: pre_work
-
+      contents: pre_work
+      
     - id: day_1
       title: "Day 1"
       contents: day_1
@@ -95,8 +94,8 @@ format:
     theme: 
       - www/custom.scss
     pointer:
-      color: '#32cd32'
-      pointerSize: 12
+      color: 'red'
+      pointerSize: 16
 revealjs-plugins:
   - pointer
   

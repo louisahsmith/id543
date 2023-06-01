@@ -97,213 +97,6 @@ Why start with figures?
 :::
 :::
 
-# Using R Studio
-
-## An IDE for R
-
-::: columns
-::: {.column width="50%"}
-![](https://github.com/rstudio/hex-stickers/blob/main/PNG/RStudio.png?raw=true)
-:::
-
-::: {.column width="50%"}
-
-An *integrated development environment* is software that makes coding easier
-
--   see objects you've imported and created
--   autocomplete
--   syntax highlighting
--   run part or all of your code
-:::
-:::
-
----
-::: r-stack
-![](../../img/rstudio.png){height=650}
-
-![](../../img/rstudio-markup.png){.fragment height=650}
-:::
-
-# Demo
-
-## Packages {.smaller}
-
--   Some functions are built into R
-    -   `mean()`, `lm()`, `table()`, etc.
--   They actually come from built-in packages
-    -   `base`, `stats`, `graphics`, etc.
--   Anyone (yes, *anyone*) build their own package to add to the functionality of R
-    -   `{ggplot2}`, `{dplyr}`, `{data.table}`, `{survival}`, etc. ![](../../img/stickers.png)[^1]
-
-[^1]: Image from [Zhi Yang](https://zhiyang.netlify.app/post/hexwall/)
-
-## Packages {.r-fit-text}
-
--   You have to **install** a package once[^2]
-
-[^2]: Actually, with every new major R release, but we won't worry about that.
-
-``` r
-install.packages("survival")
-```
-
--   You then have to **load** the package every time you want to use it
-
-``` r
-library(survival)
-```
-
-## Packages
-
-"You only have to buy the book once, but you have to go get it out of the bookshelf every time you want to read it."
-
-``` r
-install.packages("survival")
-library(survival)
-survfit(...)
-```
-
-::: center
-::: hand
-Several days later...
-:::
-:::
-
-``` r
-library(survival)
-coxph(...)
-```
-
-## Package details {.smaller}
-
--   When you use `install.packages`, packages are downloaded from [CRAN](https://cran.r-project.org) (The Comprehensive R Archive Network)
-    -   This is also where you downloaded R
--   Packages can be hosted lots of other places, such as [Bioconductor](https://www.bioconductor.org) (for bioinformatics), and [Github](https://www.github.com) (for personal projects or while still developing)
--   The folks at CRAN check to make things "work" in some sense, but don't check on the statistical methods...
-    -   But because R is open-source, you can always read the code yourself
--   Two functions from different packages can have the same name... if you load them both, you may have some trouble
-
-## tidyverse
-
--   The same people who make RStudio also are responsible for a set of packages called the `tidyverse`
-
-![](../../img/tidy-data.png){fig-align="center"}
-
-## tidyverse
-
-::: columns
-::: {.column width="75%"}
--   `install.packages(tidyverse)` actually downloads more than a dozen packages[^3]
--   `library(tidyverse)` loads:
-
-::: {.center .smaller}
-`ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`, `lubridate`
-:::
-
-This is by no means the only way to manage your data, but I find that a lot of the time, it's the easiest and simplest way to get things done.
-:::
-
-::: {.column width="25%"}
-![](../../img/tidyverse.png)
-:::
-:::
-
-[^3]: See which ones at <https://tidyverse.tidyverse.org>
-
-# Demo
-
-# Using R
-
-## The biggest difference between R and Stata is that R can have many different objects in its environment
-
-- datasets, numbers, figures, etc.
-- you have to be explicit about storing and retrieving objects
-  - e.g., what dataset a variable belongs to
-
-## R uses `<-` to store objects in the environment
-
-I call this the "assignment arrow"
-
-```{r}
-# create values
-vals <- c(1, 645, 329)
-```
-
-Now `vals` holds those values
-
-::: callout-warning
-No assignment arrow means that the object will be printed to the console (and lost forever!)
-:::
-
-## Objects
-
-We can retrieve those values by running just the name of the object
-
-```{r}
-vals
-```
-
-We can also perform operations on them
-
-```{r}
-mean(vals)
-```
-
-If we want to keep the result of that operation, we need to use `<-` again
-
-```{r}
-mean_val <- mean(vals)
-```
-
-
-## Types of data (*classes*)
-
-We could also create a character *vector*:
-
-```{r}
-chars <- c("dog", "cat", "rhino")
-chars
-```
-
-Or a *logical* vector:
-
-```{r}
-logs <- c(TRUE, FALSE, FALSE)
-logs
-```
-
-::: callout-tip
-We'll see more options as we go along!
-:::
-
-## Types of objects
-
-We created *vectors* with the `c()` function (`c` stands for concatenate)
-
-We could also create a *matrix* of values with the `matrix()` function:
-
-```{r}
-# turn the vector of numbers into a 2-row matrix
-mat <- matrix(c(234, 7456, 12, 654, 183, 753), nrow = 2)
-mat
-```
-
-## Indices
-
-The numbers in square brackets are *indices*, which we can use to pull out values:
-
-```{r}
-# extract second row
-mat[2, ]
-```
-
-```{r}
-# extract first column
-mat[, 1]
-```
-
-# Demo
-
 # Dataframes
 
 ## Dataframes
@@ -447,3 +240,29 @@ There are usually multiple ways to achieve a task in R. Ideally we'd like soluti
 
 We'll focus on the *tidyverse* because I think it's the optimal mix of those characteristics
 
+## tidyverse
+
+-   The same people who make RStudio also are responsible for a set of packages called the `tidyverse`
+
+![](../../img/tidy-data.png){fig-align="center"}
+
+## tidyverse
+
+::: columns
+::: {.column width="75%"}
+-   `install.packages(tidyverse)` actually downloads more than a dozen packages[^3]
+-   `library(tidyverse)` loads:
+
+::: {.center .smaller}
+`ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`, `lubridate`
+:::
+
+This is by no means the only way to manage your data, but I find that a lot of the time, it's the easiest and simplest way to get things done.
+:::
+
+::: {.column width="25%"}
+![](../../img/tidyverse.png)
+:::
+:::
+
+[^3]: See which ones at <https://tidyverse.tidyverse.org>

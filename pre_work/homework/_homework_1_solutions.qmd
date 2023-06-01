@@ -1,0 +1,57 @@
+---
+title: "Homework 1"
+format: docx
+execute: 
+  echo: true
+---
+
+Please copy and paste your code and answers into this document and submit on Canvas.
+
+1. Install R and RStudio as well as the packages described in Section 1.4 of of R for Data Science. Paste the code you used to install those packages below.
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages(c("arrow", "babynames", "curl", "duckdb", "gapminder", "ggrepel", "ggridges", "ggthemes", "hexbin", "janitor", "Lahman", "leaflet", "maps", "nycflights13", "openxlsx", "palmerpenguins", "repurrrsive", "tidymodels", "writexl"))
+```
+
+2.	Create a vector named `temp` with the average low temperatures in December for London, Shanghai, Sydney, Boston, Mexico City and Johannesburg which are 40, 38, 64, 28, 42 and 57° Fahrenheit. 
+
+```{r}
+
+```
+
+3.	Create a second vector with the city names called `city`.
+
+```{r}
+
+```
+
+4.	Use the `setNames()` function to assign the city names to the corresponding temperatures using the two objects create above. (Hint: `help(setNames)`). You should overwrite your original `temp` vector with the named vector. Print the `temp` vector.
+
+```{r}
+
+```
+
+5.	Recall that you can use the `[]` operator directly following a vector name to select specific values contained within that vector (e.g. `temp[1]` should return `40`). Use this `[]` operator and the `sum()` function to calculate the sum of the temperatures for Sydney, Mexico City and Johannesburg.
+
+```{r}
+
+```
+
+6.	Create a vector of all positive even numbers smaller than 75 using the `seq()` function. (Hint: `help(seq)`)
+
+```{r}
+```
+
+7.	Create a vector of numbers. Let the first value of the vector be 4, with a maximum value < 80, adding numbers in increments of 2/3. How many elements are in this vector?
+
+```{r}
+
+```
+
+g.  Using your answer to the previous question, find another solution to create the same vector as the previous question.
+
+```{r}
+
+```

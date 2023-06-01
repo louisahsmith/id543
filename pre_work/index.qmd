@@ -7,37 +7,23 @@ webr:
   show-startup-message: false
 ---
 
-```{=html}
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female")))
-`)
-</script>	
-```
-
-
 # Install R and RStudio
 
 1. Download R from [CRAN](https://cloud.r-project.org/). Choose the link at the top that corresponds to your operating system. [If you have a Mac, make sure you [choose correctly](https://support.apple.com/en-us/HT211814) between the Apple Silicon (M1/M2) and Intel options.]{.aside} Unless you downloaded R within the past month or two, do so again -- you want the most up-to-date version (≥ R 4.3) for this class.
 
 2. Download [RStudio](https://posit.co/download/rstudio-desktop/) (step 2 on that page -- you already completed step 1 above!). It should automatically recognize your operating system, but if not, choose the correct link at the bottom.[Which version of RStudio you have is not as important, but it's nice to stay up-to-date for the newest features!]{.aside}
+
+# Video
+
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="slides/intro-to-R.html"></iframe>
+```
+
+</div>
+
 
 # Readings
 
@@ -48,4 +34,15 @@ nlsy <- readr::read_csv("nlsy_cc.csv") |>
 3. Optional, but helpful: [Chapter 2](https://rstudio-education.github.io/hopr/basics.html) of *Hands-On Programming with R*. For the purposes of this class, we will necessarily skip some of the R basics to focus on the skills you'll need most. This is a good resource if you want to learn more about them, so it's highly recommended, you just don't need to master it as part of your pre-work.
 
 # Homework
+
+Complete the following exercises, showing your code for each. You can download the homework as a Word document [here](homework_1.docx) or on Canvas. Please copy and paste your code and answers into the document and submit on Canvas.
+
+a. Install R and RStudio as well as the packages described in Section 1.4 of of R for Data Science. Paste the code you used to install those packages below.
+a.	Create a vector named `temp` with the average low temperatures in December for London, Shanghai, Sydney, Boston, Mexico City and Johannesburg which are 40, 38, 64, 28, 42 and 57° Fahrenheit. 
+b.	Create a second vector with the city names called `city`.
+c.	Use the `setNames()` function to assign the city names to the corresponding temperatures using the two objects create above. (Hint: `help(setNames)`). You should overwrite your original `temp` vector with the named vector. Print the `temp` vector.
+d.	Recall that you can use the `[]` operator directly following a vector name to select specific values contained within that vector (e.g. `temp[1]` should return `40`). Use this `[]` operator and the `sum()` function to calculate the sum of the temperatures for Sydney, Mexico City and Johannesburg.
+e.	Create a vector of all positive even numbers smaller than 75 using the `seq()` function. (Hint: `help(seq)`)
+f.	Create a vector of numbers. Let the first value of the vector be 4, with a maximum value < 80, adding numbers in increments of 2/3. How many elements are in this vector?
+g.  Using your answer to the previous question, find another solution to create the same vector as the previous question.
 
