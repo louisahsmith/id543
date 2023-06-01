@@ -33,6 +33,23 @@ An *integrated development environment* is software that makes coding easier
 ![](../../img/rstudio-markup.png){.fragment height=650}
 :::
 
+## Start fresh
+
+::: smaller
+- If you have used R previously, an old workspace may still be active when you open RStudio
+- You always want to start with a fresh session
+- Go to Tools -\> Global Options, and under General, change these settings:
+:::
+
+::: center
+![](../../img/Screenshot%202023-05-24%20at%205.44.10%20PM.png)
+:::
+
+
+::: callout-tip
+Now, you can just quit and restart RStudio if something goes wrong! You can also go to Session -\> Restart R to clear your session.
+:::
+
 # Demo
 
 ## Packages {.smaller}

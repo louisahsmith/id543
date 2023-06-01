@@ -42,7 +42,7 @@ This document aligns with the Stata cheat sheet.
 
 Open RStudio. If you have used R previously, an old workspace may still be active. However, you always want to start with a fresh session. Go to Tools -\> Global Options, and under General, change these settings:
 
-![](images/Screenshot%202023-05-24%20at%205.44.10%20PM.png)
+![](../img/Screenshot%202023-05-24%20at%205.44.10%20PM.png)
 
 Now, you can quit RStudio if something goes wrong. You can also go to Session -\> Restart R to clear your session.
 

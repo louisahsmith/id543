@@ -15,6 +15,7 @@ webr:
 
 # Video
 
+Open the slides in a new tab [here](slides/intro-to-R.html){target="_blank"}.
 
 <div>
 
