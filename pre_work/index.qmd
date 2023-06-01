@@ -15,7 +15,11 @@ webr:
 
 # Video
 
-Open the slides in a new tab [here](slides/intro-to-R.html){target="_blank"}.
+Open the slides in a new tab [here](slides/intro-to-R.html){target="_blank"} or follow along below.
+
+(P.S. Sorry, I didn't realize the video of my face would be in the screen instead of off to the side!)
+
+{{< video https://www.youtube.com/embed/72aMNxq4zfA >}}
 
 <div>
 
