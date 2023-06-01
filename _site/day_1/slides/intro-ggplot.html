@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.3.353">
+
+  <title>Introduction to ggplot</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #d8dee9; background-color: #2e3440; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #d8dee9; } /* Normal */
+    code span.al { color: #bf616a; background-color: #3b4252; font-weight: bold; } /* Alert */
+    code span.an { color: #d08770; } /* Annotation */
+    code span.at { color: #8fbcbb; } /* Attribute */
+    code span.bn { color: #b48ead; } /* BaseN */
+    code span.bu { color: #88c0d0; font-style: italic; } /* BuiltIn */
+    code span.cf { color: #81a1c1; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #ebcb8b; } /* Char */
+    code span.cn { color: #eceff4; font-weight: bold; } /* Constant */
+    code span.co { color: #616e88; } /* Comment */
+    code span.cv { color: #e5e9f0; } /* CommentVar */
+    code span.do { color: #5e81ac; } /* Documentation */
+    code span.dt { color: #81a1c1; } /* DataType */
+    code span.dv { color: #b48ead; } /* DecVal */
+    code span.er { color: #bf616a; text-decoration: underline; } /* Error */
+    code span.ex { color: #8fbcbb; font-weight: bold; } /* Extension */
+    code span.fl { color: #b48ead; } /* Float */
+    code span.fu { color: #88c0d0; } /* Function */
+    code span.im { color: #a3be8c; } /* Import */
+    code span.in { color: #ebcb8b; } /* Information */
+    code span.kw { color: #81a1c1; font-weight: bold; } /* Keyword */
+    code span.op { color: #81a1c1; } /* Operator */
+    code span.ot { color: #8fbcbb; } /* Other */
+    code span.pp { color: #5e81ac; } /* Preprocessor */
+    code span.re { color: #88c0d0; background-color: #3b4252; } /* RegionMarker */
+    code span.sc { color: #ebcb8b; } /* SpecialChar */
+    code span.ss { color: #d08770; } /* SpecialString */
+    code span.st { color: #a3be8c; } /* String */
+    code span.va { color: #5e81ac; } /* Variable */
+    code span.vs { color: #a3be8c; } /* VerbatimString */
+    code span.wa { color: #bf616a; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-pointer/pointer.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section class="quarto-title-block center">
+  <h1 class="title">Introduction to ggplot</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section class="slide level2">
+<h2>#goals</h2>
+<div style="height: 0px;">
+<div class="cell">
+<style type="text/css">
+div.callout-caution{border-left-color:#5e81ac !important}div.callout-caution.callout-style-default .callout-caption{background-color:#5e81ac !important}div.callout-caution.callout-style-default .callout-title{background-color:rgba(94,129,172,0.501961) !important}div.callout-note{border-left-color:#b48ead !important}div.callout-note.callout-style-default .callout-caption{background-color:#b48ead !important}div.callout-note.callout-style-default .callout-title{background-color:rgba(180,142,173,0.501961) !important}div.callout-important{border-left-color:#d08770 !important}div.callout-important.callout-style-default .callout-caption{background-color:#d08770 !important}div.callout-important.callout-style-default .callout-title{background-color:rgba(208,135,112,0.501961) !important}div.callout-warning{border-left-color:#ebcb8b !important}div.callout-warning.callout-style-default .callout-caption{background-color:#ebcb8b !important}div.callout-warning.callout-style-default .callout-title{background-color:rgba(235,203,139,0.501961) !important}div.callout-tip{border-left-color:#a3be8c !important}div.callout-tip.callout-style-default .callout-caption{background-color:#a3be8c !important}div.callout-tip.callout-style-default .callout-title{background-color:rgba(163,190,140,0.501961) !important}.callout-icon-container>p{color:#a1b6cf !important}div.callout-caution .callout-icon::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2388c0d0' viewbox='0 0 16 16'%3E%3Cpath d='m8,0C3.58,0,0,3.58,0,8s3.58,8,8,8,8-3.58,8-8S12.42,0,8,0Zm0,1.02c3.85,0,6.98,3.12,6.98,6.98s-3.12,6.98-6.98,6.98S1.02,11.85,1.02,8,4.15,1.02,8,1.02Zm.12,1.7c-.44,0-.85.06-1.22.16-.38.11-.73.28-1.03.5-.26.19-.51.43-.7.68-.33.44-.52.93-.56,1.5,0,.04,0,.07,0,.07,0,0,1.74.22,1.74.22,0,0,0-.02.02-.08.16-.65.44-1.08.88-1.34.35-.21.78-.29,1.26-.24.22.02.42.08.59.16.22.1.41.27.56.46.12.17.2.37.22.58,0,.06,0,.2,0,.26-.02.15-.06.27-.12.4-.06.13-.12.2-.22.3-.16.17-.41.39-.86.75-.29.24-.48.41-.65.59-.4.41-.58.73-.68,1.18-.07.3-.1.6-.09,1.06,0,.11,0,.22,0,.24v.03h1.73v-.19c0-.26.02-.43.05-.59.05-.26.11-.4.32-.62.13-.14.3-.3.55-.52.38-.32.65-.56.9-.81.39-.39.6-.66.74-.98.11-.25.18-.49.2-.76,0-.07,0-.24,0-.32-.04-.56-.25-1.06-.65-1.52-.06-.07-.22-.23-.3-.3-.4-.35-.86-.59-1.4-.73-.34-.08-.66-.13-1.07-.14-.06,0-.13,0-.19,0h0Zm-.87,8.29v1.76h1.76v-1.76h-1.76Z'%3E%3C/path%3E%3C/svg%3E") !important}div.callout-tip .callout-icon::before{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAp1JREFUWEftls1rE0EUwN9mu0ZR/IDsNilaQUQPiv4BglhpbRPRgpTeBvI32HTjMadKuqn4JyzMsXhQaddYURQ8eFT0IOLBz3SbVpQqNo2bSkZ32WxmZme3uQjmtGTex2/ee/PekyDKb6m4D8vqV54Kan4ehNEbH0TNSkKCd6dSeHemLiT7V0gUhA+wBRJ+VGnRHKNm/QzIidfkzGkdx4r6NCiXb6yMO9nZOzxwNgDFOXLqh2Gk/J4biaXiIJbVd34ZdL7A9MM8wA8rW6JGaECi+nSA+/oA7tM+uYZ5N+BFww+BNuyjkDPeBuWpAB2KnPCJFGWYrW6A6tVDWBkgeUatL2kYnrFFHDFlqgUNK2liA/2yj8EF441ftgsgjDgODM8mEyDfrOWc0TkrjsOgjlydyppKZpFEIZBSJgBy6vthpPytFwDg66Bo9VkfTM47rl02wDaLLwjupgG11lIwfH2NDuBrPnGfHitiHoD08QAM3fTmCTsCP2oqXJpb7UkKfLMEDRUSIIHX5NhFuGlPOGPGrV4AyJZ+xUxqxJZwEdKE48JEeobw4NoRnEiRlokay6chW3kR1zHRswqncDL9/E9j6yzA9n/hrfjJdxlKJepIDgUrlRL47B7vydEKmz6MfO1zO6noCP36yl4Yn10XGkZtIdmazpnJ/oX2d75hTzpZYz70xj4BuapPmIpGdNCGfQ5yxmOaPncj6rhBlF1vUT+Id2reXhhrISG0ga1ItDlFGWjhS+m94gm8Q31JQikyH/x9f7N+EsbKr3ipCwcAgCg3iiLLfIZd49TSL5tJ7XaUIhTZiIUBIPCeRUCQYP8QSkHbYXDLDYMQLdj/AP9OBKLUgWj+xV+BW3EL02m8q7/GK0D0087ARWM5rEjd89/mEzIwY1V62wAAAABJRU5ErkJggg==") !important}div.callout-warning .callout-icon::before{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAA4dJREFUWEfFVmtP01AYXmGbEJB1iEhwF4aIMYZoiKKBrWIiGIUyKGMJxpgYEow/gO985w+IGj+YeGM36DZNIFG2ghc03mJilOgYVQMBWYdiZB3MnINbumVd2xHkfOnJOe/leZ7z9j0HkW3zQLY5vyxrACFHGxbVmXyAgJz2N6oJN5xLHVkBCDlbD0e1J99wk8mDVK3aQr7ecgCxmAxZfDmwni5RydG+HASRxaSAkKxA2I53R/TYHZAkNzCFgu+aoY4BXyVNXVAR5O0tAzB3q7kg92DTL3juQapHbSFvgnnIab4U1RrhPBaY2llqtUEbMUOSAgsvBhLylnhXcpH+fngUsf7+nMWWgrV4wt3H+kTHFW0YHmqrihhM01Dq4MQJlWXkOZdh2NVeF9E0wDVl0FetsnigrdAQDYDLno+hGJtUQKIAhF342YgGewCc879TZYVmcj5sNx+P6I3PuIr8dHaU/tHWz8O1WapV1Ul6N61AbKhLuWioW009Xy5bsBdXJalOFh7lIeceJnzTgRFUICngq2klcvkaCwLxAYgN9ioWa/dHxBZkRgALI23lsnLTNxBMQVPNKEGOxQPzAQD7jMN8mtUZoS0S8GlKrB4YQ7ICmYoqE4BUhTL9lrwKLNvM9asVxknIPuCvRK3uAJeBEICQq70iqmmAPrm0z1RMeCZEKyCmsXBbsjLoP6+yuO+mJkiqn8CUHLHaEs0qbptWAcaB97I6bBAYsXP+gnLc/Ts1eMjW3hitaHgM1uUzk6fUXcPjqTb0UFd+nqEO+ipo6gpKkFcF+wDjaVGzexqX/jlZUYK0pZNu2dlRvaqt/wj2dtBPDhQRrk/p7Bg73snqMTvYUwamdqmsNhibVwGx3Yx7LQtdw5liJh3B0rC5Zm2v8d1G4YzXFBPe93y/j5T1H3b80Loeg7HktO+ImvC8TauAWPZSksdtkwqS83BJKMDYcSurx+7Ds58fL0ZbvaFMiRhnWxOrNY1C+xn/GbTLDed8I+RqR6OaBhhTSVPdKoK8B+YQAPehoQhSvaiFvC7EUqgPpC1IB97D6rAbYG/tw1hh2cXRFQiA76GRCUQ2ANL1F4RxtFSyusbPG7+Tr76I8DwVYg/2pR5BPCb3Gld8naxCtrLw+IhwcyYAKGbH96Gd3i9i2G/WhntPJCmw2cDZ+CPMEG5gDdh/YZ4KEKgu+CLKhpUUn20H8BfRiJwMGfDNGwAAAABJRU5ErkJggg==") !important}div.callout-important .callout-icon::before{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAqtJREFUWEdjZCAS3A4NFf3z/7f2XavY/fi0KB9b7Mj6l/Gayvr1r4gxmpGQomtBQfL3bKIfEFKHTV7pyFIFrXXrHuLTi9MBj0NDOS9aRnzDpVn56CIP9t//L3xn/8PI9I9V/6513A5cavWPr+CSXb36OzZ5rA64Geyrcds64TqyBvVDi1VUN2y4S0xI3A4IUL5pF3sHWa3q0QWa6ms330DXj+GA28F+hjet48/BFCofX2KluXr9cWIsRldzPTTQ8q5lzDGYuPrRhUaqazedR1aH4oAbfn5Sdxzin8IUGO1fwC21eTPOaCDGUc98fbnOOSZ8halVObBQWmPTpmcwPtwB/0NDmbdaRvyBSUjc2MlmMmvWb2IsIaTmTFoa6wsN918wdd7HV7Awrl79F8SHO2BL39r/MAWqpxeIqi/f/IaQwaTI34z0FbltmvAapsenKBhsN5i44+8ve8M+7hGIrXZkkavauo17CBl+K9jf/JZ13AmwnqOLLNTWbjxJUE+Qv8stm7jdIHUaBxfJqWzc+BjsAGTfw1xGyDBkPSC15OgD6WG8HhgofNc2BhzcyoeXqGuuX3+LkOXojibFAdcDA9Xu2sbchNonwkiO7ylxALreweMA9aMLdFTXbr5KTPBTGgK3g321b1onXAHnAlgU4CuvsTmK3EQIMgu5noE7gNhUDHPM9ZAAB1jVDKqCNddsOEBs6CGHIPkOQE3NROcemCNhIUh2FPxnYGDc2rf2H8hA76JgJkYGBnhJSigksEYBqYmQkCX45LEmQlIKE0osp1o5cCvQz/WWbfwukIHqxxa7q67ZAGYTA5Bz0MAXxQNeGYEcQFZ1TEYU3MJVHaOHAt0bJCAHDHiTDOSIAW2UwrLPgDbLYY4Y0I4JzBED2jVDLs0GrHOKXqTSqnsOAJxF1JQ5aCVbAAAAAElFTkSuQmCC") !important}div.callout-note .callout-icon::before{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAuxJREFUWEdjZCASeLY9F/39l0U7TX3/fnxaZt10dGT6+/fargaJV8QYzUhIkVPLe/kMtd0PCKnDJj/jlqvCvhrBh/j04nSAZd9jzkKZ499waZ513dnjP8ufC39/MzKyMDLrp2nu3YFLbf8TS67jRbLfscljdYBbwxuNFK1915E1zLhpr7KvVvwuMSHh1PxSOUP94B1ktXOuOWnuahC5ga4fwwEuTa8M0zQOnIMpnHnD2WpvnfBxYixGV+Pc9NYyXWPvMZj4rBsORnvqxM4jq0NxgGvDa6lUrf1PYQoWX7Ph3twghTMaiHGUb8MzrlitI19hamdfc5Te3SD6DMaHOyB01X/mUIbVf2ASne9D2c6mM/4mxhJCaoxn/mctF1z9C6ZuNUMoy+owxr8gPtwBq1at+g9TMO2ah+iBBr43+Ax2a3zrmqK5dxdIzZzrzm676oV341Pv0PBJJEtrx2uYmrCwMLDdYMKt5a1sitreRyD2zJtOrntrRfYQ8hWyg0FqYQbi0+fc/MYlXX0f2KFzbjnL7aoRfgx2ALJhxBiErodYB2Czi9G57ZNwusoOcHDPvOaovrdB9BYh34NDjcQogJnp3PBaLV1r/02wfXc8RBjJ8T0xDsSnBtnOweOAuTecdXbWCV8lxncuLW8t0tT2ohROxKYdkPnuTW+1kzX2XgHnAlhw4Cuv0R2FngNISYQgtcj1DNwBpPiAklwA8wzME1RxwLybjho7akXBKZtYgOEAUqIAIz+HhjIxMDLCS1JCjsAaBaQkQvQKhtTow5oISUlILi3vbNLU9hyG+ZRUB1BcDiAbMOe6o9+uetHNhIIdWR7FAeQUxcgGzLxtL7G3WvwlsQ7AKIrJqYwoKb7R9ZJVHZNbEOGsjtFDgVCDBN0B8685y25vEH6CLxrwNkhAGklqkv3/z+jU+kGOhf3nm12lEvD2Hi4HENUkA2ke0EYpzPUD2iyHOWJAOyYwRwxo1ww5MQ1Y5xQ9RdOqew4AmQrjruDNt+sAAAAASUVORK5CYII=") !important}.reveal .smaller .callout.callout-titled .callout-icon::before{margin-top:0.5rem !important}
+</style>
+</div>
+</div>
+
+<img data-src="intro-ggplot_files/figure-revealjs/goals-plot-1-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+<h2>#goals</h2>
+
+<img data-src="intro-ggplot_files/figure-revealjs/goals-plot-2-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+<h2>Why ggplot?</h2>
+<ul>
+<li>Powerful and flexible: create complex and customized visualizations easily</li>
+<li>Reproducibility and efficiency: promotes reproducibility by offering consistent syntax and saves time through automation of plot creation</li>
+<li>Layered approach: incrementally build visualizations with multiple layers, exploring different aspects of data</li>
+<li>Extensive customization: essentially infinite options to tailor visualizations</li>
+</ul>
+</section>
+<section class="slide level2">
+<h2>ggplot builds figures by adding on pieces via a particular “<em>g</em>rammar of <em>g</em>raphics”</h2>
+<div class="center">
+<p><img data-src="../../img/grammar.png"></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Basic structure of a ggplot</h2>
+<pre><code>ggplot(data = {data}, aes(x = {xvar}, y = {yvar}, &lt;characteristic&gt; = {othvar}, ...)) +
+      &lt;geom&gt;(&lt;characteristic&gt; = "value", ...) + 
+      ...</code></pre>
+<div class="smaller">
+<ul>
+<li><code>{data}</code>: must be a dataframe (or tibble!)</li>
+<li><code>{xvar}</code> and <code>{yvar}</code> are the names (unquoted) of the variables on the x- and y-axes
+<ul>
+<li>some graphs may not require both, or may require other parameters</li>
+</ul></li>
+<li><code>{othvar}</code> is some other unquoted variable name that defines a grouping or other characteristic you want to map to an aesthetic</li>
+<li><code>&lt;characteristic&gt;</code>: you can map <code>{othvar}</code> (or a fixed <code>"value"</code>) to any of a number of aesthetic features of the figure; e.g., color, shape, size, linetype, etc.</li>
+<li><code>&lt;geom&gt;</code>: the geometric feature you want to use; e.g., point (scatterplot), line, histogram, bar, etc.</li>
+<li><code>"value"</code>: a fixed value that defines some characteristic of the figure; e.g., “red”, 10, “dashed”</li>
+<li>… : there are numerous other options to discover!</li>
+</ul>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb2-2"><a href="#cb2-2"></a>                        <span class="at">fill =</span> eyesight_cat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-2-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>ggplot()</code> doesn’t plot any data itself, it just sets up the data and variables</li>
+</ul>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb3-2"><a href="#cb3-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-3-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>geom_bar()</code> creates a bar graph for the number of observations with a certain value of the <code>x</code> variable
+<ul>
+<li>does not need a <code>y</code> variable</li>
+</ul></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>use <code>geom_col()</code> if you have a <code>y</code> variable that you want to use as the height of the bars</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb4-2"><a href="#cb4-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-4-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>facet_grid()</code> creates a panel for each value of another variable
+<ul>
+<li>can also do <code>rows =</code></li>
+<li>variable name should be within <code>vars()</code> (for reasons we’ll get to later!)</li>
+</ul></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>use <code>facet_wrap()</code> if you want to create panels that expand along rows and columns (e.g., to facet by many countries)</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="5-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb5-2"><a href="#cb5-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>                    <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-5-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>scale_{fill/color}_{...}()</code> functions change the color palette
+<ul>
+<li>some are appropriate for continuous variables, others discrete</li>
+</ul></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><code>scale_fill_viridis_d()</code> good color-blind and black &amp; white-friendly options</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="7-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb6-2"><a href="#cb6-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>                    <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, </span>
+<span id="cb6-8"><a href="#cb6-8"></a>                              <span class="st">"Good"</span>, <span class="st">"Poor"</span>),</span>
+<span id="cb6-9"><a href="#cb6-9"></a>                   <span class="at">name =</span> <span class="st">"Eyesight quality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-6-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>scale_{x/y}_{...}()</code> functions change the axis scale and/or labeling</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><code>scale_y_log10()</code> is helpful when plotting odds or risk ratios</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb7-2"><a href="#cb7-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>                    <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, </span>
+<span id="cb7-8"><a href="#cb7-8"></a>                              <span class="st">"Good"</span>, <span class="st">"Poor"</span>),</span>
+<span id="cb7-9"><a href="#cb7-9"></a>                   <span class="at">name =</span> <span class="st">"Eyesight quality"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-7-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>theme_{...}()</code> changes the “look” of the plot
+<ul>
+<li>but not the data color palette</li>
+</ul></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>find lots of themes and color palettes at <a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/" class="uri">https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="11-13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb8-2"><a href="#cb8-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>                    <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, </span>
+<span id="cb8-8"><a href="#cb8-8"></a>                              <span class="st">"Good"</span>, <span class="st">"Poor"</span>),</span>
+<span id="cb8-9"><a href="#cb8-9"></a>                   <span class="at">name =</span> <span class="st">"Eyesight quality"</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb8-13"><a href="#cb8-13"></a>          <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-8-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li>you can also specify any component of the theme directly</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>lots of arguments can be set to <code>element_blank()</code> to get rid of them</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="14-15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb9-2"><a href="#cb9-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat)) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6"></a>                    <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, </span>
+<span id="cb9-8"><a href="#cb9-8"></a>                              <span class="st">"Good"</span>, <span class="st">"Poor"</span>),</span>
+<span id="cb9-9"><a href="#cb9-9"></a>                   <span class="at">name =</span> <span class="st">"Eyesight quality"</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb9-13"><a href="#cb9-13"></a>          <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Eyesight in NLSY"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15"></a>       <span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-9-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>labs()</code> can add subtitles, caption, alt text, as well as label any aesthetics (fill, color, etc.)</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>there’s a lot of redundancy… we could have specified <code>x = "Eyesight quality"</code> here instead.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> eyesight_cat, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>                        <span class="at">fill =</span> eyesight_cat)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(glasses_cat)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>                    <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, </span>
+<span id="cb10-8"><a href="#cb10-8"></a>                              <span class="st">"Good"</span>, <span class="st">"Poor"</span>),</span>
+<span id="cb10-9"><a href="#cb10-9"></a>                   <span class="at">name =</span> <span class="st">"Eyesight quality"</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb10-13"><a href="#cb10-13"></a>          <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Eyesight in NLSY"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15"></a>       <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-10-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<ul>
+<li><code>coord_{...}()</code> functions change the coordinate system
+<ul>
+<li>cartesian is already the default, but <code>expand = FALSE</code> means there is no extra space beyond the axis limits</li>
+</ul></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><code>coord_fixed(ratio = 1)</code> will ensure that 1 unit on the x-axis is the same length as one unit on the y-axis</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Can you recognize some of the layers we may need for this one?</h2>
+
+<img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+<h2>Returning to our basic structure</h2>
+<pre><code>ggplot(data = {data}, aes(x = {xvar}, y = {yvar}, &lt;characteristic&gt; = {othvar}, ...)) +
+      &lt;geom&gt;(&lt;characteristic&gt; = "value", ...) + 
+      ...</code></pre>
+<p>Let’s walk through some more examples in depth</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-12-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>What if we want to change the color of the points?</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb13-2"><a href="#cb13-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-13-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>When we put <code>color =</code> <em>outside</em> the <code>aes()</code>, it means we’re giving it a specific color value that applies to all the points.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>This is the <code>&lt;characteristic&gt; = "value"</code> structure and a common confusion!</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb14-2"><a href="#cb14-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#3d93c8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Sometimes we do want to change all of the colors, though! We can also use hex codes.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>One of my favorite color resources: https://www.color-hex.com</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb15-2"><a href="#cb15-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir, </span>
+<span id="cb15-3"><a href="#cb15-3"></a>           <span class="at">color =</span> eyesight)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-15-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>When we put <code>color =</code> <em>inside</em> the <code>aes()</code> – with no quotation marks – it means we’re telling it how it should assign colors.</p>
+<p>Here we’re plotting the values according to eyesight, where 1 is excellent and 5 is poor.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb16-2"><a href="#cb16-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> eyesight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-16-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Note that we could also put the <code>aes()</code> (aesthetics) in the <code>geom_()</code> itself.</p>
+<p>If within <code>geom_point()</code>, it will only apply to that geom.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb17-2"><a href="#cb17-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> eyesight)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-17-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>if we add, say, <code>geom_line()</code>, it will not be colored by eyesight</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>           <span class="at">color =</span> eyesight)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">"green"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>                       <span class="at">high =</span> <span class="st">"purple"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-18-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>The blues are hard to distinguish, so we could map the values of <code>eyesight</code> to a different continuous scale using <code>scale_color_gradient()</code></p>
+<p>You can read lots more about this function <a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">here</a>, so you don’t have to have such ugly color scales! ##</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb19-2"><a href="#cb19-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir, </span>
+<span id="cb19-3"><a href="#cb19-3"></a>           <span class="at">color =</span> <span class="fu">factor</span>(eyesight))) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-19-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>But wait! The variable <code>eyesight</code> isn’t really continuous: it has 5 discrete values.</p>
+<p>We want to treat it as a <em>factor</em> (categorical) variable using the <code>factor()</code> function</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb20-2"><a href="#cb20-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>           <span class="at">color =</span> <span class="fu">factor</span>(eyesight))) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb20-6"><a href="#cb20-6"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"purple"</span>, <span class="st">"red"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>               <span class="st">"green"</span>, <span class="st">"yellow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-20-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Now if we want to change the color scheme, we have to use a different function.</p>
+<p>Before we used <code>scale_color_gradient()</code>, which works for continuous variables, now <code>scale_color_manual()</code>.</p>
+<p>There are a lot of options that follow the same naming scheme.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb21-2"><a href="#cb21-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir, </span>
+<span id="cb21-3"><a href="#cb21-3"></a>           <span class="at">color =</span> <span class="fu">factor</span>(eyesight))) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">geom_point</span>()  <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-21-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>There are tons of different options in R for color palettes.</p>
+<p>You can play around with those in the <code>RColorBrewer</code> package <a href="http://colorbrewer2.org">here</a>.</p>
+<p>You can access the scales in that package with <code>scale_color_brewer()</code>, or see them all after installing the package with <code>RColorBrewer::display.brewer.all()</code></p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, </span>
+<span id="cb22-2"><a href="#cb22-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> age_bir, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>           <span class="at">color =</span> <span class="fu">factor</span>(eyesight))) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">geom_point</span>()  <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, </span>
+<span id="cb22-6"><a href="#cb22-6"></a>            <span class="at">name =</span> <span class="st">"Eyesight"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7"></a>            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8"></a>                       <span class="st">"Very Good"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9"></a>                       <span class="st">"Good"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10"></a>                       <span class="st">"Fair"</span>,</span>
+<span id="cb22-11"><a href="#cb22-11"></a>                       <span class="st">"Poor"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-22-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Each of the <code>scale_color_x()</code> functions has a lot of the same arguments.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Make sure if you are labelling a factor variable in a plot like this that you get the names right!</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Exercise</h2>
+<ol type="1">
+<li>Make a scatterplot showing the relationship between sleep on weekdays and on weekends.</li>
+<li>Play around with changing the colors.</li>
+<li>Type <code>scale_color</code> into your R console and press tab to see the autocomplete. Look through the options and find one we haven’t seen. that works with your plot.</li>
+</ol>
+</section>
+<section class="slide level2">
+<h2>Facets</h2>
+<p>One of the most useful features of <code>{ggplot2}</code> is the ability to “facet” a graph by splitting it up according to the values of some variable.</p>
+<p>You might use this to show results for a lot of outcomes or exposures at once, for example, or see how some relationship differs by something like age or geographic region</p>
+<div class="center">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../img/facets.png"></p>
+<figcaption>scale=80%</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-23-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>We’ll introduce bar graphs at the same time!</p>
+<p>Notice how we only need an <code>x =</code> argument - the y-axis is automatically the count with this geom.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-24-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>The <code>facet_grid()</code> function splits up the data according to a variable(s).</p>
+<p>Here we’ve split it by region into columns.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-25-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Since that was hard to read, we’ll probably want to split by rows instead.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(region),</span>
+<span id="cb26-5"><a href="#cb26-5"></a>             <span class="at">margins =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-26-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>We can also add a row for all of the data combined</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(region),</span>
+<span id="cb27-5"><a href="#cb27-5"></a>             <span class="at">margins =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-6"><a href="#cb27-6"></a>             <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-27-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>That squishes the other rows though! We can allow them all to have their own axis limits with the <code>scales =</code> argument.</p>
+<p>Other options are “free_x” if we want to allow the x-axis scale to vary, or just “free” to allow for both.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-28-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>We can use <code>facet_wrap()</code> instead, if we want to use both multiple rows and columns for all the values of a variable.</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nlsy, <span class="fu">aes</span>(<span class="at">x =</span> nsibs)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of siblings"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(region), </span>
+<span id="cb29-5"><a href="#cb29-5"></a>             <span class="at">ncol =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-29-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>It tries to make a good decision, but you can override how many columns you want!</p>
+</section>
+<section class="slide level2">
+<h2>Wait, these look like histograms!</h2>
+<p>When we have a variable with a lot of possible values, we may want to bin them with a histogram</p>
+
+<img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-30-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+<h2><code>stat_bin()</code> using <code>bins = 30</code>. Pick better value with <code>binwidth</code>.</h2>
+<p>We used discrete values with <code>geom_bar()</code>, but with <code>geom_histogram()</code> we’re combining values: the default is into 30 bins.</p>
+<p>This is one of the most common warning messages I get in R! <br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><embed data-src="https://www.washingtonpost.com/pbox.php?url=http://www.washingtonpost.com/news/volokh-conspiracy/wp-content/uploads/sites/14/2015/08/Warning-2.gif&amp;w=1484&amp;op=resize&amp;opt=1&amp;filter=antialias&amp;t=20170517" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">ggplot</span>(nlsy, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-32-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>We can use <code>bins =</code> instead, if we want!</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Note how this fits into the <code>&lt;characteristic&gt; = "value"</code> structure</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">ggplot</span>(nlsy, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="co">#&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-33-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Be aware that you may interpret your data differently depending on how you bin it!</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">ggplot</span>(nlsy, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-34-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Sometimes the bin width actually has some meaning so we want to specify that</p>
+<p>Here, each bin is $1000 – you can see the $5000 and $10000 increments</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">ggplot</span>(nlsy, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-35-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>There are a lot of <code>scale_x_()</code> and <code>scale_y_()</code> functions for you to explore</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>The naming schemes work similarly to the <code>scale_color</code> ones, just with different options!</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">ggplot</span>(nlsy, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-36-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>The <code>{scales}</code> packages contains lots of helpful number formatting functions</p>
+<p>See the <code>help(scale_x_log10)</code> for some examples</p>
+</section>
+<section class="slide level2">
+<h2>Exercise</h2>
+<p>Make a fancy histogram showing the distribution of income in this data.</p>
+</section>
+<section class="slide level2">
+<h2>Finally, themes to make our plots prettier</h2>
+<p>You probably recognize the ggplot theme. But did you know you can trick people into thinking you made your figures in Stata?</p>
+<div class="columns">
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-37-1.png" style="width:85.0%"></p>
+</div>
+</div>
+</div><div class="column" style="width:48%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-38-1.png" style="width:85.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nlsy, </span>
+<span id="cb35-2"><a href="#cb35-2"></a>            <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(sleep_wknd), </span>
+<span id="cb35-3"><a href="#cb35-3"></a>                <span class="at">y =</span> sleep_wkdy,</span>
+<span id="cb35-4"><a href="#cb35-4"></a>                <span class="at">fill =</span> <span class="fu">factor</span>(sleep_wknd))) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"hours slept on weekends"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8"></a>       <span class="at">y =</span> <span class="st">"hours slept on weekends"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9"></a>       <span class="at">title =</span> <span class="st">"The more people sleep on weekends, the more they</span><span class="sc">\n</span><span class="st"> sleep on weekdays"</span>,</span>
+<span id="cb35-10"><a href="#cb35-10"></a>       <span class="at">subtitle =</span> <span class="st">"According to NLSY data"</span>)</span>
+<span id="cb35-11"><a href="#cb35-11"></a></span>
+<span id="cb35-12"><a href="#cb35-12"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-39-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Let’s store our plot first.</p>
+<p>Plots work just like other R objects, meaning we can use the assignment arrow.</p>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Question</strong></p>
+</div>
+<div class="callout-content">
+<p>Can you figure out what each chunk of this code is doing to the figure?</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>p <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">theme_minimal</span>() <span class="co">#&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-40-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>We can change the overall theme</p>
+<p>Since we stored the plot as <code>p</code>, it’s easy to add on / try different things</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>p <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-41-1.png" width="576"></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>p <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-42-1.png" width="576"></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>p <span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-43-1.png" width="576"></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>p <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_fivethirtyeight</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-44-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>Other packages contain themes</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>p <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_excel_new</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-45-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>In case you miss Excel….</p>
+</section>
+<section class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-fig.asp="0.7">
+<div class="column">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>p <span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>  louisahstuff<span class="sc">::</span><span class="fu">my_theme</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-46-1.png" width="576"></p>
+</div>
+</div>
+</div>
+<p>You can even make your own!</p>
+</section>
+<section class="slide level2">
+<h2>Finally, save it!</h2>
+<p>If your data changes, you can easily run the whole script again:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb43-2"><a href="#cb43-2"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset.csv"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="fu">ggplot</span>(dataset) <span class="sc">+</span> </span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> xvar, <span class="at">y =</span> yvar))</span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"scatterplot.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>ggsave()</code> function will automatically save the most recent plot in your output.</p>
+<p>To be safe, you can store your plot, e.g., <code>p &lt;- ggplot(...) + ...</code> and then</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"scatterplot.pdf"</span>, <span class="at">plot =</span> p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+<h2>More resources</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Cheat sheet: https://www.rstudio.com/resources/cheatsheets/#ggplot2 Catalog: http://shiny.stat.ubc.ca/r-graph-catalog/ Cookbook: http://www.cookbook-r.com/Graphs/ Official package reference: https://ggplot2.tidyverse.org/index.html List of themes and instructions to make your own: https://www.datanovia.com/en/blog/ggplot-themes-gallery/</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="https://github.com/rstudio/hex-stickers/blob/main/PNG/ggplot2.png?raw=true"></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Exercise</h2>
+<p>See how close you can get to this plot!</p>
+
+<!-- Work through gradually filling in things to build up -->
+<!-- ```{r, echo = FALSE, out.width = "55%", fig.align = "left", eval = FALSE} -->
+<!-- ggplot(nlsy, aes(nsibs, age_bir, col = factor(region))) + -->
+<!--   geom_jitter(alpha = 0.3) + -->
+<!--   geom_smooth(method = "loess", se = FALSE) + -->
+<!--   labs(title = "Relationship between family size and age at first birth", -->
+<!--        subtitle = "By U.S. Region, with Loess curves", -->
+<!--        x = "Number of siblings", -->
+<!--        y = "Age at first birth") + -->
+<!--   scale_color_viridis_d(labels = c("Northeast", "North Central", "South", "West"), -->
+<!--                         name = "Region") + -->
+<!--   facet_grid(cols = vars(sex), -->
+<!--              labeller = labeller(sex = c("1" = "Male", "2" = "Female"))) + -->
+<!--   theme_minimal() + -->
+<!--   theme(legend.position = "bottom") -->
+<!-- ``` -->
+<!-- 1. Using the NLSY data, make a scatter plot of the relationship between hours of sleep on weekends and weekdays. Color it according to region (where 1 = northeast, 2 = north central, 3 = south, and 4 = west). -->
+<!-- 2. Replace `geom_point()` with `geom_jitter()`. What does this do? Why might this be a good choice for this graph? Play with the `width = ` and `height = ` options. This site may help: https://ggplot2.tidyverse.org/reference/geom_jitter.html -->
+<!-- 3. Use the `shape = ` argument to map the sex variable to different shapes. Change the shapes to squares and diamonds. (Hint: how did we manually change colors to certain values? This might help: https://ggplot2.tidyverse.org/articles/ggplot2-specs.html) -->
+<!-- 1. When we're comparing distributions with very different numbers of observations, instead of scaling the y-axis like we did with the `facet_grid()` function, we might want to make density histograms. Use google to figure out how to make a density histogram of income. Facet it by region. -->
+<!-- 2. Make each of the regions in your histogram from part 1 a different color. (Hint: compare what `col = ` and `fill = ` do to histograms). -->
+<!-- 3. Instead of a log-transformed x-axis, make a square-root transformed x-axis. -->
+<!-- 4. Doing part 3 squishes the labels on the x-axis. Using the `breaks = ` argument that all the `scale_x_()` functions have, make labels at 1000, 10000, 25000, and 50000. -->
+<!-- ## Other geoms -->
+<!-- ::: center -->
+<!-- ![](../../img/geoms.png){width=900} -->
+<!-- ::: -->
+<!-- <!-- - A helpful reference can also be found here: http://sape.inf.usi.ch/quick-reference/ggplot2/geom -->
+<img data-src="intro-ggplot_files/figure-revealjs/unnamed-chunk-49-1.png" width="960" class="r-stretch"><p>–&gt;</p>
+<!-- ::: aside -->
+<!-- Image via <https://nbisweden.github.io/RaukR-2019/ggplot/presentation/ggplot_presentation.html> -->
+<!-- ::: -->
+<!-- ## -->
+
+<div class="footer footer-default">
+
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'pointer': {"key":"q","color":"red","pointerSize":16,"alwaysVisible":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: true,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealPointer, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
