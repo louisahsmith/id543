@@ -324,7 +324,6 @@ ggplot(data = nlsy, aes(x = eyesight_cat,
 `coord_fixed(ratio = 1)` will ensure that 1 unit on the x-axis is the same length as one unit on the y-axis
 :::
 
-
 ## Can you recognize some of the layers we may need for this one?
 
 ```{r}
