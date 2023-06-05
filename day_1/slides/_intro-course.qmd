@@ -4,7 +4,6 @@ subtitle: Introduction to R
 format: revealjs
 execute: 
   echo: true
-order: 1
 ---
 
 ## About this class
@@ -270,6 +269,3 @@ This is by no means the only way to manage your data, but I find that a lot of t
 :::
 
 [^3]: See which ones at <https://tidyverse.tidyverse.org>
-
-# Exercise
-
