@@ -4,6 +4,7 @@ format:
   revealjs:
     theme: 
       - ../../www/custom.scss
+order: 2
 ---
 
 ## #goals

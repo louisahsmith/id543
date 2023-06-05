@@ -158,14 +158,14 @@
     "href": "day_1/index.html",
     "title": "Day 1",
     "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL) +\n  coord_cartesian(expand = FALSE)\n\nLoading\n  webR..."
+    "text": "This is an R console built right into the site. The nlsy dataframe is available here.\nLoading\n  webR...\n\n\n  \n\n\n\n\n\n\n\n\n\nggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL) +\n  coord_cartesian(expand = FALSE)\n\nLoading\n  webR..."
   },
   {
     "objectID": "day_1/index.html#overview",
     "href": "day_1/index.html#overview",
     "title": "Day 1",
     "section": "",
-    "text": "ggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL) +\n  coord_cartesian(expand = FALSE)\n\nLoading\n  webR..."
+    "text": "This is an R console built right into the site. The nlsy dataframe is available here.\nLoading\n  webR...\n\n\n  \n\n\n\n\n\n\n\n\n\nggplot(data = nlsy, aes(x = eyesight_cat, \n                        fill = eyesight_cat)) +\n  geom_bar() +\n  facet_grid(cols = vars(glasses_cat)) +\n  scale_fill_brewer(palette = \"Spectral\",\n                    direction = -1) +\n  scale_x_discrete(breaks = c(\"Excellent\", \n                              \"Good\", \"Poor\"),\n                   name = \"Eyesight quality\") +\n  theme_minimal() +\n  theme(legend.position = \"none\",\n        axis.text.x = element_text(\n          angle = 45, vjust = 1, hjust = 1)) +\n  labs(title = \"Eyesight in NLSY\",\n       y = NULL) +\n  coord_cartesian(expand = FALSE)\n\nLoading\n  webR..."
   },
   {
     "objectID": "resources.html",

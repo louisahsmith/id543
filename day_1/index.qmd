@@ -4,7 +4,7 @@ toc-location: left
 filters:
   - webr
 webr:
-  show-startup-message: false
+  show-startup-message: true
 ---
 
 ## Overview
@@ -43,10 +43,26 @@ nlsy <- readr::read_csv("nlsy_cc.csv") |>
 
 </div>
 
+### Exercise
+
+This is an R console built right into the site. The `nlsy` dataframe is available here.
+
+```{webr-r}
+nlsy
+```
+
 <div>
 
 ```{=html}
 <iframe class="slide-deck" src="slides/intro-ggplot.html"></iframe>
+```
+
+</div>
+
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="slides/factor-variables.html"></iframe>
 ```
 
 </div>
