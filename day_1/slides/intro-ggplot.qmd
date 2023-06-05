@@ -559,7 +559,7 @@ ggplot(data = nlsy,
 Each of the `scale_color_x()` functions has a lot of the same arguments.
 
 ::: callout-warning
-Make sure if you are labelling a factor variable in a plot like this that you get the names right!
+Make sure if you are labeling a factor variable in a plot like this that you get the names right!
 :::
 
 ## Exercise
