@@ -800,8 +800,10 @@ See the `help(scale_x_log10)` for some examples
 
 ## Exercise
 
-Make a fancy histogram showing the distribution of income in this data.
-
+1. Make a histogram showing the distribution of income in this data. Facet it by the variable(s) of your choice.
+2. Make the bars of the histogram orange.
+3. Make the bars of the histogram differ according to the variable you faceted by
+4. Make the bars of the histogram differ according to a different variable from the one you faceted by.
 
 ## Finally, themes to make our plots prettier
 

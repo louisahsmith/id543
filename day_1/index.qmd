@@ -1,39 +1,7 @@
 ---
 title: "Day 1"
 toc-location: left
-filters:
-  - webr
-webr:
-  show-startup-message: true
 ---
-
-## Overview
-
-```{=html}
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female"))) |> 
-  dplyr::select(id, samp, sex_cat, race_eth_cat, dplyr::everything())
-`)
-</script>	
-```
 
 <div>
 
@@ -43,13 +11,6 @@ nlsy <- readr::read_csv("nlsy_cc.csv") |>
 
 </div>
 
-### Exercise
-
-This is an R console built right into the site. The `nlsy` dataframe is available here.
-
-```{webr-r}
-nlsy
-```
 
 <div>
 
@@ -66,30 +27,3 @@ nlsy
 ```
 
 </div>
-
-```{r}
-#| echo: true
-#| eval: false
-ggplot(data = nlsy, aes(x = eyesight_cat, 
-                        fill = eyesight_cat)) +
-  geom_bar() +
-  facet_grid(cols = vars(glasses_cat)) +
-  scale_fill_brewer(palette = "Spectral",
-                    direction = -1) +
-  scale_x_discrete(breaks = c("Excellent", 
-                              "Good", "Poor"),
-                   name = "Eyesight quality") +
-  theme_minimal() +
-  theme(legend.position = "none",
-        axis.text.x = element_text(
-          angle = 45, vjust = 1, hjust = 1)) +
-  labs(title = "Eyesight in NLSY",
-       y = NULL) +
-  coord_cartesian(expand = FALSE)
-```
-
-
-```{webr-r}
-ggplot(nlsy, aes(x = eyesight_cat)) + geom_bar()
-```
-

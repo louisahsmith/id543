@@ -71,7 +71,7 @@ nlsy <- mutate(nlsy,
 The second way may look longer now, but we'll see later why it's useful.
 :::
 
-## The `factor()` function does nothing to the values
+## The `factor()` function does nothing to the names of the values
 
 ```{r}
 nlsy <- mutate(nlsy, 
@@ -84,7 +84,7 @@ levels(nlsy$eyesight_cat)
 The levels will be in numeric order, or alphabetical order if a character variable. This means that `factor(c(1, 2, ..., 10))` will have a different ordering than `factor(c("1", "2", ..., "10"))`.
 :::
 
-## We can assign values
+## We can assign names to the values
 
 If I know that `factor(eyesight)` is going to create levels 1, 2, ..., 5 and what those correspond to:
 ```{r}
@@ -110,6 +110,24 @@ count(nlsy,eyesight_cat, eyesight)
 Make sure the `levels = ` and `labels = ` arguments always match!
 :::
 
+## Creating a factor variable from a character variable using `case_when()`
+
+```{r}
+nlsy <- mutate(nlsy, slp_cat_wkdy = 
+                 case_when(
+                   sleep_wkdy < 5 ~ "little",
+                   sleep_wkdy < 7 ~ "some",
+                   sleep_wkdy < 9 ~ "ideal",
+                   sleep_wkdy < 12 ~ "lots"
+                 ),
+               slp_cat_wkdy = factor(slp_cat_wkdy)
+)
+```
+::: callout-danger
+# Question
+What order will these levels be in?
+:::
+
 ## `forcats` package
 
 :::: columns
@@ -120,7 +138,7 @@ Make sure the `levels = ` and `labels = ` arguments always match!
 - Automatically loads with `library(tidyverse)`
 :::
 :::{.column width="30%"}
-![](../../img/forcats.png)
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/forcats.png?raw=true)
 :::
 ::::
 
