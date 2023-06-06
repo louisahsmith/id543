@@ -132,12 +132,63 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../day_1/index.html" class="sidebar-item-text sidebar-link active">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../day_1/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Day 1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Homework</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../day_1/homework/homework_2.docx" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework 1</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../day_1/slides/intro-course.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome to ID 543</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../day_1/slides/intro-ggplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to ggplot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../day_1/slides/factor-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factor variables</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
     </ul>
     </div>
     
@@ -166,29 +217,19 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female"))) |> 
-  dplyr::select(id, samp, sex_cat, race_eth_cat, dplyr::everything())
-`)
-</script>   
+<p>Download some exercises to go along with these slides <a href="exercises/exercises_day_1.R">here</a>.</p>
+Open the slides in a new tab <a href="slides/intro-course.html">here</a>.
+<div>
+<iframe class="slide-deck" src="slides/intro-course.html"></iframe>
+</div>
+Open the slides in a new tab <a href="slides/intro-ggplot.html">here</a>.
+<div>
+<iframe class="slide-deck" src="slides/intro-ggplot.html"></iframe>
+</div>
+Open the slides in a new tab <a href="slides/factor-variables.html">here</a>.
+<div>
+<iframe class="slide-deck" src="slides/factor-variables.html"></iframe>
+</div>
 
 
 

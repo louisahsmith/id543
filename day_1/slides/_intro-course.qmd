@@ -88,8 +88,11 @@ Why start with figures?
 
 ::: columns
 ::: {.column width="50%"}
--   MD MS
--   Originally Stata!
+-   MD from Germany, background in Anesthesiology
+    -   recently graduated from MS in Epidemiology at HSPH
+    -   now postdoctoral research fellow in Epi
+-   Originally Stata! 
+    -   deep dive into R during Master
 :::
 
 ::: {.column width="50%"}

@@ -1,0 +1,33 @@
+---
+title: "Homework 1"
+format: docx
+order: 2
+---
+
+Please copy and paste your code and answers into this document and submit on Canvas.
+
+1. Using the NLSY data, make a scatter plot of the relationship between hours of sleep on weekends and weekdays. Color it according to region (where 1 = northeast, 2 = north central, 3 = south, and 4 = west).
+
+2. Replace `geom_point()` with `geom_jitter()`. What does this do? Why might this be a good choice for this graph? Play with the `width = ` and `height = ` options. This site may help: https://ggplot2.tidyverse.org/reference/geom_jitter.html
+
+3. Use the `shape = ` argument to map the sex variable to different shapes. Change the shapes to squares and diamonds. (Hint: how did we manually change colors to certain values? This might help: https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
+
+4. When we're comparing distributions with very different numbers of observations, instead of scaling the y-axis like we did with the `facet_grid()` function, we might want to make density histograms. Use google to figure out how to make a density histogram of income. Facet it by region.
+
+5. Make each of the regions in your histogram a different color and square-root transform the x-axis.
+
+7. Doing the last question squishes the labels on the x-axis. Using the `breaks = ` argument that all the `scale_x_()` functions have, make labels at 1000, 10000, 25000, and 50000. To make these easier to read, format them with commas (But not dollar signs. Hint: look at the examples in the documentation.)
+
+8. The order of the different levels of a factor variable is important. Describe a scenario where different orders of the levels of a factor variable may lead to different results. (Hint: Think about how factor variables are treated a regression analysis.)
+<!-- Comment SF: This may be too advanced. But if the students already know how to run regression analysis in STATA, they might know this. In STATA, the same as in R the lowest/first level is  used as reference level for categorical variables in a regression model as default. -->
+<!-- I think it's a good one, because we'll also mention it (in passing) in class - LS -->
+
+9. The `race_eth` variable in the NLSY dataset is numeric. In the dataset you loaded, we already turned it into a factor variable (`race_eth_cat`). Show the code you would use to do this.
+
+10. Create a new variable called `race_reor`, reordering the levels such that "Non-Black, Non-Hispanic" would automatically be used as reference level in analyses. Use a function to check the order of these two variables.
+
+11. Age of individuals contained in the NLSY dataset ranges from 13 to 52 years (variable: `age_bir`). Use `case_when()` to create the following age categories: teenager (13-19), young adult (20-29), adult (30-52). Make sure it is a correctly labeled factor variable (hint: this can be a two-step process).
+
+<!-- 12. Using the age group factor variable, show the mean age and total number of individuals in each age group. -->
+<!-- (Going to save this one for later! LS) -->
+

@@ -1,0 +1,252 @@
+---
+title: "Factor variables"
+format: 
+  revealjs:
+    theme:
+      - ../../www/custom.scss
+execute: 
+  echo: true
+order: 3
+---
+
+## Problem
+
+::: {style="height: 0px;"}
+{{< include ../../www/_scss.qmd >}}
+:::
+
+```{r data, include = FALSE}
+library(tidyverse)
+nlsy <- read_csv(here::here("data", "nlsy_cc.csv")) |> 
+  mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
+                                                    "Good", "Fair", "Poor")),
+         glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
+                                                  "Wears glasses/contacts")),
+         race_eth_cat = fct_recode(as.character(race_eth),
+                                   "Hispanic" = "1",
+                                   "Black" = "2",
+                                   "Non-Black, Non-Hispanic" = "3"),
+         sex_cat = factor(sex, labels = c("Male", "Female")),
+         slp_cat_wkdy = case_when(sleep_wkdy < 5 ~ "little",
+                                              sleep_wkdy < 7 ~ "some",
+                                              sleep_wkdy < 9 ~ "ideal",
+                                              sleep_wkdy < 12 ~ "lots",
+                                              TRUE ~ NA_character_ # >= 12
+                                              ))
+```
+
+We encountered this code while making a plot:
+```{r}
+#| eval: false
+ggplot(data = nlsy, 
+       aes(x = income, y = age_bir, 
+           color = factor(eyesight))) +
+  geom_point()  +
+  scale_color_brewer(palette = "Set1", 
+                     name = "Eyesight",
+                     labels = c("Excellent",
+                                "Very Good",
+                                "Good",
+                                "Fair",
+                                "Poor"))
+```
+Before, the `eyesight` variable had values 1 through 5, now it is treated as discrete and its values are labelled on the plot.
+
+## Creating a new variable
+
+Two (of several) ways of doing the same thing:
+
+```{r}
+nlsy$eyesight_cat <- factor(nlsy$eyesight)
+```
+
+*OR*
+
+```{r}
+nlsy <- mutate(nlsy, 
+               eyesight_cat = factor(eyesight))
+```
+
+::: callout-tip
+The second way may look longer now, but we'll see later why it's useful.
+:::
+
+## The `factor()` function does nothing to the names of the values
+
+```{r}
+nlsy <- mutate(nlsy, 
+               eyesight_cat = factor(eyesight))
+class(nlsy$eyesight_cat)
+levels(nlsy$eyesight_cat)
+```
+
+::: callout-warning
+The levels will be in numeric order, or alphabetical order if a character variable. This means that `factor(c(1, 2, ..., 10))` will have a different ordering than `factor(c("1", "2", ..., "10"))`.
+:::
+
+## We can assign names to the values
+
+If I know that `factor(eyesight)` is going to create levels 1, 2, ..., 5 and what those correspond to:
+```{r}
+nlsy <- mutate(nlsy, 
+               eyesight_cat = factor(eyesight, 
+                                     labels = c("Excellent", 
+                                                "Very Good", 
+                                                "Good", 
+                                                "Fair", 
+                                                "Poor")))
+count(nlsy, eyesight_cat, eyesight)
+```
+
+## We can reorder the levels
+
+Use the `levels = ` argument to put the levels in some order.
+
+```{r}
+nlsy <- mutate(nlsy, 
+               eyesight_cat = factor(eyesight, 
+                                     levels = c(5, 4, 3, 2, 1), 
+                                     labels = c("Poor", "Fair", 
+                                                "Good", "Very Good",
+                                                "Excellent")))
+count(nlsy,eyesight_cat, eyesight)
+```
+
+::: callout-warning
+Make sure the `levels = ` and `labels = ` arguments always match!
+:::
+
+## Creating a factor variable from a character variable using `case_when()`
+
+```{r}
+nlsy <- mutate(nlsy, slp_cat_wkdy = 
+                 case_when(
+                   sleep_wkdy < 5 ~ "little",
+                   sleep_wkdy < 7 ~ "some",
+                   sleep_wkdy < 9 ~ "ideal",
+                   sleep_wkdy < 12 ~ "lots"
+                 ),
+               slp_cat_wkdy = factor(slp_cat_wkdy)
+)
+```
+::: {.callout-danger title="Question"}
+What order will these levels be in?
+:::
+
+## `forcats` package
+
+:::: columns
+::: {.column width="70%"}
+- Tries to make working with factors safe and convenient
+- Functions to make new levels, reorder levels, combine levels, etc.
+- All the functions start with `fct_` so they're easy to find using tab-complete!
+- Automatically loads with `library(tidyverse)`
+:::
+:::{.column width="30%"}
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/forcats.png?raw=true)
+:::
+::::
+
+## Reorder factors
+
+The `fct_relevel()` function allows us just to rewrite the names of the categories out in the order we want them (safely).
+
+```{r fct-relevel}
+nlsy <- mutate(nlsy, 
+               slp_cat_wkdy_ord = fct_relevel(slp_cat_wkdy, 
+                                              "little", 
+                                              "some", 
+                                              "ideal", 
+                                              "lots"
+               )
+)
+
+summary(nlsy$slp_cat_wkdy_ord)
+```
+
+## What if you misspell something?
+
+```{r misspell}
+#| warning: true
+#| error: false
+nlsy <- mutate(nlsy, 
+               slp_cat_wkdy_ord2 = fct_relevel(slp_cat_wkdy, 
+                                               "little", 
+                                               "soome", 
+                                               "ideal", 
+                                               "lots"
+               )
+)
+
+summary(nlsy$slp_cat_wkdy_ord2)
+```
+
+#### You get a warning, and levels you didn't mention are pushed to the end.
+
+## Other orders
+
+While amount of sleep has an inherent ordering, region doesn't. Also, the region variable is numeric, not a character!
+
+From the codebook, I know that:
+```{r fct-recode}
+nlsy <- mutate(nlsy, 
+               region_fact = fct_recode(factor(region),
+                                        "Northeast" = "1",
+                                        "North Central" = "2",
+                                        "South" = "3",
+                                        "West" = "4"))
+summary(nlsy$region_fact)
+```
+
+## Other orders
+
+So now I can reorder them as I wish -- how about from most people to least?
+```{r fct-infreq}
+nlsy <- mutate(nlsy, region_fact = fct_infreq(region_fact))
+summary(nlsy$region_fact)
+```
+Or the reverse of that?
+```{r fct-rev}
+nlsy <- mutate(nlsy, region_fact = fct_rev(region_fact))
+summary(nlsy$region_fact)
+```
+
+## Add levels
+
+
+```{r fct-na}
+nlsy <- mutate(nlsy, slp_cat_wkdy_out = 
+                 fct_explicit_na(slp_cat_wkdy, na_level = "outlier"))
+summary(nlsy$slp_cat_wkdy_out)
+```
+
+## Remove levels
+
+Or maybe we want to combine some levels that don't have a lot of observations in them:
+```{r fct-collapse}
+nlsy <- mutate(nlsy, slp_cat_wkdy_comb = 
+                 fct_collapse(slp_cat_wkdy, 
+                              "less" = c("little", "some"),
+                              "more" = c("ideal", "lots")
+)
+)
+summary(nlsy$slp_cat_wkdy_comb)
+```
+
+## Add and remove
+
+Or we can have R choose which ones to combine based on how few observations they have:
+```{r fct-lump}
+nlsy <- mutate(nlsy, slp_cat_wkdy_lump = 
+                 fct_lump(slp_cat_wkdy, n = 2))
+summary(nlsy$slp_cat_wkdy_lump)
+```
+
+- Probably not a good idea for factors with in inherent order
+
+##
+::: center
+### There are 25 `fct_` functions in the package. The sky's the limit when it comes to manipulating your categorical variables in R!
+:::
+
+# Exercise

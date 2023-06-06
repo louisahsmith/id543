@@ -1,35 +1,33 @@
 ---
 title: "Day 1"
 toc-location: left
-filters:
-  - webr
-webr:
-  show-startup-message: false
 ---
 
+Download some exercises to go along with these slides [here](exercises/exercises_day_1.R).
+
+Open the slides in a new tab [here](slides/intro-course.html).
+<div>
+```{=html}
+<iframe class="slide-deck" src="slides/intro-course.html"></iframe>
+```
+
+</div>
+
+
+Open the slides in a new tab [here](slides/intro-ggplot.html).
+<div>
 
 ```{=html}
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female"))) |> 
-  dplyr::select(id, samp, sex_cat, race_eth_cat, dplyr::everything())
-`)
-</script>	
+<iframe class="slide-deck" src="slides/intro-ggplot.html"></iframe>
 ```
+
+</div>
+
+Open the slides in a new tab [here](slides/factor-variables.html).
+<div>
+
+```{=html}
+<iframe class="slide-deck" src="slides/factor-variables.html"></iframe>
+```
+
+</div>

@@ -1,0 +1,275 @@
+---
+title: "Welcome to ID 543"
+subtitle: Introduction to R
+format: revealjs
+execute: 
+  echo: true
+order: 1
+---
+
+## About this class
+
+::: {style="height: 0px;"}
+{{< include ../../www/_scss.qmd >}}
+:::
+
+```{r data, include = FALSE}
+library(tidyverse)
+nlsy <- read_csv(here::here("data", "nlsy_cc.csv")) |> 
+  mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
+               "Good", "Fair", "Poor")),
+    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
+                     "Wears glasses/contacts")),
+    race_eth_cat = fct_recode(as.character(race_eth),
+    "Hispanic" = "1",
+    "Black" = "2",
+    "Non-Black, Non-Hispanic" = "3"),
+    sex_cat = factor(sex, labels = c("Male", "Female"))) |> 
+  select(id, samp, sex_cat, race_eth_cat, everything())
+dat <- data.frame(nlsy)
+```
+
+-   Quick! Intense!
+    -   Daily homeworks & final project
+    -   Use office hours! Your classmates! The internet!
+    -   It will require practice afterward, and time to sink in
+    -   The goal is to set you up for success and give you resources to learn more
+
+::: callout-tip
+Experiment! You are not going to break anything!
+:::
+
+## About this class {.smaller}
+
+-   Everything you need is at <http://id543.louisahsmith.com>
+    -   Canvas will link you there, but good to bookmark as well
+    -   Everything admin/grade-related on Canvas
+-   General format:
+    -   Some overview slides
+    -   An example together
+    -   Practice on your own/with your classmates
+    -   Repeat
+
+::: callout-tip
+Try to solve a problem yourself first, classmate second, teaching team third
+:::
+
+## About this class
+
+-   Day 1: figures and categorical (factor) variables
+-   Day 2: data manipulation
+-   Day 3: data management
+-   Day 4: models and tables
+
+::: callout-caution
+# 
+
+Why start with figures?
+:::
+
+## About Louisa {.smaller}
+
+::: columns
+::: {.column width="40%"}
+-   Assistant professor at Northeastern University
+    -   Department of Health Sciences and the Roux Institute (Portland)
+-   Started using R during my master's (so almost 9 years of experience)
+    -   Learned mostly by doing!
+    -   Twitter, blogs, RStudio::conf, meetups
+-   First iteration of this class when I was a PhD student here
+-   Basically everything I do is in R!
+:::
+
+::: {.column width="60%"}
+![](../../img/apppic.png)
+:::
+:::
+
+## About Sabine
+
+::: columns
+::: {.column width="50%"}
+-   MD from Germany, background in Anesthesiology
+    -   recently graduated from MS in Epidemiology at HSPH
+    -   now postdoctoral research fellow in Epi
+-   Originally Stata! 
+    -   deep dive into R during Master
+:::
+
+::: {.column width="50%"}
+![](../../img/sabine.jpg)
+:::
+:::
+
+# Dataframes
+
+## Dataframes
+
+- We usually do analysis in R with dataframes (or some variant)
+- Dataframes basically work like spreadsheets: here, columns are variables, and rows are observations
+- Here's some data from the National Longitudinal Survey of Youth:
+
+```{r}
+#| eval: false
+dat
+```
+
+```{r}
+#| echo: false
+head(dat, n = 20)
+```
+
+## Indices in dataframes
+
+We can also pull out data from dataframes using "square bracket notation":
+
+```{r}
+dat[3, ]
+```
+
+```{r}
+#| eval: false
+dat[, 3]
+```
+
+```{r}
+#| echo: false
+dat[1:100, 3]
+```
+
+## Dollar sign notation
+
+It's much more useful to be able to pull out a variable by its name, though:
+
+```{r}
+#| eval: false
+dat$sex_cat
+```
+```{r}
+#| echo: false
+dat$sex_cat[1:200]
+```
+
+## Variables as strings
+
+We can also pull out one or more variables by quoting their names in square brackets:
+
+```{r}
+#| eval: false
+dat[, "sex_cat"]
+```
+```{r}
+#| echo: false
+dat[, "sex_cat"][1:200]
+```
+
+## Variables
+
+- Variables can also be different types, including numeric, character, logical, and factor.
+- You can check what type of variable you're dealing with: `class(dat$sex_cat)` (factor!)
+- A special type of dataframe called a "tibble" will show you at the top:
+
+```{r}
+nlsy
+```
+
+## 
+::: center
+![](https://github.com/rstudio/hex-stickers/blob/main/PNG/tibble.png?raw=true){height=650}
+:::
+
+## tibbles are basically just pretty dataframes
+
+:::: columns
+::: {.column width="50%"}
+```{r}
+#| comment: "" 
+as_tibble(nlsy)[, 1:4]
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| comment: ""
+as.data.frame(nlsy)[, 1:4]
+```
+```{r}
+#| echo: false
+#| comment: ""
+as.data.frame(nlsy)[1:20, 1:4]
+```
+:::
+::::
+
+## You can make your own tibble!
+
+We'll be using existing data, but you might want to create a mini-dataset to test on:
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+dat1 <- tibble(
+  age = c(24, 76, 38),
+  height_in = c(70, 64, 68),
+  height_cm = height_in * 2.54
+)
+dat1
+```
+
+:::
+  
+::: {.column width="50%"}
+```{r}
+dat2 <- tribble(
+  ~n, ~food, ~animal,
+  39, "banana", "monkey",
+  21, "milk", "cat",
+  18, "bone", "dog"
+)
+dat2
+```
+:::
+::::
+
+## Different ways to do the same thing
+
+There are usually multiple ways to achieve a task in R. Ideally we'd like solutions that are:
+
+- **readable**: If you share your code with someone, can they figure out what you're doing?
+- **reliable**: Is this way always going to work, even if the data is slightly different?
+- **safe**: Is this way going to introduce errors into your code without you noticing?
+- **fast**: Is this an efficient way to do things, given all of the above?
+
+We'll focus on the *tidyverse* because I think it's the optimal mix of those characteristics
+
+## tidyverse
+
+-   The same people who make RStudio also are responsible for a set of packages called the `tidyverse`
+
+![](../../img/tidy-data.png){fig-align="center"}
+
+## tidyverse
+
+::: columns
+::: {.column width="75%"}
+-   `install.packages(tidyverse)` actually downloads more than a dozen packages[^3]
+-   `library(tidyverse)` loads:
+
+::: {.center .smaller}
+`ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, `forcats`, `lubridate`
+:::
+
+This is by no means the only way to manage your data, but I find that a lot of the time, it's the easiest and simplest way to get things done.
+:::
+
+::: {.column width="25%"}
+![](../../img/tidyverse.png)
+:::
+:::
+
+[^3]: See which ones at <https://tidyverse.tidyverse.org>
+
+# Exercise
+
