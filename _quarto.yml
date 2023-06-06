@@ -91,6 +91,7 @@ format:
     preview-links: auto
     hash-type: number
     hash-one-based-index: true
+    pdf-max-pages-per-slide: 1
     theme: 
       - www/custom.scss
     pointer:

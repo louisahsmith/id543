@@ -3,8 +3,10 @@ title: "Day 1"
 toc-location: left
 ---
 
-<div>
+Download some exercises to go along with these slides [here](exercises/exercises_day_1.R).
 
+Open the slides in a new tab [here](slides/intro-course.html).
+<div>
 ```{=html}
 <iframe class="slide-deck" src="slides/intro-course.html"></iframe>
 ```
@@ -12,6 +14,7 @@ toc-location: left
 </div>
 
 
+Open the slides in a new tab [here](slides/intro-ggplot.html).
 <div>
 
 ```{=html}
@@ -20,6 +23,7 @@ toc-location: left
 
 </div>
 
+Open the slides in a new tab [here](slides/factor-variables.html).
 <div>
 
 ```{=html}

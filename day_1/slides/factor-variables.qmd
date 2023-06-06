@@ -90,19 +90,25 @@ If I know that `factor(eyesight)` is going to create levels 1, 2, ..., 5 and wha
 ```{r}
 nlsy <- mutate(nlsy, 
                eyesight_cat = factor(eyesight, 
-                                     labels = c("Excellent", "Very Good", "Good", "Fair", "Poor")))
+                                     labels = c("Excellent", 
+                                                "Very Good", 
+                                                "Good", 
+                                                "Fair", 
+                                                "Poor")))
 count(nlsy, eyesight_cat, eyesight)
 ```
 
 ## We can reorder the levels
 
-Use the `levels = ` argument to put the levels in the desired order.
+Use the `levels = ` argument to put the levels in some order.
 
 ```{r}
 nlsy <- mutate(nlsy, 
                eyesight_cat = factor(eyesight, 
                                      levels = c(5, 4, 3, 2, 1), 
-                                     labels = c("Poor", "Fair", "Good", "Very Good", "Excellent")))
+                                     labels = c("Poor", "Fair", 
+                                                "Good", "Very Good",
+                                                "Excellent")))
 count(nlsy,eyesight_cat, eyesight)
 ```
 
@@ -123,8 +129,7 @@ nlsy <- mutate(nlsy, slp_cat_wkdy =
                slp_cat_wkdy = factor(slp_cat_wkdy)
 )
 ```
-::: callout-danger
-# Question
+::: {.callout-danger title="Question"}
 What order will these levels be in?
 :::
 
@@ -219,9 +224,10 @@ summary(nlsy$slp_cat_wkdy_out)
 
 Or maybe we want to combine some levels that don't have a lot of observations in them:
 ```{r fct-collapse}
-nlsy <- mutate(nlsy, slp_cat_wkdy_comb = fct_collapse(slp_cat_wkdy, 
-                                                        "less" = c("little", "some"),
-                                                        "more" = c("ideal", "lots")
+nlsy <- mutate(nlsy, slp_cat_wkdy_comb = 
+                 fct_collapse(slp_cat_wkdy, 
+                              "less" = c("little", "some"),
+                              "more" = c("ideal", "lots")
 )
 )
 summary(nlsy$slp_cat_wkdy_comb)
@@ -231,12 +237,16 @@ summary(nlsy$slp_cat_wkdy_comb)
 
 Or we can have R choose which ones to combine based on how few observations they have:
 ```{r fct-lump}
-nlsy <- mutate(nlsy, slp_cat_wkdy_lump = fct_lump(slp_cat_wkdy, n = 2))
+nlsy <- mutate(nlsy, slp_cat_wkdy_lump = 
+                 fct_lump(slp_cat_wkdy, n = 2))
 summary(nlsy$slp_cat_wkdy_lump)
 ```
 
 - Probably not a good idea for factors with in inherent order
 
-#### There are 25 `fct_` functions in the package. The sky's the limit when it comes to manipulating your categorical variables in R!
+##
+::: center
+### There are 25 `fct_` functions in the package. The sky's the limit when it comes to manipulating your categorical variables in R!
+:::
 
 # Exercise

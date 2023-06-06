@@ -480,8 +480,12 @@ div.callout-caution{border-left-color:#5e81ac !important}div.callout-caution.cal
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
 <span id="cb8-2"><a href="#cb8-2"></a>               <span class="at">eyesight_cat =</span> <span class="fu">factor</span>(eyesight, </span>
-<span id="cb8-3"><a href="#cb8-3"></a>                                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, <span class="st">"Very Good"</span>, <span class="st">"Good"</span>, <span class="st">"Fair"</span>, <span class="st">"Poor"</span>)))</span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">count</span>(nlsy, eyesight_cat, eyesight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3"></a>                                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Excellent"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4"></a>                                                <span class="st">"Very Good"</span>, </span>
+<span id="cb8-5"><a href="#cb8-5"></a>                                                <span class="st">"Good"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6"></a>                                                <span class="st">"Fair"</span>, </span>
+<span id="cb8-7"><a href="#cb8-7"></a>                                                <span class="st">"Poor"</span>)))</span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">count</span>(nlsy, eyesight_cat, eyesight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   eyesight_cat eyesight     n
@@ -496,13 +500,15 @@ div.callout-caution{border-left-color:#5e81ac !important}div.callout-caution.cal
 </section>
 <section class="slide level2">
 <h2>We can reorder the levels</h2>
-<p>Use the <code>levels =</code> argument to put the levels in the desired order.</p>
+<p>Use the <code>levels =</code> argument to put the levels in some order.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
 <span id="cb10-2"><a href="#cb10-2"></a>               <span class="at">eyesight_cat =</span> <span class="fu">factor</span>(eyesight, </span>
 <span id="cb10-3"><a href="#cb10-3"></a>                                     <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), </span>
-<span id="cb10-4"><a href="#cb10-4"></a>                                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Good"</span>, <span class="st">"Very Good"</span>, <span class="st">"Excellent"</span>)))</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">count</span>(nlsy,eyesight_cat, eyesight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4"></a>                                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Poor"</span>, <span class="st">"Fair"</span>, </span>
+<span id="cb10-5"><a href="#cb10-5"></a>                                                <span class="st">"Good"</span>, <span class="st">"Very Good"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>                                                <span class="st">"Excellent"</span>)))</span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="fu">count</span>(nlsy,eyesight_cat, eyesight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   eyesight_cat eyesight     n
@@ -541,12 +547,10 @@ div.callout-caution{border-left-color:#5e81ac !important}div.callout-caution.cal
 <span id="cb12-8"><a href="#cb12-8"></a>               <span class="at">slp_cat_wkdy =</span> <span class="fu">factor</span>(slp_cat_wkdy)</span>
 <span id="cb12-9"><a href="#cb12-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section class="title-slide slide level1 callout-danger center">
-<h1>Question</h1>
+<div class="callout-danger" title="Question">
 <p>What order will these levels be in?</p>
+</div>
 </section>
-
 <section class="slide level2">
 <h2><code>forcats</code> package</h2>
 <div class="columns">
@@ -663,12 +667,13 @@ Caused by warning:
 <h2>Remove levels</h2>
 <p>Or maybe we want to combine some levels that don’t have a lot of observations in them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">slp_cat_wkdy_comb =</span> <span class="fu">fct_collapse</span>(slp_cat_wkdy, </span>
-<span id="cb27-2"><a href="#cb27-2"></a>                                                        <span class="st">"less"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"little"</span>, <span class="st">"some"</span>),</span>
-<span id="cb27-3"><a href="#cb27-3"></a>                                                        <span class="st">"more"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"ideal"</span>, <span class="st">"lots"</span>)</span>
-<span id="cb27-4"><a href="#cb27-4"></a>)</span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">slp_cat_wkdy_comb =</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>                 <span class="fu">fct_collapse</span>(slp_cat_wkdy, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>                              <span class="st">"less"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"little"</span>, <span class="st">"some"</span>),</span>
+<span id="cb27-4"><a href="#cb27-4"></a>                              <span class="st">"more"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"ideal"</span>, <span class="st">"lots"</span>)</span>
 <span id="cb27-5"><a href="#cb27-5"></a>)</span>
-<span id="cb27-6"><a href="#cb27-6"></a><span class="fu">summary</span>(nlsy<span class="sc">$</span>slp_cat_wkdy_comb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-6"><a href="#cb27-6"></a>)</span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="fu">summary</span>(nlsy<span class="sc">$</span>slp_cat_wkdy_comb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>more less NA's 
  673  529    3 </code></pre>
@@ -679,8 +684,9 @@ Caused by warning:
 <h2>Add and remove</h2>
 <p>Or we can have R choose which ones to combine based on how few observations they have:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">slp_cat_wkdy_lump =</span> <span class="fu">fct_lump</span>(slp_cat_wkdy, <span class="at">n =</span> <span class="dv">2</span>))</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">summary</span>(nlsy<span class="sc">$</span>slp_cat_wkdy_lump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">slp_cat_wkdy_lump =</span> </span>
+<span id="cb29-2"><a href="#cb29-2"></a>                 <span class="fu">fct_lump</span>(slp_cat_wkdy, <span class="at">n =</span> <span class="dv">2</span>))</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">summary</span>(nlsy<span class="sc">$</span>slp_cat_wkdy_lump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ideal  some Other  NA's 
   626   462   114     3 </code></pre>
@@ -689,7 +695,12 @@ Caused by warning:
 <ul>
 <li>Probably not a good idea for factors with in inherent order</li>
 </ul>
-<h4>There are 25 <code>fct_</code> functions in the package. The sky’s the limit when it comes to manipulating your categorical variables in R!</h4>
+</section>
+<section class="slide level2">
+<h2></h2>
+<section class="center">
+<h3>There are 25 <code>fct_</code> functions in the package. The sky’s the limit when it comes to manipulating your categorical variables in R!</h3>
+</section>
 </section>
 <section class="title-slide slide level1 center">
 <h1>Exercise</h1>
