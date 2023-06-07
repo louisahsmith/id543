@@ -52,21 +52,7 @@ ggplot(data = nlsy, aes(x = income)) +
   facet_wrap(vars(region))
 ```
 
-5. Make each of the regions in your histogram from part 1 a different color. (Hint: compare what `col = ` and `fill = ` do to histograms).
-
-```{r}
-ggplot(data = nlsy, aes(x = income)) +
-  geom_histogram(aes(y = ..density.., fill=factor(region)), col = "black", binwidth=1000) +
-  facet_wrap(vars(region))
-ggplot(data = nlsy, aes(x = income)) +
-  geom_histogram(aes(y = ..density.., col=factor(region)), binwidth=1000) +
-  facet_wrap(vars(region))
-```
-
-Response: The "col=" option within geom_histogram() changes the outline color of the bars, the "fill="-option changes the color of area/the fill of the bars.
-
-
-6. Instead of a log-transformed x-axis, make a square-root transformed x-axis.
+5. Make each of the regions in your histogram a different color and square-root transform the x-axis.
 
 ```{r}
 ggplot(data = nlsy, aes(x = income)) +
@@ -76,47 +62,39 @@ scale_x_sqrt()
 ```
 
 
-7. Doing part 3 squishes the labels on the x-axis. Using the `breaks = ` argument that all the `scale_x_()` functions have, make labels at 1000, 10000, 25000, and 50000.
+7. Doing the last question squishes the labels on the x-axis. Using the `breaks = ` argument that all the `scale_x_()` functions have, make labels at 1000, 10000, 25000, and 50000. To make these easier to read, format them with commas (But not dollar signs. Hint: look at the examples in the documentation.)
 
 ```{r}
 ggplot(data = nlsy, aes(x = income)) +
   geom_histogram(aes(y = ..density.., fill=factor(region)), col = "black") +
   facet_wrap(vars(region))+
-scale_x_sqrt( breaks=c(0,1000,10000,25000, 50000))
+scale_x_sqrt( breaks=c(0,1000,10000,25000, 50000)) #add commas
 ```
 
 8. The order of the different levels of a factor variable is important. Describe a scenario where different orders of the levels of a factor variable may lead to different results. (Hint: Think about how factor variables are treated a regression analysis.)
-Comment SF: This may be too advanced. But if the students already know how to run regression analysis in STATA, they might know this. In STATA, the same as in R the lowest/first level is  used as reference level for categorical variables in a regression model as default.
 
 Response: A different order of the levels in a factor variable could result in a different reference level in the results that the software returns for a regression model as the first level as specified in the order of levels is automatically set to be the reference level.
 
-9. The "race_eth"-variable in the NLSY dataset relates to the following level: hispanic (1), black (2), other (3). When loading the data it is a numeric variable. Turn it into a factor variable making sure it is labeled correctly. 
+9. The `race_eth` variable in the NLSY dataset is numeric. In the dataset you loaded, we already turned it into a factor variable (`race_eth_cat`). Show the code you would use to do this.
 
 ```{r}
-nlsy$race_eth <- factor(nlsy$race_eth, levels = c(1, 2, 3), 
-                                     labels = c("hispanic", "black", "other"))
+nlsy$race_eth_cat <- factor(nlsy$race_eth, levels = c(1, 2, 3), 
+                                     labels = c("hispanic", "black", "Non-Black, Non-Hispanic"))
 ```
 
-10. Create a new variable called "race_reor", reordering the levels such that "other" would automatically be used as reference level in analyses. Use the count()-function to check the order of these two variables.
+10. Create a new variable called `race_reor`, reordering the levels such that "Non-Black, Non-Hispanic" would automatically be used as reference level in analyses. Use a function to check the order of these two variables.
 
 ```{r}
-nlsy <- nlsy |> mutate(race_reor=fct_relevel(race_eth, "other", "hispanic", "black"))
+nlsy <- nlsy |> mutate(race_reor=fct_relevel(race_eth, "Non-Black, Non-Hispanic", "hispanic", "black"))
 
 count(nlsy,race_eth )
 count(nlsy, race_reor)
 ```
 
-11. Age of individuals contained in the NLSY dataset ranges from 13 to 52 years (variable: age_bir). Use case_when() to create the following age categories: teenager (13-19), young adult (20-29), adult (30-52). Make sure it is a correctly labeled factor variable (hint: this can be a two step process).
+11. Age of individuals contained in the NLSY dataset ranges from 13 to 52 years (variable: age_bir). Use `case_when()` to create the following age categories: teenager (13-19), young adult (20-29), adult (30-52). Make sure it is a correctly labeled factor variable (hint: this can be a two step process).
 
 ```{r}
 nlsy <- nlsy |> mutate(age_cat=case_when(age_bir <=19 ~ 1, age_bir>=20 & age_bir<=29 ~ 2, age_bir>=30 ~ 3)) 
 nlsy <- nlsy |> mutate(age_cat=factor(nlsy$age_cat, levels = c(1, 2, 3), labels = c("teenager", "young adult", "adult")))
-```
-
-
-12. Using the age group factor variable, show the mean age and total number of individuals in each age group.
-
-```{r}
-nlsy|> group_by(age_cat) |> summarise(mean_age=mean(age_bir), n=n())
 ```
 
