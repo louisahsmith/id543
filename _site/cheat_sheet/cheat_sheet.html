@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Click on the “New File” icon in the top left of RStudio, then select “R Script”.</li>
 <li>File -&gt; New File -&gt; R Script</li>
-<li><p><kbd data-mac="Shift-Command-N" data-linux="Shift-Ctrl-N" data-windows="Shift-Control-N"></kbd></p></li>
+<li><p><kbd data-windows="Shift-Control-N" data-linux="Shift-Ctrl-N" data-mac="Shift-Command-N"></kbd></p></li>
 </ol>
 </section>
 <section id="installing-packages" class="level2 unnumbered">
@@ -472,17 +472,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>{forcats}</code> package is designed to make working with categorical variables easier. If a variable has levels “large”, “medium”, and “small” and you want to change the order, you can use:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>newvar <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(dataset<span class="sc">$</span>oldvar, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>)<span class="er">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To rename the levels “sm”, “md”, and “lg”:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_recode</span>(dataset<span class="sc">$</span>oldvar, </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"sm"</span> <span class="ot">=</span> <span class="st">"small"</span>, <span class="st">"md"</span> <span class="ot">=</span> <span class="st">"medium"</span>, <span class="st">"lg"</span> <span class="ot">=</span> <span class="st">"large"</span>)<span class="er">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"sm"</span> <span class="ot">=</span> <span class="st">"small"</span>, <span class="st">"md"</span> <span class="ot">=</span> <span class="st">"medium"</span>, <span class="st">"lg"</span> <span class="ot">=</span> <span class="st">"large"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If the variable is numeric, you need to turn it into a character or factor variable before using <code>fct_recode()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_recode</span>(<span class="fu">as.character</span>(dataset<span class="sc">$</span>oldvar), </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"sm"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"md"</span> <span class="ot">=</span> <span class="st">"1"</span>, <span class="st">"lg"</span> <span class="ot">=</span> <span class="st">"2"</span>)<span class="er">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"sm"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"md"</span> <span class="ot">=</span> <span class="st">"1"</span>, <span class="st">"lg"</span> <span class="ot">=</span> <span class="st">"2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sorting-data" class="level2" data-number="3.6">
@@ -692,7 +692,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>COnfidence intervals:</p>
+<p>Confidence intervals:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -710,7 +710,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>To change the referent group, you can use <code>fct_relevel()</code> to move a new level to be the first level (the other levels will stay in their original order, unless you include them):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>newvar <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(dataset<span class="sc">$</span>oldvar, <span class="st">"ref"</span>)<span class="er">)</span></span>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>dataset<span class="sc">$</span>newvar <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(dataset<span class="sc">$</span>oldvar, <span class="st">"ref"</span>)</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> exposure <span class="sc">+</span> newvar, </span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> dataset, <span class="at">family =</span> <span class="fu">binomial</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -798,11 +798,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>See the <a href="https://cran.r-project.org/web/packages/survminer/vignettes/Specifiying_weights_in_log-rank_comparisons.html#tharone-ware"><code>{survminer}</code> vignette</a> for details on plotting survival curves with p-values from weighted log-rank tests (here, Tarone-Ware):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>survmire<span class="sc">::</span><span class="fu">ggsurvplot</span>(km, <span class="at">data =</span> dataset, </span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pval =</span> <span class="cn">TRUE</span>, <span class="at">pval.method =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">log.rank.weights =</span> <span class="st">"sqrtN"</span>,</span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pval.method.coord =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">0.1</span>),</span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pval.method.size =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>survminer<span class="sc">::</span><span class="fu">ggsurvplot</span>(km, <span class="at">data =</span> dataset, </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pval =</span> <span class="cn">TRUE</span>, <span class="at">pval.method =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">log.rank.weights =</span> <span class="st">"sqrtN"</span>,</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pval.method.coord =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">0.1</span>),</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pval.method.size =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="cox-regression" class="level3" data-number="5.3.5">
