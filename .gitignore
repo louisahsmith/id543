@@ -6,3 +6,5 @@
 /.quarto/
 /_old-slides/
 /cheat_sheet/*STATA*
+*.icloud
+*.DS_Store

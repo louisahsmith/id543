@@ -101,6 +101,8 @@ Why start with figures?
 :::
 :::
 
+# Review homework
+
 # Dataframes
 
 ## Dataframes

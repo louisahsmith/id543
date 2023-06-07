@@ -285,21 +285,21 @@ The `{forcats}` package is designed to make working with categorical variables e
 
 ```{r}
 dataset$newvar <- forcats::fct_relevel(dataset$oldvar, 
-                                       "small", "medium", "large"))
+                                       "small", "medium", "large")
 ```
 
 To rename the levels "sm", "md", and "lg":
 
 ```{r}
 dataset <- forcats::fct_recode(dataset$oldvar, 
-                               "sm" = "small", "md" = "medium", "lg" = "large"))
+                               "sm" = "small", "md" = "medium", "lg" = "large")
 ```
 
 If the variable is numeric, you need to turn it into a character or factor variable before using `fct_recode()`:
 
 ```{r}
 dataset <- forcats::fct_recode(as.character(dataset$oldvar), 
-                               "sm" = "0", "md" = "1", "lg" = "2"))
+                               "sm" = "0", "md" = "1", "lg" = "2")
 ```
 
 ## Sorting data
@@ -557,7 +557,7 @@ Coefficients, standard errors, p-values:
 summary(model)
 ```
 
-COnfidence intervals:
+Confidence intervals:
 
 ```{r}
 confint(model)
@@ -581,7 +581,7 @@ model <- glm(outcome ~ exposure + factor(var1) + var2,
 To change the referent group, you can use `fct_relevel()` to move a new level to be the first level (the other levels will stay in their original order, unless you include them):
 
 ```{r}
-dataset$newvar <- forcats::fct_relevel(dataset$oldvar, "ref"))
+dataset$newvar <- forcats::fct_relevel(dataset$oldvar, "ref")
 model <- glm(outcome ~ exposure + newvar, 
              data = dataset, family = binomial())
 ```
@@ -690,11 +690,11 @@ survdiff(Surv(time_to_outcome, outcome) ~ exposure,
 See the [`{survminer}` vignette](https://cran.r-project.org/web/packages/survminer/vignettes/Specifiying_weights_in_log-rank_comparisons.html#tharone-ware) for details on plotting survival curves with p-values from weighted log-rank tests (here, Tarone-Ware):
 
 ```{r}
-survmire::ggsurvplot(km, data = dataset, 
-                     pval = TRUE, pval.method = TRUE,
-                     log.rank.weights = "sqrtN",
-                     pval.method.coord = c(3, 0.1),
-                     pval.method.size = 4)
+survminer::ggsurvplot(km, data = dataset, 
+                      pval = TRUE, pval.method = TRUE,
+                      log.rank.weights = "sqrtN",
+                      pval.method.coord = c(3, 0.1),
+                      pval.method.size = 4)
 ```
 
 ### Cox Regression

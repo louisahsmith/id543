@@ -5,6 +5,8 @@ toc-location: left
 
 Download some exercises to go along with these slides [here](exercises/exercises_day_1.R).
 
+[Here](exercises/exercises_day_1_inclass.R) is the R script containing the code we ran in class.
+
 Open the slides in a new tab [here](slides/intro-course.html).
 <div>
 ```{=html}
