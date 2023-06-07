@@ -30,7 +30,14 @@ website:
       
     - id: day_1
       title: "Day 1"
-      contents: day_1
+      contents: 
+        - auto: day_1
+        - section: Exercises
+          contents:
+          - text: Blank
+            url:  day_1/exercises/exercises_day_1.R
+          - text: Notes from class
+            url:  day_1/exercises/exercises_day_1_inclass.R
 
     - id: day_2
       title: "Day 2"
