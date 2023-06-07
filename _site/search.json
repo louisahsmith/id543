@@ -1,5 +1,61 @@
 [
   {
+    "objectID": "day_2/index.html",
+    "href": "day_2/index.html",
+    "title": "Day 2",
+    "section": "",
+    "text": "In class\nDownload some exercises to go along with these slides here.\nDownload the example quarto document here\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 4.1-4.3\nR for Data Science Ch. 5\n\n\n\nResources\n\nquarto tutorials\ndplyr cheat sheet\nHere’s more info on the select() helpers\nHere are some useful functions for use with mutate()"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html",
+    "href": "day_2/exercises/exercises_day_2.html",
+    "title": "Day 2 Exercises",
+    "section": "",
+    "text": "Download this document here."
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html#standardized-income",
+    "href": "day_2/exercises/exercises_day_2.html#standardized-income",
+    "title": "Day 2 Exercises",
+    "section": "Standardized income",
+    "text": "Standardized income\nUsing the NLSY data and mutate(), make a standardized (centered at the mean, and divided by the standard deviation) version of income. Look at this variable using summary().\n\n# replace the ... with your code\nnlsy &lt;- mutate(nlsy, income_stand = ...)\n\nsummary(nlsy$income_stand)"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html#standardized-logincome",
+    "href": "day_2/exercises/exercises_day_2.html#standardized-logincome",
+    "title": "Day 2 Exercises",
+    "section": "Standardized log(income)",
+    "text": "Standardized log(income)\nDo the same thing, but using income on the log scale. Look at this variable using summary(). Can you figure out what happened? (Hint: look at your log(income) variable.)"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html#select-centered-variables",
+    "href": "day_2/exercises/exercises_day_2.html#select-centered-variables",
+    "title": "Day 2 Exercises",
+    "section": "Select centered variables",
+    "text": "Select centered variables\nCreate mean-centered versions of age_bir, nsibs, income, and the two sleep variables. Use the same ending (e.g., cent) for all of them. Then make a new dataset of just the centered variables using select() and a helper.\n\nnlsy &lt;- mutate(nlsy,\n               age_bir_cent = ...,\n               nsibs_cent = ...,\n               ...)\nnlsy_new &lt;- select(nlsy, ...)"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html#selecting-based-on-a-vector",
+    "href": "day_2/exercises/exercises_day_2.html#selecting-based-on-a-vector",
+    "title": "Day 2 Exercises",
+    "section": "Selecting based on a vector",
+    "text": "Selecting based on a vector\nCreate a dataset called nlsy_orig that contains only the raw variables, using a vector of names and the all_of() helper. I’ll start you off with the variable names.\n\ncolnames_orig &lt;- c(\"glasses\", \"eyesight\", \"sleep_wkdy\", \"sleep_wknd\",\n                   \"id\", \"nsibs\", \"samp\", \"race_eth\", \"sex\", \"region\", \n                   \"income\", \"res_1980\", \"res_2002\", \"age_bir\")"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html#selecting-another-way",
+    "href": "day_2/exercises/exercises_day_2.html#selecting-another-way",
+    "title": "Day 2 Exercises",
+    "section": "Selecting another way",
+    "text": "Selecting another way\nCan you come up with another way to end up with the same raw variables? (Hint: what do the added variables have in common?)"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2.html#case_when",
+    "href": "day_2/exercises/exercises_day_2.html#case_when",
+    "title": "Day 2 Exercises",
+    "section": "case_when()",
+    "text": "case_when()\nTry again to make a new variable for standardized log-income. This time, if you are not able to calculate log(income) for an observation, replace it with the missing value NA (using case_when()). This time, when you standardize log(income), you’ll have to use na.rm = TRUE to remove missing values both when you take the mean and the standard deviation.\n\nnlsy &lt;- mutate(nlsy,\n               log_income_stand = case_when(\n                 ...\n               ))"
+  },
+  {
     "objectID": "cheat_sheet/cheat_sheet.html",
     "href": "cheat_sheet/cheat_sheet.html",
     "title": "Basic R coding overview",
@@ -151,14 +207,14 @@
     "href": "pre_work/index.html",
     "title": "Pre-work",
     "section": "",
-    "text": "Install R and RStudio\n\nDownload R from CRAN. Choose the link at the top that corresponds to your operating system.  Unless you downloaded R within the past month or two, do so again – you want the most up-to-date version (≥ R 4.3) for this class.\nDownload RStudio (step 2 on that page – you already completed step 1 above!). It should automatically recognize your operating system, but if not, choose the correct link at the bottom.\n\nIf you have a Mac, make sure you choose correctly between the Apple Silicon (M1/M2) and Intel options.Which version of RStudio you have is not as important, but it’s nice to stay up-to-date for the newest features!\n\nVideo\nOpen the slides in a new tab here or follow along below.\n(P.S. Sorry, I didn’t realize the video of my face would be in the screen instead of off to the side!)\n\n\n\n\n\n\nReadings\n\nSections 1.4-1.5 of R for Data Science. Run the code in your RStudio console as you go.\nChapter 3 of R for Data Science. Again, run the code in your RStudio console as you read. Try the exercises.\nOptional, but helpful: Chapter 2 of Hands-On Programming with R. For the purposes of this class, we will necessarily skip some of the R basics to focus on the skills you’ll need most. This is a good resource if you want to learn more about them, so it’s highly recommended, you just don’t need to master it as part of your pre-work.\n\nIn particular, make sure you install the packages in the text.If you’re wondering what happened to chapter 2, we’ll be doing that one together!\n\nHomework\nComplete the following exercises, showing your code for each. You can download the homework as a Word document here or on Canvas. Please copy and paste your code and answers into the document and submit on Canvas.\n\nInstall R and RStudio as well as the packages described in Section 1.4 of of R for Data Science. Paste the code you used to install those packages below.\nCreate a vector named temp with the average low temperatures in December for London, Shanghai, Sydney, Boston, Mexico City and Johannesburg which are 40, 38, 64, 28, 42 and 57° Fahrenheit.\nCreate a second vector with the city names called city.\nUse the setNames() function to assign the city names to the corresponding temperatures using the two objects create above. (Hint: help(setNames)). You should overwrite your original temp vector with the named vector. Print the temp vector.\nRecall that you can use the [] operator directly following a vector name to select specific values contained within that vector (e.g. temp[1] should return 40). Use this [] operator and the sum() function to calculate the sum of the temperatures for Sydney, Mexico City and Johannesburg.\nCreate a vector of all positive even numbers smaller than 75 using the seq() function. (Hint: help(seq))\nCreate a vector of numbers. Let the first value of the vector be 4, with a maximum value &lt; 80, adding numbers in increments of 2/3. How many elements are in this vector?\nUsing your answer to the previous question, find another solution to create the same vector as the previous question."
+    "text": "Install R and RStudio\n\nDownload R from CRAN. Choose the link at the top that corresponds to your operating system.  Unless you downloaded R within the past month or two, do so again – you want the most up-to-date version (≥ R 4.3) for this class.\nDownload RStudio (step 2 on that page – you already completed step 1 above!). It should automatically recognize your operating system, but if not, choose the correct link at the bottom.\n\nIf you have a Mac, make sure you choose correctly between the Apple Silicon (M1/M2) and Intel options.Which version of RStudio you have is not as important, but it’s nice to stay up-to-date for the newest features!\n\nVideo\nOpen the slides in a new tab here or follow along below.\n(P.S. Sorry, I didn’t realize the video of my face would be in the screen instead of off to the side!)\n\n\n\n\n\n\nReadings\n\nSections 1.4-1.5 of R for Data Science. Run the code in your RStudio console as you go.\nChapter 3 of R for Data Science. Again, run the code in your RStudio console as you read. Try the exercises.\nOptional, but helpful: Chapter 2 of Hands-On Programming with R. For the purposes of this class, we will necessarily skip some of the R basics to focus on the skills you’ll need most. This is a good resource if you want to learn more about them, so it’s highly recommended, you just don’t need to master it as part of your pre-work.\n\nIn particular, make sure you install the packages in the text.If you’re wondering what happened to chapter 2, we’ll be doing that one together!\n\nHomework\nComplete the following exercises, showing your code for each. You can download the homework as a Word document here or on Canvas. Please copy and paste your code and answers into the document and submit on Canvas.\n\nInstall R and RStudio as well as the packages described in Section 1.4 of of R for Data Science. Paste the code you used to install those packages below.\nCreate a vector named temp with the average low temperatures in December for London, Shanghai, Sydney, Boston, Mexico City and Johannesburg which are 40, 38, 64, 28, 42 and 57° Fahrenheit.\nCreate a second vector with the city names called city.\nUse the setNames() function to assign the city names to the corresponding temperatures using the two objects create above. (Hint: help(setNames)). You should overwrite your original temp vector with the named vector. Print the temp vector.\nRecall that you can use the [] operator directly following a vector name to select specific values contained within that vector (e.g. temp[1] should return 40). Use this [] operator and the sum() function to calculate the sum of the temperatures for Sydney, Mexico City and Johannesburg.\nCreate a vector of all positive even numbers smaller than 75 using the seq() function. (Hint: help(seq))\nCreate a vector of numbers. Let the first value of the vector be 4, with a maximum value &lt; 80, adding numbers in increments of 2/3. How many elements are in this vector?\nUsing your answer to the previous question, find another solution to create the same vector as the previous question.\n\n\n\nResources\n\nRStudio cheat sheet"
   },
   {
     "objectID": "day_1/index.html",
     "href": "day_1/index.html",
     "title": "Day 1",
     "section": "",
-    "text": "Download some exercises to go along with these slides here.\nHere is the R script containing the code we ran in class.\nOpen the slides in a new tab here.\n\n\n\nOpen the slides in a new tab here.\n\n\n\nOpen the slides in a new tab here."
+    "text": "Exercises\nDownload some exercises to go along with these slides here.\nHere is the R script containing the code we ran in class.\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\nOpen the slides in a new tab here.\n\n\n\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 2\nR for Data Science Ch. 17\n\n\n\nResources\n\nggplot2 cheat sheet\nHere’s an entire paper about working with factors in R.\nforcats cheat sheet"
   },
   {
     "objectID": "resources.html",

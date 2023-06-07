@@ -1,0 +1,28 @@
+---
+title: "Homework 3"
+format: docx
+---
+
+Include all of your code in a quarto document (`echo: true`). Render your document to html, docx, or pdf and submit. As always, there are many different ways to solve these problems, but focus on the functions and skills we have been learning in class.
+
+Use the following code to read in a raw version of the NLSY dataset we've been using:
+
+```{r}
+library(tidyverse)
+nlsy <- read_csv("https://github.com/louisahsmith/id543/raw/main/data/nlsy.csv")
+```
+
+The variables in this dataset correspond to `c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", "id", "nsibs", "samp", "race_eth", "sex", "region", "income", "res_1980", "res_2002", "age_bir")`. All negative numbers indicate missing values.
+
+1. Create a version of the dataset with the variable names as above.
+
+2. Replace missing values in income and region with `NA`.
+
+4. Create a factor variable that has the value "sister", "brother", or "only child" depending on a person's sex and number of siblings. Recall that men have `sex = 1` and women have `sex = 2`.
+
+3. Create a dataset with *only* the sisters who are missing income and region. How many are there?
+
+4. Move `id` to the beginning (first column) of the dataset and remove the `samp`, `res_1980`, and `res_2002` variables.
+
+5. Combine your answers to questions 1:3, including reading in the data, using pipes. Your answer should be one continuous sequence of code that reads in the data and stores the changed dataset in an object.
+
