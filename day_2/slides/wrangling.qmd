@@ -167,10 +167,10 @@ nlsy_subset
 
 - Like `mutate()`, the first argument is the dataset you want to select from
 - Then you can just list the variables you want!
-- Or you can list the variables you *don't* want, preceded by an exclamation point (`!`)
+- Or you can list the variables you *don't* want, preceded by a negative sign (`-`)
 
 ```{r neg-sel}
-select(nlsy_subset, !c(id, region))
+select(nlsy_subset, -c(id, region))
 ```
 
 ## `select()` syntax

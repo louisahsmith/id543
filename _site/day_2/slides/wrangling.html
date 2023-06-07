@@ -452,12 +452,6 @@
 <span id="cb3-11"><a href="#cb3-11"></a>                                             <span class="st">"West"</span> <span class="ot">=</span> <span class="st">"4"</span>),</span>
 <span id="cb3-12"><a href="#cb3-12"></a>                     <span class="at">sex_cat =</span> <span class="fu">fct_relevel</span>(sex_cat,</span>
 <span id="cb3-13"><a href="#cb3-13"></a>                                           <span class="st">"Female"</span>, <span class="st">"Male"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `sex_cat = fct_relevel(sex_cat, "Female", "Male")`.
-Caused by warning:
-! 2 unknown levels in `f`: Female and Male</code></pre>
-</div>
 </div>
 </section>
 <section class="slide level2">
@@ -466,10 +460,10 @@ Caused by warning:
 <li>You can refer immediately to variables you just made:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>nlsy_new <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy,</span>
-<span id="cb5-2"><a href="#cb5-2"></a>                   <span class="at">age_bir_cent =</span> age_bir <span class="sc">-</span> <span class="fu">mean</span>(age_bir),</span>
-<span id="cb5-3"><a href="#cb5-3"></a>                   <span class="at">age_bir_stand =</span> age_bir_cent <span class="sc">/</span> <span class="fu">sd</span>(age_bir_cent)</span>
-<span id="cb5-4"><a href="#cb5-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>nlsy_new <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy,</span>
+<span id="cb4-2"><a href="#cb4-2"></a>                   <span class="at">age_bir_cent =</span> age_bir <span class="sc">-</span> <span class="fu">mean</span>(age_bir),</span>
+<span id="cb4-3"><a href="#cb4-3"></a>                   <span class="at">age_bir_stand =</span> age_bir_cent <span class="sc">/</span> <span class="fu">sd</span>(age_bir_cent)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -492,11 +486,11 @@ Caused by warning:
 <li>If A is TRUE, then B; if not, then if C is true, then D; if not, then if E is true, then F; if not, …</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy,</span>
-<span id="cb6-2"><a href="#cb6-2"></a>               <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">5</span>,  <span class="st">"little"</span>, </span>
-<span id="cb6-3"><a href="#cb6-3"></a>                      <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">7</span>, <span class="st">"some"</span>, </span>
-<span id="cb6-4"><a href="#cb6-4"></a>                             <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">9</span>, <span class="st">"ideal"</span>, </span>
-<span id="cb6-5"><a href="#cb6-5"></a>                                    <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">12</span>, <span class="st">"lots"</span>, <span class="cn">NA</span>)))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy,</span>
+<span id="cb5-2"><a href="#cb5-2"></a>               <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">5</span>,  <span class="st">"little"</span>, </span>
+<span id="cb5-3"><a href="#cb5-3"></a>                      <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">7</span>, <span class="st">"some"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4"></a>                             <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">9</span>, <span class="st">"ideal"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5"></a>                                    <span class="fu">ifelse</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">12</span>, <span class="st">"lots"</span>, <span class="cn">NA</span>)))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="../../img/if-else.png" class="r-stretch"><p>This can be extremely hard to follow!</p>
@@ -516,16 +510,16 @@ Caused by warning:
 <section class="slide level2">
 <h2><code>case_when()</code> combines a lot of “if-else” statements</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">slp_cat_wkdy =</span> </span>
-<span id="cb7-2"><a href="#cb7-2"></a>                 <span class="fu">case_when</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"little"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3"></a>                           sleep_wkdy <span class="sc">&lt;</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">"some"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>                           sleep_wkdy <span class="sc">&lt;</span> <span class="dv">9</span> <span class="sc">~</span> <span class="st">"ideal"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5"></a>                           sleep_wkdy <span class="sc">&lt;</span> <span class="dv">12</span> <span class="sc">~</span> <span class="st">"lots"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6"></a>                           <span class="at">.default =</span> <span class="cn">NA</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>                 )</span>
-<span id="cb7-8"><a href="#cb7-8"></a>)</span>
-<span id="cb7-9"><a href="#cb7-9"></a></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="fu">count</span>(nlsy, sleep_wkdy, slp_cat_wkdy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">slp_cat_wkdy =</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>                 <span class="fu">case_when</span>(sleep_wkdy <span class="sc">&lt;</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"little"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>                           sleep_wkdy <span class="sc">&lt;</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">"some"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>                           sleep_wkdy <span class="sc">&lt;</span> <span class="dv">9</span> <span class="sc">~</span> <span class="st">"ideal"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>                           sleep_wkdy <span class="sc">&lt;</span> <span class="dv">12</span> <span class="sc">~</span> <span class="st">"lots"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>                           <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>                 )</span>
+<span id="cb6-8"><a href="#cb6-8"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="fu">count</span>(nlsy, sleep_wkdy, slp_cat_wkdy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 3
    sleep_wkdy slp_cat_wkdy     n
@@ -549,13 +543,13 @@ Caused by warning:
 <section class="slide level2">
 <h2><code>case_when()</code> example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">total_sleep =</span> </span>
-<span id="cb9-2"><a href="#cb9-2"></a>                 <span class="fu">case_when</span>(</span>
-<span id="cb9-3"><a href="#cb9-3"></a>                   sleep_wknd <span class="sc">&gt;</span> <span class="dv">8</span> <span class="sc">&amp;</span> sleep_wkdy <span class="sc">&gt;</span> <span class="dv">8</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb9-4"><a href="#cb9-4"></a>                   sleep_wknd <span class="sc">+</span> sleep_wkdy <span class="sc">&gt;</span> <span class="dv">15</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb9-5"><a href="#cb9-5"></a>                   sleep_wknd <span class="sc">-</span> sleep_wkdy <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">3</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>                 )</span>
-<span id="cb9-7"><a href="#cb9-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">total_sleep =</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>                 <span class="fu">case_when</span>(</span>
+<span id="cb8-3"><a href="#cb8-3"></a>                   sleep_wknd <span class="sc">&gt;</span> <span class="dv">8</span> <span class="sc">&amp;</span> sleep_wkdy <span class="sc">&gt;</span> <span class="dv">8</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>                   sleep_wknd <span class="sc">+</span> sleep_wkdy <span class="sc">&gt;</span> <span class="dv">15</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>                   sleep_wknd <span class="sc">-</span> sleep_wkdy <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">3</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>                 )</span>
+<span id="cb8-7"><a href="#cb8-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Which value would someone with <code>sleep_wknd = 8</code> and <code>sleep_wkdy = 4</code> go?</li>
@@ -576,8 +570,8 @@ Caused by warning:
 <li>Luckily there’s an easy way to select the variables you want: <code>select()</code>!</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>nlsy_subset <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy, id, income, eyesight, sex, region)</span>
-<span id="cb10-2"><a href="#cb10-2"></a>nlsy_subset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>nlsy_subset <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy, id, income, eyesight, sex, region)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>nlsy_subset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 5
       id income eyesight   sex region
@@ -601,10 +595,10 @@ Caused by warning:
 <ul>
 <li>Like <code>mutate()</code>, the first argument is the dataset you want to select from</li>
 <li>Then you can just list the variables you want!</li>
-<li>Or you can list the variables you <em>don’t</em> want, preceded by an exclamation point (<code>!</code>)</li>
+<li>Or you can list the variables you <em>don’t</em> want, preceded by a negative sign (<code>-</code>)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">select</span>(nlsy_subset, <span class="sc">!</span><span class="fu">c</span>(id, region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">select</span>(nlsy_subset, <span class="sc">-</span><span class="fu">c</span>(id, region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 3
    income eyesight   sex
@@ -644,8 +638,8 @@ Caused by warning:
 <p>Notice that the variable names we used in <code>select()</code> weren’t in quotation marks.</p>
 <p>Let’s say you have a vector of column names that you want. Then you can use <code>all_of()</code> to choose them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>cols_I_want <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"age_bir"</span>, <span class="st">"nsibs"</span>, <span class="st">"region"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">select</span>(nlsy, <span class="fu">all_of</span>(cols_I_want))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>cols_I_want <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"age_bir"</span>, <span class="st">"nsibs"</span>, <span class="st">"region"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">select</span>(nlsy, <span class="fu">all_of</span>(cols_I_want))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 3
    age_bir nsibs region
@@ -669,7 +663,7 @@ Caused by warning:
 <h2><code>starts_with</code>, <code>ends_with</code></h2>
 <p>Variables won’t be repeated even if they meet multiple criteria</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">select</span>(nlsy, <span class="fu">starts_with</span>(<span class="st">"sleep"</span>), <span class="fu">ends_with</span>(<span class="st">"d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">select</span>(nlsy, <span class="fu">starts_with</span>(<span class="st">"sleep"</span>), <span class="fu">ends_with</span>(<span class="st">"d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 3
    sleep_wkdy sleep_wknd    id
@@ -692,7 +686,7 @@ Caused by warning:
 <h2><code>starts_with</code>, <code>ends_with</code></h2>
 <p>Use <code>&amp;</code> in between multiple criteria if they have to meet <em>all</em> of them</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">select</span>(nlsy, <span class="fu">starts_with</span>(<span class="st">"sleep"</span>) <span class="sc">&amp;</span> <span class="fu">ends_with</span>(<span class="st">"d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">select</span>(nlsy, <span class="fu">starts_with</span>(<span class="st">"sleep"</span>) <span class="sc">&amp;</span> <span class="fu">ends_with</span>(<span class="st">"d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 1
    sleep_wknd
@@ -715,7 +709,7 @@ Caused by warning:
 <h2><code>where()</code></h2>
 <p>You can use these helpers to rearrange variables</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">select</span>(nlsy, id, <span class="fu">where</span>(is.factor), <span class="fu">where</span>(is.numeric), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">select</span>(nlsy, id, <span class="fu">where</span>(is.factor), <span class="fu">where</span>(is.numeric), <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 24
       id eyesight_cat glasses_cat        race_eth_cat sex_cat region_cat glasses
@@ -748,13 +742,13 @@ Caused by warning:
 <h2>Subsetting data</h2>
 <p>We usually don’t do an analysis in an <em>entire</em> dataset. We usually apply some eligibility criteria to find the people who we will analyze. One function we can use to do that in R is <code>filter()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>wear_glasses <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, glasses <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="fu">nrow</span>(wear_glasses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>wear_glasses <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, glasses <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">nrow</span>(wear_glasses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 624</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">summary</span>(wear_glasses<span class="sc">$</span>glasses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">summary</span>(wear_glasses<span class="sc">$</span>glasses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
       1       1       1       1       1       1 </code></pre>
@@ -771,13 +765,13 @@ Caused by warning:
 </ul>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>yesno_glasses <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, glasses <span class="sc">==</span> <span class="dv">0</span>, glasses <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">nrow</span>(yesno_glasses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>yesno_glasses <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, glasses <span class="sc">==</span> <span class="dv">0</span>, glasses <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">nrow</span>(yesno_glasses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>glasses_great_eyes <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, glasses <span class="sc">==</span> <span class="dv">0</span>, eyesight <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">nrow</span>(glasses_great_eyes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>glasses_great_eyes <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, glasses <span class="sc">==</span> <span class="dv">0</span>, eyesight <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">nrow</span>(glasses_great_eyes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 220</code></pre>
 </div>
@@ -799,9 +793,9 @@ Caused by warning:
 <h2>Or statements</h2>
 <p>To get the extreme values of eyesight (1 and 5), we would do something like:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>extreme_eyes <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, eyesight <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> </span>
-<span id="cb30-2"><a href="#cb30-2"></a>                         eyesight <span class="sc">==</span> <span class="dv">5</span>)</span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="fu">table</span>(extreme_eyes<span class="sc">$</span>eyesight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>extreme_eyes <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, eyesight <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> </span>
+<span id="cb29-2"><a href="#cb29-2"></a>                         eyesight <span class="sc">==</span> <span class="dv">5</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">table</span>(extreme_eyes<span class="sc">$</span>eyesight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   1   5 
@@ -810,9 +804,9 @@ Caused by warning:
 </div>
 <p>We could of course do the same thing with a factor variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>some_regions <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, region_cat <span class="sc">==</span> <span class="st">"Northeast"</span> <span class="sc">|</span> </span>
-<span id="cb32-2"><a href="#cb32-2"></a>                         region_cat <span class="sc">==</span> <span class="st">"South"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="fu">table</span>(some_regions<span class="sc">$</span>region_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>some_regions <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, region_cat <span class="sc">==</span> <span class="st">"Northeast"</span> <span class="sc">|</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>                         region_cat <span class="sc">==</span> <span class="st">"South"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="fu">table</span>(some_regions<span class="sc">$</span>region_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Northeast North Central         South          West 
@@ -824,9 +818,9 @@ Caused by warning:
 <h2>Multiple “or” possibilities</h2>
 <p>Often we have a number of options for one variable that would meet our eligibility criteria. R’s special <code>%in%</code> function comes in handy here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>more_regions <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, region_cat <span class="sc">%in%</span> </span>
-<span id="cb34-2"><a href="#cb34-2"></a>                         <span class="fu">c</span>(<span class="st">"South"</span>, <span class="st">"West"</span>, <span class="st">"Northeast"</span>))</span>
-<span id="cb34-3"><a href="#cb34-3"></a><span class="fu">table</span>(more_regions<span class="sc">$</span>region_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>more_regions <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, region_cat <span class="sc">%in%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>                         <span class="fu">c</span>(<span class="st">"South"</span>, <span class="st">"West"</span>, <span class="st">"Northeast"</span>))</span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">table</span>(more_regions<span class="sc">$</span>region_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Northeast North Central         South          West 
@@ -839,11 +833,11 @@ Caused by warning:
 <h2>More <code>%in%</code></h2>
 <p>This is just a regular R function that works outside of the <code>filter()</code> function, of course!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="dv">7</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="dv">7</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="dv">5</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="dv">5</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -853,20 +847,20 @@ Caused by warning:
 <h2>Opposite of <code>%in%</code></h2>
 <p>We can’t say “not in” with the syntax <code>%!in%</code> or something like that. We have to put the <code>!</code> <em>before</em> the question to basically make it the opposite of what it otherwise would be.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="sc">!</span><span class="dv">7</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="sc">!</span><span class="dv">7</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="sc">!</span><span class="dv">5</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="sc">!</span><span class="dv">5</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>northcentralers <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, </span>
-<span id="cb44-2"><a href="#cb44-2"></a>                          <span class="sc">!</span>region_cat <span class="sc">%in%</span> </span>
-<span id="cb44-3"><a href="#cb44-3"></a>                            <span class="fu">c</span>(<span class="st">"South"</span>, <span class="st">"West"</span>, <span class="st">"Northeast"</span>))</span>
-<span id="cb44-4"><a href="#cb44-4"></a><span class="fu">table</span>(northcentralers<span class="sc">$</span>region_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>northcentralers <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, </span>
+<span id="cb43-2"><a href="#cb43-2"></a>                          <span class="sc">!</span>region_cat <span class="sc">%in%</span> </span>
+<span id="cb43-3"><a href="#cb43-3"></a>                            <span class="fu">c</span>(<span class="st">"South"</span>, <span class="st">"West"</span>, <span class="st">"Northeast"</span>))</span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="fu">table</span>(northcentralers<span class="sc">$</span>region_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Northeast North Central         South          West 
@@ -887,13 +881,13 @@ Caused by warning:
 <section class="slide level2">
 <h2>Putting it all together</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, </span>
-<span id="cb46-2"><a href="#cb46-2"></a>                  age_bir_cent <span class="sc">&lt;</span> <span class="dv">1</span>,</span>
-<span id="cb46-3"><a href="#cb46-3"></a>                  sex <span class="sc">!=</span> <span class="dv">1</span>,</span>
-<span id="cb46-4"><a href="#cb46-4"></a>                  nsibs <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb46-5"><a href="#cb46-5"></a>                  <span class="sc">!</span><span class="fu">is.na</span>(slp_cat_wkdy))</span>
-<span id="cb46-6"><a href="#cb46-6"></a></span>
-<span id="cb46-7"><a href="#cb46-7"></a><span class="fu">summary</span>(<span class="fu">select</span>(my_data, age_bir_cent, sex, nsibs, slp_cat_wkdy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, </span>
+<span id="cb45-2"><a href="#cb45-2"></a>                  age_bir_cent <span class="sc">&lt;</span> <span class="dv">1</span>,</span>
+<span id="cb45-3"><a href="#cb45-3"></a>                  sex <span class="sc">!=</span> <span class="dv">1</span>,</span>
+<span id="cb45-4"><a href="#cb45-4"></a>                  nsibs <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb45-5"><a href="#cb45-5"></a>                  <span class="sc">!</span><span class="fu">is.na</span>(slp_cat_wkdy))</span>
+<span id="cb45-6"><a href="#cb45-6"></a></span>
+<span id="cb45-7"><a href="#cb45-7"></a><span class="fu">summary</span>(<span class="fu">select</span>(my_data, age_bir_cent, sex, nsibs, slp_cat_wkdy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  age_bir_cent          sex        nsibs       slp_cat_wkdy      
  Min.   :-9.4481   Min.   :2   Min.   :1.000   Length:207        
@@ -908,12 +902,12 @@ Caused by warning:
 <section class="slide level2">
 <h2>Putting it all together</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>oth_dat <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, </span>
-<span id="cb48-2"><a href="#cb48-2"></a>                  (age_bir_cent <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="sc">&amp;</span></span>
-<span id="cb48-3"><a href="#cb48-3"></a>                    (sex <span class="sc">!=</span> <span class="dv">1</span> <span class="sc">|</span> nsibs <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)) <span class="sc">&amp;</span></span>
-<span id="cb48-4"><a href="#cb48-4"></a>                    <span class="sc">!</span><span class="fu">is.na</span>(slp_cat_wkdy))</span>
-<span id="cb48-5"><a href="#cb48-5"></a></span>
-<span id="cb48-6"><a href="#cb48-6"></a><span class="fu">summary</span>(<span class="fu">select</span>(oth_dat, age_bir_cent, sex, nsibs, slp_cat_wkdy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>oth_dat <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy, </span>
+<span id="cb47-2"><a href="#cb47-2"></a>                  (age_bir_cent <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="sc">&amp;</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>                    (sex <span class="sc">!=</span> <span class="dv">1</span> <span class="sc">|</span> nsibs <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)) <span class="sc">&amp;</span></span>
+<span id="cb47-4"><a href="#cb47-4"></a>                    <span class="sc">!</span><span class="fu">is.na</span>(slp_cat_wkdy))</span>
+<span id="cb47-5"><a href="#cb47-5"></a></span>
+<span id="cb47-6"><a href="#cb47-6"></a><span class="fu">summary</span>(<span class="fu">select</span>(oth_dat, age_bir_cent, sex, nsibs, slp_cat_wkdy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  age_bir_cent           sex            nsibs        slp_cat_wkdy      
  Min.   :-10.4481   Min.   :1.000   Min.   : 0.000   Length:602        
@@ -933,13 +927,13 @@ Caused by warning:
 <section class="slide level2">
 <h2>Your code might start to look like this</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
-<span id="cb50-2"><a href="#cb50-2"></a>                <span class="at">only =</span> <span class="fu">case_when</span>(</span>
-<span id="cb50-3"><a href="#cb50-3"></a>                  nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb50-4"><a href="#cb50-4"></a>                  <span class="at">.default =</span> <span class="st">"no"</span>))</span>
-<span id="cb50-5"><a href="#cb50-5"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only)</span>
-<span id="cb50-6"><a href="#cb50-6"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3, only <span class="sc">==</span> <span class="st">"yes"</span>)</span>
-<span id="cb50-7"><a href="#cb50-7"></a>only_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
+<span id="cb49-2"><a href="#cb49-2"></a>                <span class="at">only =</span> <span class="fu">case_when</span>(</span>
+<span id="cb49-3"><a href="#cb49-3"></a>                  nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb49-4"><a href="#cb49-4"></a>                  <span class="at">.default =</span> <span class="st">"no"</span>))</span>
+<span id="cb49-5"><a href="#cb49-5"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only)</span>
+<span id="cb49-6"><a href="#cb49-6"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3, only <span class="sc">==</span> <span class="st">"yes"</span>)</span>
+<span id="cb49-7"><a href="#cb49-7"></a>only_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 5
       id sleep_wkdy sleep_wknd total_sleep only 
@@ -992,15 +986,15 @@ Caused by warning:
 <section class="slide level2">
 <h2>Instead of successive command lines</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
-<span id="cb52-2"><a href="#cb52-2"></a>                <span class="at">only =</span> <span class="fu">case_when</span>(nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>, </span>
-<span id="cb52-3"><a href="#cb52-3"></a>                                 <span class="at">.default =</span> <span class="st">"no"</span>))</span>
-<span id="cb52-4"><a href="#cb52-4"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only)</span>
-<span id="cb52-5"><a href="#cb52-5"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3, only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
+<span id="cb51-2"><a href="#cb51-2"></a>                <span class="at">only =</span> <span class="fu">case_when</span>(nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>, </span>
+<span id="cb51-3"><a href="#cb51-3"></a>                                 <span class="at">.default =</span> <span class="st">"no"</span>))</span>
+<span id="cb51-4"><a href="#cb51-4"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only)</span>
+<span id="cb51-5"><a href="#cb51-5"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3, only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>or all-in-one</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(<span class="fu">select</span>(<span class="fu">mutate</span>(nlsy, <span class="at">only =</span> <span class="fu">case_when</span>(nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>, <span class="at">.default =</span> <span class="st">"no"</span>)), id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only), only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(<span class="fu">select</span>(<span class="fu">mutate</span>(nlsy, <span class="at">only =</span> <span class="fu">case_when</span>(nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>, <span class="at">.default =</span> <span class="st">"no"</span>)), id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only), only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1008,19 +1002,19 @@ Caused by warning:
 <div class="columns">
 <div class="column" style="width:70%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">little_bunny</span>()</span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">bop_on</span>(</span>
-<span id="cb54-3"><a href="#cb54-3"></a>  <span class="fu">scoop_up</span>(</span>
-<span id="cb54-4"><a href="#cb54-4"></a>    <span class="fu">hop_through</span>(foo_foo, forest),</span>
-<span id="cb54-5"><a href="#cb54-5"></a>    field_mouse),</span>
-<span id="cb54-6"><a href="#cb54-6"></a>  head)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>foo_foo <span class="ot">&lt;-</span> <span class="fu">little_bunny</span>()</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">bop_on</span>(</span>
+<span id="cb53-3"><a href="#cb53-3"></a>  <span class="fu">scoop_up</span>(</span>
+<span id="cb53-4"><a href="#cb53-4"></a>    <span class="fu">hop_through</span>(foo_foo, forest),</span>
+<span id="cb53-5"><a href="#cb53-5"></a>    field_mouse),</span>
+<span id="cb53-6"><a href="#cb53-6"></a>  head)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <h3>vs</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>foo_foo <span class="sc">|&gt;</span> </span>
-<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">hop_through</span>(forest) <span class="sc">|&gt;</span> </span>
-<span id="cb55-3"><a href="#cb55-3"></a>  <span class="fu">scoop_up</span>(field_mouse) <span class="sc">|&gt;</span> </span>
-<span id="cb55-4"><a href="#cb55-4"></a>  <span class="fu">bop_on</span>(head)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>foo_foo <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href="#cb54-2"></a>  <span class="fu">hop_through</span>(forest) <span class="sc">|&gt;</span> </span>
+<span id="cb54-3"><a href="#cb54-3"></a>  <span class="fu">scoop_up</span>(field_mouse) <span class="sc">|&gt;</span> </span>
+<span id="cb54-4"><a href="#cb54-4"></a>  <span class="fu">bop_on</span>(head)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:30%;">
 <p><img data-src="../../img/bunny.jpg"></p>
@@ -1035,23 +1029,23 @@ Caused by warning:
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">leave_house</span>(</span>
-<span id="cb56-2"><a href="#cb56-2"></a>  <span class="fu">get_dressed</span>(</span>
-<span id="cb56-3"><a href="#cb56-3"></a>    <span class="fu">get_out_of_bed</span>(</span>
-<span id="cb56-4"><a href="#cb56-4"></a>      <span class="fu">wake_up</span>(me))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">leave_house</span>(</span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">get_dressed</span>(</span>
+<span id="cb55-3"><a href="#cb55-3"></a>    <span class="fu">get_out_of_bed</span>(</span>
+<span id="cb55-4"><a href="#cb55-4"></a>      <span class="fu">wake_up</span>(me))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>me <span class="ot">&lt;-</span> <span class="fu">wake_up</span>(me)</span>
-<span id="cb57-2"><a href="#cb57-2"></a>me <span class="ot">&lt;-</span> <span class="fu">get_out_of_bed</span>(me)</span>
-<span id="cb57-3"><a href="#cb57-3"></a>me <span class="ot">&lt;-</span> <span class="fu">get_dressed</span>(me)</span>
-<span id="cb57-4"><a href="#cb57-4"></a>me <span class="ot">&lt;-</span> <span class="fu">leave_house</span>(me)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>me <span class="ot">&lt;-</span> <span class="fu">wake_up</span>(me)</span>
+<span id="cb56-2"><a href="#cb56-2"></a>me <span class="ot">&lt;-</span> <span class="fu">get_out_of_bed</span>(me)</span>
+<span id="cb56-3"><a href="#cb56-3"></a>me <span class="ot">&lt;-</span> <span class="fu">get_dressed</span>(me)</span>
+<span id="cb56-4"><a href="#cb56-4"></a>me <span class="ot">&lt;-</span> <span class="fu">leave_house</span>(me)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>me  <span class="sc">|&gt;</span> </span>
-<span id="cb58-2"><a href="#cb58-2"></a>  <span class="fu">wake_up</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb58-3"><a href="#cb58-3"></a>  <span class="fu">get_out_of_bed</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb58-4"><a href="#cb58-4"></a>  <span class="fu">get_dressed</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb58-5"><a href="#cb58-5"></a>  <span class="fu">leave_house</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>me  <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href="#cb57-2"></a>  <span class="fu">wake_up</span>()  <span class="sc">|&gt;</span> </span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="fu">get_out_of_bed</span>()  <span class="sc">|&gt;</span> </span>
+<span id="cb57-4"><a href="#cb57-4"></a>  <span class="fu">get_dressed</span>()  <span class="sc">|&gt;</span> </span>
+<span id="cb57-5"><a href="#cb57-5"></a>  <span class="fu">leave_house</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="../../img/friday.png"></p>
@@ -1066,13 +1060,13 @@ Caused by warning:
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">only =</span> <span class="fu">case_when</span>(</span>
-<span id="cb59-2"><a href="#cb59-2"></a>  nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb59-3"><a href="#cb59-3"></a>  <span class="at">.default =</span> <span class="st">"no"</span>))</span>
-<span id="cb59-4"><a href="#cb59-4"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, </span>
-<span id="cb59-5"><a href="#cb59-5"></a>                id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only)</span>
-<span id="cb59-6"><a href="#cb59-6"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3, only <span class="sc">==</span> <span class="st">"yes"</span>)</span>
-<span id="cb59-7"><a href="#cb59-7"></a>only_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, <span class="at">only =</span> <span class="fu">case_when</span>(</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb58-3"><a href="#cb58-3"></a>  <span class="at">.default =</span> <span class="st">"no"</span>))</span>
+<span id="cb58-4"><a href="#cb58-4"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, </span>
+<span id="cb58-5"><a href="#cb58-5"></a>                id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only)</span>
+<span id="cb58-6"><a href="#cb58-6"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3, only <span class="sc">==</span> <span class="st">"yes"</span>)</span>
+<span id="cb58-7"><a href="#cb58-7"></a>only_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 5
       id sleep_wkdy sleep_wknd total_sleep only 
@@ -1092,13 +1086,13 @@ Caused by warning:
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>only_kids <span class="ot">&lt;-</span> nlsy <span class="sc">|&gt;</span> </span>
-<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">mutate</span>(<span class="at">only =</span> <span class="fu">case_when</span>(</span>
-<span id="cb61-3"><a href="#cb61-3"></a>    nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb61-4"><a href="#cb61-4"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"no"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb61-5"><a href="#cb61-5"></a>  <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only) <span class="sc">|&gt;</span> </span>
-<span id="cb61-6"><a href="#cb61-6"></a>  <span class="fu">filter</span>(only <span class="sc">==</span> <span class="st">"yes"</span>)</span>
-<span id="cb61-7"><a href="#cb61-7"></a>only_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>only_kids <span class="ot">&lt;-</span> nlsy <span class="sc">|&gt;</span> </span>
+<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">mutate</span>(<span class="at">only =</span> <span class="fu">case_when</span>(</span>
+<span id="cb60-3"><a href="#cb60-3"></a>    nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb60-4"><a href="#cb60-4"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"no"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), only) <span class="sc">|&gt;</span> </span>
+<span id="cb60-6"><a href="#cb60-6"></a>  <span class="fu">filter</span>(only <span class="sc">==</span> <span class="st">"yes"</span>)</span>
+<span id="cb60-7"><a href="#cb60-7"></a>only_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 5
       id sleep_wkdy sleep_wknd total_sleep only 
@@ -1122,9 +1116,9 @@ Caused by warning:
 <section class="slide level2">
 <h2>Pipes replace the first argument of the next function</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">help</span>(mutate)</span>
-<span id="cb63-2"><a href="#cb63-2"></a><span class="fu">help</span>(select)</span>
-<span id="cb63-3"><a href="#cb63-3"></a><span class="fu">help</span>(filter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">help</span>(mutate)</span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="fu">help</span>(select)</span>
+<span id="cb62-3"><a href="#cb62-3"></a><span class="fu">help</span>(filter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <h3>Usage</h3>
 <p><code>mutate(.data, ...)</code></p>
@@ -1136,19 +1130,19 @@ Caused by warning:
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
-<span id="cb64-2"><a href="#cb64-2"></a>                <span class="at">only =</span> </span>
-<span id="cb64-3"><a href="#cb64-3"></a>                  <span class="fu">case_when</span>(</span>
-<span id="cb64-4"><a href="#cb64-4"></a>                    nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb64-5"><a href="#cb64-5"></a>                    <span class="at">.default =</span> <span class="st">"no"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
+<span id="cb63-2"><a href="#cb63-2"></a>                <span class="at">only =</span> </span>
+<span id="cb63-3"><a href="#cb63-3"></a>                  <span class="fu">case_when</span>(</span>
+<span id="cb63-4"><a href="#cb63-4"></a>                    nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb63-5"><a href="#cb63-5"></a>                    <span class="at">.default =</span> <span class="st">"no"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>only_kids <span class="ot">&lt;-</span> nlsy  <span class="sc">|&gt;</span> </span>
-<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">mutate</span>(<span class="at">only =</span> </span>
-<span id="cb65-3"><a href="#cb65-3"></a>           <span class="fu">case_when</span>(</span>
-<span id="cb65-4"><a href="#cb65-4"></a>             nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb65-5"><a href="#cb65-5"></a>             <span class="at">.default =</span> <span class="st">"no"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>only_kids <span class="ot">&lt;-</span> nlsy  <span class="sc">|&gt;</span> </span>
+<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">mutate</span>(<span class="at">only =</span> </span>
+<span id="cb64-3"><a href="#cb64-3"></a>           <span class="fu">case_when</span>(</span>
+<span id="cb64-4"><a href="#cb64-4"></a>             nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb64-5"><a href="#cb64-5"></a>             <span class="at">.default =</span> <span class="st">"no"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1158,28 +1152,28 @@ Caused by warning:
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
-<span id="cb66-2"><a href="#cb66-2"></a>                <span class="at">only =</span> </span>
-<span id="cb66-3"><a href="#cb66-3"></a>                  <span class="fu">case_when</span>(</span>
-<span id="cb66-4"><a href="#cb66-4"></a>                    nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb66-5"><a href="#cb66-5"></a>                    <span class="at">.default =</span> <span class="st">"no"</span>))</span>
-<span id="cb66-6"><a href="#cb66-6"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, </span>
-<span id="cb66-7"><a href="#cb66-7"></a>                id, <span class="fu">contains</span>(<span class="st">"sleep"</span>),</span>
-<span id="cb66-8"><a href="#cb66-8"></a>                only)</span>
-<span id="cb66-9"><a href="#cb66-9"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3,</span>
-<span id="cb66-10"><a href="#cb66-10"></a>                    only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>nlsy2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(nlsy, </span>
+<span id="cb65-2"><a href="#cb65-2"></a>                <span class="at">only =</span> </span>
+<span id="cb65-3"><a href="#cb65-3"></a>                  <span class="fu">case_when</span>(</span>
+<span id="cb65-4"><a href="#cb65-4"></a>                    nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb65-5"><a href="#cb65-5"></a>                    <span class="at">.default =</span> <span class="st">"no"</span>))</span>
+<span id="cb65-6"><a href="#cb65-6"></a>nlsy3 <span class="ot">&lt;-</span> <span class="fu">select</span>(nlsy2, </span>
+<span id="cb65-7"><a href="#cb65-7"></a>                id, <span class="fu">contains</span>(<span class="st">"sleep"</span>),</span>
+<span id="cb65-8"><a href="#cb65-8"></a>                only)</span>
+<span id="cb65-9"><a href="#cb65-9"></a>only_kids <span class="ot">&lt;-</span> <span class="fu">filter</span>(nlsy3,</span>
+<span id="cb65-10"><a href="#cb65-10"></a>                    only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>only_kids <span class="ot">&lt;-</span> nlsy  <span class="sc">|&gt;</span> </span>
-<span id="cb67-2"><a href="#cb67-2"></a>  <span class="fu">mutate</span>(<span class="at">only =</span> </span>
-<span id="cb67-3"><a href="#cb67-3"></a>           <span class="fu">case_when</span>(</span>
-<span id="cb67-4"><a href="#cb67-4"></a>             nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
-<span id="cb67-5"><a href="#cb67-5"></a>             <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"no"</span>))  <span class="sc">|&gt;</span> </span>
-<span id="cb67-6"><a href="#cb67-6"></a>  <span class="fu">select</span>(id,</span>
-<span id="cb67-7"><a href="#cb67-7"></a>         <span class="fu">contains</span>(<span class="st">"sleep"</span>),</span>
-<span id="cb67-8"><a href="#cb67-8"></a>         only)  <span class="sc">|&gt;</span> </span>
-<span id="cb67-9"><a href="#cb67-9"></a>  <span class="fu">filter</span>(only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>only_kids <span class="ot">&lt;-</span> nlsy  <span class="sc">|&gt;</span> </span>
+<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">mutate</span>(<span class="at">only =</span> </span>
+<span id="cb66-3"><a href="#cb66-3"></a>           <span class="fu">case_when</span>(</span>
+<span id="cb66-4"><a href="#cb66-4"></a>             nsibs <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"yes"</span>,</span>
+<span id="cb66-5"><a href="#cb66-5"></a>             <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"no"</span>))  <span class="sc">|&gt;</span> </span>
+<span id="cb66-6"><a href="#cb66-6"></a>  <span class="fu">select</span>(id,</span>
+<span id="cb66-7"><a href="#cb66-7"></a>         <span class="fu">contains</span>(<span class="st">"sleep"</span>),</span>
+<span id="cb66-8"><a href="#cb66-8"></a>         only)  <span class="sc">|&gt;</span> </span>
+<span id="cb66-9"><a href="#cb66-9"></a>  <span class="fu">filter</span>(only <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1406,6 +1400,44 @@ Caused by warning:
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

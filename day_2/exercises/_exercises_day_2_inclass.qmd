@@ -1,0 +1,199 @@
+---
+title: "Day 2 Solutions"
+execute: 
+  eval: true
+  error: true
+---
+
+# Install quarto
+
+1.  Download quarto [here](https://quarto.org/docs/get-started/).
+
+2.  Render this **document** using the *button* at the top of the document.
+
+3.  Switch back and forth between Visual and Source mode.
+
+4.  Change `execute: eval:` to `true` at the top of the document. Try to render it.
+
+5.  Add `format: docx` to the top of the document and render.
+
+```{r}
+library(tidyverse)
+nlsy <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds")
+```
+
+# Exercises 1: Making new variables with `mutate()`
+
+## Standardized income
+
+Using the NLSY data and `mutate()`, make a standardized (centered at the mean, and divided by the standard deviation) version of income. Look at this variable using `summary()`.
+
+```{r}
+# replace the ... with your code
+nlsy <- mutate(nlsy, 
+               income_mean_centered = income - mean(income),
+               income_stand = income_mean_centered / sd(income_mean_centered))
+summary(nlsy$income_stand)
+```
+
+## Standardized log(income)
+
+Do the same thing, but using income on the log scale. Look at this variable using `summary()`. Can you figure out what happened? (Hint: look at your log(income) variable.)
+
+```{r}
+nlsy <- mutate(nlsy, 
+               log_income = log(income),
+               log_income_mean_centered = log_income - mean(log_income),
+               log_income_stand = log_income_mean_centered / sd(log_income_mean_centered))
+summary(nlsy$log_income)
+mean(nlsy$log_income)
+```
+
+```{r}
+select(nlsy, starts_with("sleep") & ends_with("d"), ends_with("y"))
+```
+
+
+# Exercises 2: Selecting variables using `select()`
+
+## Select centered variables
+
+Create mean-centered versions of `age_bir`, `nsibs`, `income`, and the two sleep variables. Use the same ending (e.g., `cent`) for all of them. Then make a new dataset of just the centered variables using `select()` and a helper.
+
+```{r}
+nlsy <- mutate(nlsy,
+               age_bir_cent = age_bir - mean(age_bir),
+               nsibs_cent = nsibs - mean(nsibs),
+               income_cent = income - mean(income),
+               sleep_wkdy_cent = sleep_wkdy - mean(sleep_wkdy),
+               sleep_wknd_cent = sleep_wknd - mean(sleep_wknd))
+nlsy_new <- select(nlsy, ends_with("cent"))
+nlsy_new
+```
+
+## Selecting based on a vector
+
+Create a dataset called `nlsy_orig` that contains only the raw variables, using a vector of names and the `all_of()` helper. I'll start you off with the variable names.
+
+```{r}
+colnames_orig <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
+                   "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                   "income", "res_1980", "res_2002", "age_bir", "dob")
+nlsy_orig <- select(nlsy, any_of(colnames_orig))
+```
+
+## Selecting another way
+
+Can you come up with another way to end up with the same raw variables? (Hint: what do the added variables have in common?)
+
+```{r}
+select(nlsy, -ends_with("cent"), -contains("cat"), -contains("income"), income)
+select(nlsy, -eyesight_cat:sleep_wknd_cent)
+
+```
+```{r}
+7 %in% c(4, 6, 7, 10)
+```
+
+# Exercises 3: Subset your data with `filter()`
+
+### "Or" conditions
+
+Create a dataset with all the observations that get over 7 hours of sleep on both weekends and weekdays *or* who have an income greater than/equal to 20,000 and less than/equal to 50,000.
+
+```{r}
+nlsy_or <- filter(nlsy, 
+                  (sleep_wkdy > 7 & sleep_wknd > 7) |
+                    (income >= 20000 & income <= 50000))
+nlsy_or <- filter(nlsy, 
+                  (sleep_wkdy > 7 & sleep_wknd > 7) |
+                    between(income, 20000, 50000))
+summary(select(nlsy_or, starts_with("sleep"), income))
+nrow(nlsy_or)
+```
+
+### Missing values
+
+Create a dataset that consists *only* of the missing values in `slp_cat_wkdy`. Check how many rows it has (there should be 3!).
+
+
+```{r}
+new_data <- filter(nlsy, is.na(slp_cat_wkdy))
+new_data
+```
+
+We can remove those with NA values by using `filter(nlsy, !is.na(slp_cat_wkdy))`.
+
+## `case_when()`
+
+Try again to make a new variable for standardized log-income. This time, if you are not able to calculate log(income) for an observation, replace it with a missing value (using `case_when()`). This time, when you standardize log(income), you'll have to use `na.rm = TRUE` to remove missing values both when you take the mean and the standard deviation.
+
+```{r}
+nlsy <- mutate(nlsy,
+               log_income = case_when(
+                 income <= 0 ~ NA,
+                 .default = income
+               ),
+               log_income_cent = log_income - mean(log_income, na.rm = TRUE),
+               log_income_stand = log_income_cent / sd(log_income_cent, na.rm = TRUE))
+summary(nlsy$log_income_stand)
+```
+
+# Exercises 4: Pipes
+
+Translate this code into a piped version:
+
+```{r}
+nlsy2 <- mutate(nlsy, 
+                slp_cat_wkdy = case_when(
+                  sleep_wkdy < 5 ~ "little",
+                  sleep_wkdy < 7 ~ "some",
+                  sleep_wkdy < 9 ~ "ideal",
+                  sleep_wkdy < 12 ~ "lots",
+                  TRUE ~ NA_character_))
+missing_sleep <- filter(nlsy2, is.na(slp_cat_wkdy))
+missing_sleep <- select(missing_sleep, starts_with("slp"), contains("sleep"))
+missing_sleep
+```
+
+```{r}
+missing_sleep <- nlsy |>  
+  mutate(slp_cat_wkdy = case_when(
+                  sleep_wkdy < 5 ~ "little",
+                  sleep_wkdy < 7 ~ "some",
+                  sleep_wkdy < 9 ~ "ideal",
+                  sleep_wkdy < 12 ~ "lots",
+                  TRUE ~ NA_character_)) |> 
+  filter(is.na(slp_cat_wkdy)) |> 
+  select(starts_with("slp"), contains("sleep"))
+missing_sleep
+```
+
+Can you rearrange this sequence of steps into a different order and get the same answer?
+
+```{r}
+missing_sleep <- nlsy |> 
+  select(starts_with("slp"), contains("sleep")) |>  
+  mutate(slp_cat_wkdy = case_when(
+                  sleep_wkdy < 5 ~ "little",
+                  sleep_wkdy < 7 ~ "some",
+                  sleep_wkdy < 9 ~ "ideal",
+                  sleep_wkdy < 12 ~ "lots",
+                  TRUE ~ NA_character_)) |> 
+  filter(is.na(slp_cat_wkdy))
+missing_sleep
+```
+```{r}
+missing_sleep <- nlsy %>% 
+  filter(sleep_wkdy >= 12) %>%
+  select(starts_with("slp"), contains("sleep")) %>%  
+  mutate(slp_cat_wkdy = case_when(
+                  sleep_wkdy < 5 ~ "little",
+                  sleep_wkdy < 7 ~ "some",
+                  sleep_wkdy < 9 ~ "ideal",
+                  sleep_wkdy < 12 ~ "lots",
+                  TRUE ~ NA_character_))
+missing_sleep %>% 
+  summary()
+```
+

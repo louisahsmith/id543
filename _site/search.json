@@ -4,7 +4,56 @@
     "href": "day_2/index.html",
     "title": "Day 2",
     "section": "",
-    "text": "In class\nDownload some exercises to go along with these slides here.\nDownload the example quarto document here\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 4.1-4.3\nR for Data Science Ch. 5\n\n\n\nResources\n\nquarto tutorials\ndplyr cheat sheet\nHere’s more info on the select() helpers\nHere are some useful functions for use with mutate()"
+    "text": "In class\nDownload some exercises to go along with these slides here. Here is the completed .qmd document (you can find the rendered version in the sidebar).\nDownload the example quarto document here\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 4.1-4.3\nR for Data Science Ch. 5\n\n\n\nResources\n\nquarto tutorials\ndplyr cheat sheet\nHere’s more info on the select() helpers\nHere are some useful functions for use with mutate()"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html",
+    "href": "day_2/exercises/exercises_day_2_inclass.html",
+    "title": "Day 2 Solutions",
+    "section": "",
+    "text": "Download this document here."
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html#standardized-income",
+    "href": "day_2/exercises/exercises_day_2_inclass.html#standardized-income",
+    "title": "Day 2 Solutions",
+    "section": "Standardized income",
+    "text": "Standardized income\nUsing the NLSY data and mutate(), make a standardized (centered at the mean, and divided by the standard deviation) version of income. Look at this variable using summary().\n\n# replace the ... with your code\nnlsy &lt;- mutate(nlsy, \n               income_mean_centered = income - mean(income),\n               income_stand = income_mean_centered / sd(income_mean_centered))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nsummary(nlsy$income_stand)\n\nError in eval(expr, envir, enclos): object 'nlsy' not found"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html#standardized-logincome",
+    "href": "day_2/exercises/exercises_day_2_inclass.html#standardized-logincome",
+    "title": "Day 2 Solutions",
+    "section": "Standardized log(income)",
+    "text": "Standardized log(income)\nDo the same thing, but using income on the log scale. Look at this variable using summary(). Can you figure out what happened? (Hint: look at your log(income) variable.)\n\nnlsy &lt;- mutate(nlsy, \n               log_income = log(income),\n               log_income_mean_centered = log_income - mean(log_income),\n               log_income_stand = log_income_mean_centered / sd(log_income_mean_centered))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nsummary(nlsy$log_income)\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nmean(nlsy$log_income)\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\n\n\nselect(nlsy, starts_with(\"sleep\") & ends_with(\"d\"), ends_with(\"y\"))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html#select-centered-variables",
+    "href": "day_2/exercises/exercises_day_2_inclass.html#select-centered-variables",
+    "title": "Day 2 Solutions",
+    "section": "Select centered variables",
+    "text": "Select centered variables\nCreate mean-centered versions of age_bir, nsibs, income, and the two sleep variables. Use the same ending (e.g., cent) for all of them. Then make a new dataset of just the centered variables using select() and a helper.\n\nnlsy &lt;- mutate(nlsy,\n               age_bir_cent = age_bir - mean(age_bir),\n               nsibs_cent = nsibs - mean(nsibs),\n               income_cent = income - mean(income),\n               sleep_wkdy_cent = sleep_wkdy - mean(sleep_wkdy),\n               sleep_wknd_cent = sleep_wknd - mean(sleep_wknd))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nnlsy_new &lt;- select(nlsy, ends_with(\"cent\"))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nnlsy_new\n\nError in eval(expr, envir, enclos): object 'nlsy_new' not found"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html#selecting-based-on-a-vector",
+    "href": "day_2/exercises/exercises_day_2_inclass.html#selecting-based-on-a-vector",
+    "title": "Day 2 Solutions",
+    "section": "Selecting based on a vector",
+    "text": "Selecting based on a vector\nCreate a dataset called nlsy_orig that contains only the raw variables, using a vector of names and the all_of() helper. I’ll start you off with the variable names.\n\ncolnames_orig &lt;- c(\"glasses\", \"eyesight\", \"sleep_wkdy\", \"sleep_wknd\",\n                   \"id\", \"nsibs\", \"samp\", \"race_eth\", \"sex\", \"region\", \n                   \"income\", \"res_1980\", \"res_2002\", \"age_bir\", \"dob\")\nnlsy_orig &lt;- select(nlsy, any_of(colnames_orig))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html#selecting-another-way",
+    "href": "day_2/exercises/exercises_day_2_inclass.html#selecting-another-way",
+    "title": "Day 2 Solutions",
+    "section": "Selecting another way",
+    "text": "Selecting another way\nCan you come up with another way to end up with the same raw variables? (Hint: what do the added variables have in common?)\n\nselect(nlsy, -ends_with(\"cent\"), -contains(\"cat\"), -contains(\"income\"), income)\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nselect(nlsy, -eyesight_cat:sleep_wknd_cent)\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\n\n\n7 %in% c(4, 6, 7, 10)\n\n[1] TRUE"
+  },
+  {
+    "objectID": "day_2/exercises/exercises_day_2_inclass.html#case_when",
+    "href": "day_2/exercises/exercises_day_2_inclass.html#case_when",
+    "title": "Day 2 Solutions",
+    "section": "case_when()",
+    "text": "case_when()\nTry again to make a new variable for standardized log-income. This time, if you are not able to calculate log(income) for an observation, replace it with a missing value (using case_when()). This time, when you standardize log(income), you’ll have to use na.rm = TRUE to remove missing values both when you take the mean and the standard deviation.\n\nnlsy &lt;- mutate(nlsy,\n               log_income = case_when(\n                 income &lt;= 0 ~ NA,\n                 .default = income\n               ),\n               log_income_cent = log_income - mean(log_income, na.rm = TRUE),\n               log_income_stand = log_income_cent / sd(log_income_cent, na.rm = TRUE))\n\nError in eval(expr, envir, enclos): object 'nlsy' not found\n\nsummary(nlsy$log_income_stand)\n\nError in eval(expr, envir, enclos): object 'nlsy' not found"
   },
   {
     "objectID": "day_2/exercises/exercises_day_2.html",
