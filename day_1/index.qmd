@@ -3,9 +3,13 @@ title: "Day 1"
 toc-location: left
 ---
 
+# Exercises
+
 Download some exercises to go along with these slides [here](exercises/exercises_day_1.R).
 
 [Here](exercises/exercises_day_1_inclass.R) is the R script containing the code we ran in class.
+
+# Slides
 
 Open the slides in a new tab [here](slides/intro-course.html).
 <div>
@@ -33,3 +37,15 @@ Open the slides in a new tab [here](slides/factor-variables.html).
 ```
 
 </div>
+
+# Readings
+
+- [R for Data Science Ch. 2](https://r4ds.hadley.nz/data-visualize.html)
+
+- [R for Data Science Ch. 17](https://r4ds.hadley.nz/factors.html)
+
+# Resources
+
+- `ggplot2` [cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
+- Here’s an [entire paper ](https://peerj.com/preprints/3163/) about working with factors in R.
+- `forcats` [cheat sheet](https://posit.co/wp-content/uploads/2022/10/factors-1.pdf)

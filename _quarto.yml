@@ -41,7 +41,7 @@ website:
 
     - id: day_2
       title: "Day 2"
-      # contents: day_2
+      contents: day_2
 
     - id: day_3
       title: "Day 3"

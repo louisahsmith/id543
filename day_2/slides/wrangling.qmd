@@ -1,0 +1,602 @@
+---
+title: "Data wrangling"
+format: 
+  revealjs:
+    theme: 
+      - ../../www/custom.scss
+order: 1
+execute: 
+  echo: true
+---
+
+## Making variables in "Base R" 
+
+```{r}
+#| include: false
+library(tidyverse)
+nlsy <- read_rds("../../data/nlsy.rds")
+```
+
+```{r}
+nlsy$region_cat <- factor(nlsy$region)
+nlsy$income <- round(nlsy$income)
+nlsy$age_bir_cent <- nlsy$age_bir - mean(nlsy$age_bir)
+nlsy$index <- 1:nrow(nlsy)
+nlsy$slp_wkdy_cat <- ifelse(nlsy$sleep_wkdy < 5, "little",
+                            ifelse(nlsy$sleep_wkdy < 7, "some",
+                                   ifelse(nlsy$sleep_wkdy < 9, "ideal",
+                                          ifelse(nlsy$sleep_wkdy < 12, "lots", NA)
+                                   )
+                            )
+)
+```
+
+
+## Very quickly your code can get overrun with dollar signs (and parentheses, and arrows)
+![](../../img/ugly-code.png)
+
+## Cleaner way to make new variables: `mutate()`
+
+```{r}
+library(tidyverse)
+# mutate() is from dplyr
+nlsy <- mutate(nlsy, # dataset
+               # new variables
+               region_cat = factor(region, labels = c("Northeast", "North Central", "South", "West")), 
+               income = round(income),
+               age_bir_cent = age_bir - mean(age_bir),
+               index = row_number()
+               # could make as many as we want....
+)
+```
+#### We can refer to variables within the same dataset (`region`, `income`, `age_bir`) without the `$` notation
+
+## `mutate()` tips and tricks
+
+You still need to store your dataset somewhere, so make sure to include the assignment arrow
+
+- Good practice to make new copies with different names as you go along
+
+```{r}
+nlsy_w_cats <- mutate(nlsy, # dataset
+                      region_cat = factor(region),
+                      sex_cat = factor(sex),
+                      race_eth_cat = factor(race_eth))
+
+nlsy_clean <- mutate(nlsy_w_cats, # dataset
+                     region_cat = fct_recode(region_cat,
+                                             "Northeast" = "1",
+                                             "North Central" = "2",
+                                             "South" = "3",
+                                             "West" = "4"),
+                     sex_cat = fct_relevel(sex_cat,
+                                           "Female", "Male"))
+```
+
+
+## `mutate()` tips and tricks
+
+- You can refer immediately to variables you just made:
+
+```{r}
+nlsy_new <- mutate(nlsy,
+                   age_bir_cent = age_bir - mean(age_bir),
+                   age_bir_stand = age_bir_cent / sd(age_bir_cent)
+)
+```
+
+::: callout-tip
+"Chunk" your work on the same/similar variables so you can keep track of how a variable is derived.
+:::
+
+## My favorite R function: `case_when()`
+
+I used to write endless strings of `ifelse()` statements
+
+- If A is TRUE, then B; if not, then if C is true, then D; if not, then if E is true, then F; if not, ...
+
+```{r}
+#| eval: false
+nlsy <- mutate(nlsy,
+               ifelse(sleep_wkdy < 5,  "little", 
+                      ifelse(sleep_wkdy < 7, "some", 
+                             ifelse(sleep_wkdy < 9, "ideal", 
+                                    ifelse(sleep_wkdy < 12, "lots", NA)))))
+```
+
+![](../../img/if-else.png)
+
+This can be extremely hard to follow!
+
+## `case_when()` syntax
+
+- Ask a question (i.e., something that will give `TRUE` or `FALSE`) on the left-hand side of a `~`
+- `sleep_wkdy < 5 ~`
+- If `TRUE`, variable will take on value of whatever is on the right-hand side of the `~`
+- `~ "little"`
+- Proceeds in order ... if TRUE, takes that value and **stops**
+- If you want some default value, you can end with `.default = {something}`, which every observation will get if everything else is `FALSE`
+- `.default = NA` is the default default
+
+
+## `case_when()` combines a lot of "if-else" statements
+
+```{r}
+nlsy <- mutate(nlsy, slp_cat_wkdy = 
+                 case_when(sleep_wkdy < 5 ~ "little",
+                           sleep_wkdy < 7 ~ "some",
+                           sleep_wkdy < 9 ~ "ideal",
+                           sleep_wkdy < 12 ~ "lots",
+                           .default = NA
+                 )
+)
+
+count(nlsy, sleep_wkdy, slp_cat_wkdy)
+```
+
+## `case_when()` example
+
+```{r}
+nlsy <- mutate(nlsy, total_sleep = 
+                 case_when(
+                   sleep_wknd > 8 & sleep_wkdy > 8 ~ 1,
+                   sleep_wknd + sleep_wkdy > 15 ~ 2,
+                   sleep_wknd - sleep_wkdy > 3 ~ 3
+                 )
+)
+```
+
+- Which value would someone with `sleep_wknd = 8` and `sleep_wkdy = 4` go? 
+- What about someone with  `sleep_wknd = 11` and `sleep_wkdy = 4`? 
+- What about someone with `sleep_wknd = 7` and `sleep_wkdy = 7`?
+
+# Exercises
+
+## Selecting the variables you want
+
+- We've made tons of new variables!
+- You don't want to keep them all!
+- Luckily there's an easy way to select the variables you want: `select()`!
+
+```{r}
+nlsy_subset <- select(nlsy, id, income, eyesight, sex, region)
+nlsy_subset
+```
+
+## `select()` syntax
+
+- Like `mutate()`, the first argument is the dataset you want to select from
+- Then you can just list the variables you want!
+- Or you can list the variables you *don't* want, preceded by an exclamation point (`!`)
+
+```{r neg-sel}
+select(nlsy_subset, !c(id, region))
+```
+
+## `select()` syntax
+
+- There are also a lot of "helpers"!
+- `var1:var10` (consecutively placed variables)
+- `all_of()`/`any_of()`
+- `starts_with()`
+- `ends_with()`
+- `contains()`
+- `matches()` (like contains, but for regular expressions)
+- `num_range()` (for patterns like `x01`, `x02`, ...)  
+- `everything()`
+- `where(is.factor)` (or anything else)
+
+## `all_of()`
+
+Notice that the variable names we used in `select()` weren't in quotation marks.
+
+Let's say you have a vector of column names that you want. Then you can use `all_of()` to choose them.
+
+```{r}
+cols_I_want <- c("age_bir", "nsibs", "region")
+select(nlsy, all_of(cols_I_want))
+```
+
+If you don't want an error if they don't exist, use `any_of()`.
+
+## `starts_with`, `ends_with`
+
+Variables won't be repeated even if they meet multiple criteria
+
+```{r}
+select(nlsy, starts_with("sleep"), ends_with("d"))
+```
+
+## `starts_with`, `ends_with`
+
+Use `&` in between multiple criteria if they have to meet *all* of them
+
+```{r}
+select(nlsy, starts_with("sleep") & ends_with("d"))
+```
+
+## `where()`
+
+You can use these helpers to rearrange variables
+
+```{r}
+select(nlsy, id, where(is.factor), where(is.numeric), everything())
+```
+
+# Exercises
+
+## Subsetting data
+
+We usually don't do an analysis in an *entire* dataset. We usually apply some eligibility criteria to find the people who we will analyze. One function we can use to do that in R is `filter()`.
+
+```{r}
+wear_glasses <- filter(nlsy, glasses == 1)
+
+nrow(wear_glasses)
+summary(wear_glasses$glasses)
+```
+
+## `filter()` syntax
+
+::: smaller
+- Like the other functions, we give `filter()` the dataset first, then we give it a series of criteria that we want to subset our data on. 
+- As with `case_when()`, these criteria should be questions with `TRUE`/`FALSE` answers. We'll keep all those rows for which the answer is `TRUE`.
+- If there are multiple criteria, we can connect them with `&` or just by separating with commas, and we'll get back only the rows that answer `TRUE` to all of them.
+:::
+
+```{r}
+yesno_glasses <- filter(nlsy, glasses == 0, glasses == 1)
+nrow(yesno_glasses)
+glasses_great_eyes <- filter(nlsy, glasses == 0, eyesight == 1)
+nrow(glasses_great_eyes)
+```
+
+## Logicals in R
+
+When we used `case_when()`, we got `TRUE`/`FALSE` answers when we asked whether a variable was `>` or `<` some number, for example.
+
+When we want to know if something is
+
+- equal: `==`
+- not equal: `!=`
+- greater than or equal to: `>=`
+- less than or equal to: `<=`
+
+We also can ask about multiple conditions with `&` (and) and `|` (or).
+
+## Or statements
+
+To get the extreme values of eyesight (1 and 5), we would do something like:
+
+```{r}
+extreme_eyes <- filter(nlsy, eyesight == 1 | 
+                         eyesight == 5)
+table(extreme_eyes$eyesight)
+```
+We could of course do the same thing with a factor variable:
+
+```{r}
+some_regions <- filter(nlsy, region_cat == "Northeast" | 
+                         region_cat == "South")
+table(some_regions$region_cat)
+```
+
+
+## Multiple "or" possibilities
+
+Often we have a number of options for one variable that would meet our eligibility criteria. R's special `%in%` function comes in handy here:
+
+```{r}
+more_regions <- filter(nlsy, region_cat %in% 
+                         c("South", "West", "Northeast"))
+table(more_regions$region_cat)
+```
+
+If the variable's value is any one of those values, it will return `TRUE`.
+
+## More `%in%`
+
+This is just a regular R function that works outside of the `filter()` function, of course!
+
+```{r}
+7 %in% c(4, 6, 7, 10)
+5 %in% c(4, 6, 7, 10)
+```
+
+## Opposite of `%in%`
+
+We can't say "not in" with the syntax `%!in%` or something like that. We have to put the `!` *before* the question to basically make it the opposite of what it otherwise would be.
+
+```{r}
+!7 %in% c(4, 6, 7, 10)
+!5 %in% c(4, 6, 7, 10)
+```
+
+```{r}
+northcentralers <- filter(nlsy, 
+                          !region_cat %in% 
+                            c("South", "West", "Northeast"))
+table(northcentralers$region_cat)
+```
+
+## Other questions
+
+R offers a number of shortcuts to use when determining whether values meet certain criteria:
+
+- `is.na()`: is it a missing value? 
+- `is.finite()` / `is.infinite()`: when you might have infinite values in your data
+- `is.factor()`: asks whether some variable is a factor
+
+You can find lots of these if you tab-complete `is.` or `is_` (the latter are tidyverse versions). Most you will never find a use for!
+
+## Putting it all together
+
+```{r}
+my_data <- filter(nlsy, 
+                  age_bir_cent < 1,
+                  sex != 1,
+                  nsibs %in% c(1, 2, 3),
+                  !is.na(slp_cat_wkdy))
+
+summary(select(my_data, age_bir_cent, sex, nsibs, slp_cat_wkdy))
+```
+
+## Putting it all together
+
+```{r}
+oth_dat <- filter(nlsy, 
+                  (age_bir_cent < 1) &
+                    (sex != 1 | nsibs %in% c(1, 2, 3)) &
+                    !is.na(slp_cat_wkdy))
+
+summary(select(oth_dat, age_bir_cent, sex, nsibs, slp_cat_wkdy))
+```
+
+# Exercises
+
+## Your code might start to look like this
+
+```{r}
+nlsy2 <- mutate(nlsy, 
+                only = case_when(
+                  nsibs == 0 ~ "yes",
+                  .default = "no"))
+nlsy3 <- select(nlsy2, id, contains("sleep"), only)
+only_kids <- filter(nlsy3, only == "yes")
+only_kids
+```
+
+## Sequence of functions
+
+:::: {.columns}
+
+::: {.column width="49%"}
+In any data management and/or analysis task, we perform a series of functions to the data until we get some object we want.
+
+Sometimes this can be hard to read/keep track of.
+
+:::
+
+::: {.column width="48%"}
+
+::: {.center}
+![](../../img/todolist.jpg)
+
+:::
+
+:::
+::::
+
+## The pipe
+
+:::: {.columns}
+
+::: {.column width="49%"}
+If you have experience with unix programming, you may be familiar with the version of the pipe there: `|`.
+
+Starting with R version 4.1, R has its own pipe: `|>`
+
+:::
+::: {.column width="48%"}
+::: {.center}
+![](../../img/pipe.png)
+:::
+The original pipe function `%>%` has been part of the tidyverse for a while and is originally from the `magrittr` package, named after [René Magritte](https://en.wikipedia.org/wiki/The_Treachery_of_Images)
+:::
+::::
+
+## We use the pipe to chain together steps
+
+It's like a recipe for our dataset.^[Example from [Lise Vaudor](http://perso.ens-lyon.fr/lise.vaudor/utiliser-des-pipes-pour-enchainer-des-instructions/)]
+![](../../img/recipe.jpg)
+
+## Instead of successive command lines
+```{r}
+nlsy2 <- mutate(nlsy, 
+                only = case_when(nsibs == 0 ~ "yes", 
+                                 .default = "no"))
+nlsy3 <- select(nlsy2, id, contains("sleep"), only)
+only_kids <- filter(nlsy3, only == "yes")
+```
+
+or all-in-one
+
+```{r}
+only_kids <- filter(select(mutate(nlsy, only = case_when(nsibs == 0 ~ "yes", .default = "no")), id, contains("sleep"), only), only == "yes")
+```
+
+## It's like reading a story (or nursery rhyme!)
+
+:::: columns
+::: {.column width=70%}
+```{r, eval = FALSE}
+foo_foo <- little_bunny()
+bop_on(
+  scoop_up(
+    hop_through(foo_foo, forest),
+    field_mouse),
+  head)
+```
+
+### vs
+```{r, eval = FALSE}
+foo_foo |> 
+  hop_through(forest) |> 
+  scoop_up(field_mouse) |> 
+  bop_on(head)
+```
+:::
+
+::: {.column width=30%}
+![](../../img/bunny.jpg)
+:::
+::::
+::: aside
+Example from [Hadley Wickham](https://t.co/Qn4B7Kna2D?amp=1)
+:::
+
+## A natural order of operations
+
+:::: columns
+::: {.column width=50%}
+```{r, eval = FALSE}
+leave_house(
+  get_dressed(
+    get_out_of_bed(
+      wake_up(me))))
+```
+
+```{r, eval = FALSE}
+me <- wake_up(me)
+me <- get_out_of_bed(me)
+me <- get_dressed(me)
+me <- leave_house(me)
+```
+
+```{r, eval = FALSE}
+me  |> 
+  wake_up()  |> 
+  get_out_of_bed()  |> 
+  get_dressed()  |> 
+  leave_house()
+```
+:::
+
+::: {.column width=50%}
+![](../../img/friday.png)
+:::
+::::
+::: aside
+Example from [Andrew Heiss](https://twitter.com/andrewheiss/status/1173743447171354624?s=20)
+:::
+
+## Using pipes with functions we already know {.smaller}
+
+:::: columns
+::: {.column width=50%}
+```{r}
+nlsy2 <- mutate(nlsy, only = case_when(
+  nsibs == 0 ~ "yes",
+  .default = "no"))
+nlsy3 <- select(nlsy2, 
+                id, contains("sleep"), only)
+only_kids <- filter(nlsy3, only == "yes")
+only_kids
+```
+:::
+
+:::{.column width=50%}
+```{r pipe1,}
+only_kids <- nlsy |> 
+  mutate(only = case_when(
+    nsibs == 0 ~ "yes",
+    TRUE ~ "no")) |> 
+  select(id, contains("sleep"), only) |> 
+  filter(only == "yes")
+only_kids
+```
+:::
+::::
+
+## Pipes replace the first argument of the next function
+
+```{r, eval = FALSE}
+help(mutate)
+help(select)
+help(filter)
+```
+### Usage
+
+`mutate(.data, ...)`
+
+`select(.data, ...)`
+
+`filter(.data, ...)`
+
+## Pipes replace the first argument of the next function
+
+
+:::: {.columns}
+
+::: {.column width="49%"}
+```{r, eval = FALSE}
+nlsy2 <- mutate(nlsy, 
+                only = 
+                  case_when(
+                    nsibs == 0 ~ "yes",
+                    .default = "no"))
+```
+
+:::
+
+::: {.column width="49%"}
+```{r, eval = FALSE}
+only_kids <- nlsy  |> 
+  mutate(only = 
+           case_when(
+             nsibs == 0 ~ "yes",
+             .default = "no"))
+```
+
+:::
+
+::::
+
+## Pipes replace the first argument of the next function
+
+
+:::: {.columns}
+
+::: {.column width="49%"}
+```{r, eval = FALSE}
+nlsy2 <- mutate(nlsy, 
+                only = 
+                  case_when(
+                    nsibs == 0 ~ "yes",
+                    .default = "no"))
+nlsy3 <- select(nlsy2, 
+                id, contains("sleep"),
+                only)
+only_kids <- filter(nlsy3,
+                    only == "yes")
+```
+
+:::
+
+::: {.column width="49%"}
+```{r, eval = FALSE}
+only_kids <- nlsy  |> 
+  mutate(only = 
+           case_when(
+             nsibs == 0 ~ "yes",
+             TRUE ~ "no"))  |> 
+  select(id,
+         contains("sleep"),
+         only)  |> 
+  filter(only == "yes")
+```
+:::
+::::
+
+# Exercises
+

@@ -1,33 +1,30 @@
 ---
 title: "Day 2"
 toc-location: left
-filters:
-  - webr
-webr:
-  show-startup-message: false
 ---
 
+# In class
+
+Download some exercises to go along with these slides [here](exercises/_exercises_day_2.qmd).
+
+# Slides
+
+Open the slides in a new tab [here](slides/wrangling.html).
+<div>
 ```{=html}
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female")))
-`)
-</script>	
+<iframe class="slide-deck" src="slides/wrangling.html"></iframe>
 ```
+
+</div>
+
+
+# Readings
+
+- [R for Data Science Ch. 4.1-4.3](https://r4ds.hadley.nz/data-transform.html)
+- [R for Data Science Ch. 5](https://r4ds.hadley.nz/workflow-style.html)
+
+# Resources
+
+- `dplyr` [cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
+- Here's [more info](https://tidyselect.r-lib.org/reference/select_helpers.html) on the `select()` helpers
+- Here are some [useful functions](https://dplyr.tidyverse.org/reference/mutate.html#useful-mutate-functions) for use with `mutate()`
