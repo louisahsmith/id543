@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Day 3</title>
+<title>Day 3 Exercises</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +20,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -60,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../www/styles.css">
+<link rel="stylesheet" href="../../www/styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -76,37 +110,37 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html" rel="" target="">
+    <a class="nav-link" href="../../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pre_work/index.html" rel="" target="">
+    <a class="nav-link" href="../../pre_work/index.html" rel="" target="">
  <span class="menu-text">Pre-work</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../day_1/index.html" rel="" target="">
+    <a class="nav-link" href="../../day_1/index.html" rel="" target="">
  <span class="menu-text">Day 1</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../day_2/index.html" rel="" target="">
+    <a class="nav-link" href="../../day_2/index.html" rel="" target="">
  <span class="menu-text">Day 2</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../day_3/index.html" rel="" target="" aria-current="page">
+    <a class="nav-link active" href="../../day_3/index.html" rel="" target="" aria-current="page">
  <span class="menu-text">Day 3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../day_4/index.html" rel="" target="">
+    <a class="nav-link" href="../../day_4/index.html" rel="" target="">
  <span class="menu-text">Day 4</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../cheat_sheet/cheat_sheet.html" rel="" target="">
+    <a class="nav-link" href="../../cheat_sheet/cheat_sheet.html" rel="" target="">
  <span class="menu-text">Cheat Sheet</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resources.html" rel="" target="">
+    <a class="nav-link" href="../../resources.html" rel="" target="">
  <span class="menu-text">Resources</span></a>
   </li>  
 </ul>
@@ -120,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../day_3/index.html">Day 3</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../day_3/index.html">Day 3</a></li><li class="breadcrumb-item"><a href="../../day_3/exercises/exercises_day_3.html">Exercises</a></li><li class="breadcrumb-item"><a href="../../day_3/exercises/exercises_day_3.html">Day 3 Exercises</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -134,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../day_3/index.html" class="sidebar-item-text sidebar-link active">
+            <a href="../../day_3/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 3</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -143,16 +177,16 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Exercises</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../day_3/exercises/exercises_day_3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../day_3/exercises/exercises_day_3.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Day 3 Exercises</span></a>
   </div>
 </li>
@@ -169,19 +203,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../day_3/slides/data-files.html" class="sidebar-item-text sidebar-link">
+  <a href="../../day_3/slides/data-files.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Load and save data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../day_3/slides/joins.html" class="sidebar-item-text sidebar-link">
+  <a href="../../day_3/slides/joins.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Arranging and merging data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../day_3/slides/summarize.html" class="sidebar-item-text sidebar-link">
+  <a href="../../day_3/slides/summarize.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Grouping and summarizing data</span></a>
   </div>
 </li>
@@ -191,27 +225,29 @@ ul.task-list li input[type="checkbox"] {
   </li>
     </ul>
     </div>
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#in-class" id="toc-in-class" class="nav-link active" data-scroll-target="#in-class">In class</a></li>
-  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
-  <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
-  </ul>
-</nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link active" data-scroll-target="#exercises-1">Exercises 1</a></li>
+  <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2">Exercises 2</a></li>
+  <li><a href="#exercises-3" id="toc-exercises-3" class="nav-link" data-scroll-target="#exercises-3">Exercises 3</a></li>
+  <li><a href="#exercises-4" id="toc-exercises-4" class="nav-link" data-scroll-target="#exercises-4">Exercises 4</a></li>
+  <li><a href="#exercises-5" id="toc-exercises-5" class="nav-link" data-scroll-target="#exercises-5">Exercises 5</a></li>
+  <li><a href="#exercises-6" id="toc-exercises-6" class="nav-link" data-scroll-target="#exercises-6">Exercises 6</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Day 3</h1>
+<h1 class="title">Day 3 Exercises</h1>
 </div>
 
 
@@ -226,39 +262,54 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="in-class" class="level1">
-<h1>In class</h1>
-<p>Download some exercises to go along with these slides <a href="exercises/_exercises_day_3.qmd">here</a>.</p>
+<p>Download this document <a href="_exercises_day_3.qmd">here</a>.</p>
+<section id="exercises-1" class="level1">
+<h1>Exercises 1</h1>
+<p>Read the <a href="http://www.principlesofeconometrics.com/stata.htm">Stata</a> or <a href="http://www.principlesofeconometrics.com/sas.htm">SAS</a> dataset of your choice into R. Investigate it a bit – look at the variables, etc. (I have no idea what any of these datasets are!). Save it as an <code>.rds</code> file and/or a <code>.csv</code> file.</p>
 </section>
-<section id="slides" class="level1">
-<h1>Slides</h1>
-Open the slides in a new tab <a href="slides/data-files.html">here</a>.
-<div>
-<iframe class="slide-deck" src="slides/data-files.html"></iframe>
+<section id="exercises-2" class="level1">
+<h1>Exercises 2</h1>
+<p>Create an R project!</p>
+<p>Copy and paste <a href="https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds" class="uri">https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds</a> into your browser to download the data as an <code>.rds</code> file. Create a <code>data/</code> directory in your R project and move it there. Move this <code>.qmd</code> folder into your R project as well. Now this code should read in the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nlsy <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"nlsy.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-Open the slides in a new tab <a href="slides/joins.html">here</a>.
-<div>
-<iframe class="slide-deck" src="slides/joins.html"></iframe>
-</div>
-Open the slides in a new tab <a href="slides/summarize.html">here</a>.
-<div>
-<iframe class="slide-deck" src="slides/summarize.html"></iframe>
-</div>
+<p>Move the dataset you created in the previous exercise into the <code>data/</code> directory as well. Write code to read it in:</p>
+<p>Create a plot – of anything! – using the dataset you downloaded. Save it as a <code>.png</code> file using <code>ggsave()</code> to a <code>figures/</code> directory that you create.</p>
 </section>
-<section id="readings" class="level1">
-<h1>Readings</h1>
+<section id="exercises-3" class="level1">
+<h1>Exercises 3</h1>
+<p>Read in the <code>nlsy</code> dataset if it’s not already in your environment. Replace the sleep variables with <code>NA</code> if they are 12 or greater. Create a dataset with <code>id</code>, the sleep variables, and the income variables, and restrict it to complete cases. Save that dataset as a csv file in your <code>code/</code> directory.</p>
+</section>
+<section id="exercises-4" class="level1">
+<h1>Exercises 4</h1>
+<p>Read in the kids dataset. You’ll have to fill in the rest of the code for reading in the <code>.csv</code> file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>kids_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"id_kid"</span>, <span class="st">"id_mom"</span>, <span class="st">"sex_kid"</span>, <span class="st">"dob_kid"</span>,<span class="st">"agebir_mom"</span>, <span class="st">"bwt_kid"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy-child.csv"</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                      ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create the smaller version of the dataset we were using:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nlsy_sleep <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), age_bir, sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Practice the joins we did: left, right, full, and inner. Look at the differences in the data that results.</p>
+<p>When we wanted to join on the mom’s first birth, we used <code>join_by(id == id_mom, age_bir == agebir_mom)</code>. Read the documentation for <code>join_by()</code> to help you create a dataset that has only the kids from the mom’s <em>later</em> births.</p>
+</section>
+<section id="exercises-5" class="level1">
+<h1>Exercises 5</h1>
+<p>Within the <code>nlsy_kids</code> dataset, calculate summary statistics for the kids:</p>
 <ul>
-<li><a href="https://r4ds.hadley.nz/workflow-scripts.html">R for Data Science Ch. 7</a></li>
-<li><a href="https://r4ds.hadley.nz/data-import.html">R for Data Science Ch. 8</a></li>
-<li><a href="https://r4ds.hadley.nz/joins.html">R for Data Science Ch. 20</a></li>
+<li>the minimum and maximum year of birth</li>
+<li>the mean birthweight in grams (you will have to convert first!)</li>
+<li>bonus: the proportion of kids who were less than 2500g at birth (hint: what is the mean of a binary variable? You will need to create that binary variable)</li>
 </ul>
 </section>
-<section id="resources" class="level1">
-<h1>Resources</h1>
-<ul>
-<li><a href="https://github.com/gadenbuie/tidyexplain#mutating-joins"><code>_join</code> gifs</a></li>
-<li>A famous <a href="https://www.tidyverse.org/blog/2017/12/workflow-vs-script/">blog post</a> about workflows in R</li>
-</ul>
+<section id="exercises-6" class="level1">
+<h1>Exercises 6</h1>
+<p>Do the same as above, but separately for male and female children. First, however, turn the <code>sex_kid</code> variable into a factor variable with “male” = 1, “female” = 2.</p>
 
 
 </section>

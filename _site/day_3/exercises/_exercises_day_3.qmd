@@ -1,0 +1,89 @@
+---
+title: "Day 3 Exercises"
+execute: 
+  eval: false
+---
+
+# Exercises 1
+
+Read the [Stata](http://www.principlesofeconometrics.com/stata.htm) or [SAS](http://www.principlesofeconometrics.com/sas.htm) dataset of your choice into R. Investigate it a bit -- look at the variables, etc. (I have no idea what any of these datasets are!). Save it as an `.rds` file and/or a `.csv` file.
+
+```{r}
+
+```
+
+# Exercises 2
+
+Create an R project! 
+
+Copy and paste <https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds> into your browser to download the data as an `.rds` file. Create a `data/` directory in your R project and move it there. Move this `.qmd` folder into your R project as well. Now this code should read in the data:
+
+```{r}
+nlsy <- readr::read_rds(here::here("data", "nlsy.rds"))
+```
+
+Move the dataset you created in the previous exercise into the `data/` directory as well. Write code to read it in:
+```{r}
+
+```
+
+Create a plot -- of anything! -- using the dataset you downloaded. Save it as a `.png` file using `ggsave()` to a `figures/` directory that you create.
+
+```{r}
+
+```
+
+# Exercises 3
+
+Read in the `nlsy` dataset if it's not already in your environment. Replace the sleep variables with `NA` if they are 12 or greater. Create a dataset with `id`, the sleep variables, and the income variables, and restrict it to complete cases. Save that dataset as a csv file in your `code/` directory.
+
+```{r}
+
+```
+
+# Exercises 4
+
+Read in the kids dataset. You'll have to fill in the rest of the code for reading in the `.csv` file.
+
+```{r}
+kids_cols <- c("id_kid", "id_mom", "sex_kid", "dob_kid","agebir_mom", "bwt_kid")
+
+nlsy_kids <- read_csv("https://github.com/louisahsmith/id543/raw/main/data/nlsy-child.csv", 
+                      ...)
+
+```
+
+Create the smaller version of the dataset we were using:
+
+```{r}
+nlsy_sleep <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds") |> 
+  select(id, contains("sleep"), age_bir, sex)
+```
+
+Practice the joins we did: left, right, full, and inner. Look at the differences in the data that results.
+
+```{r}
+
+```
+
+When we wanted to join on the mom's first birth, we used `join_by(id == id_mom, age_bir == agebir_mom)`. Read the documentation for `join_by()` to help you create a dataset that has only the kids from the mom's *later* births.
+
+```{r}
+
+```
+
+# Exercises 5
+
+Within the `nlsy_kids` dataset, calculate summary statistics for the kids:
+
+- the minimum and maximum year of birth
+- the mean birthweight in grams (you will have to convert first!)
+- bonus: the proportion of kids who were less than 2500g at birth (hint: what is the mean of a binary variable? You will need to create that binary variable)
+
+```{r}
+
+```
+
+# Exercises 6
+
+Do the same as above, but separately for male and female children. First, however, turn the `sex_kid` variable into a factor variable with "male" = 1, "female" = 2.

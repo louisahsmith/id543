@@ -27,7 +27,7 @@ Open the slides in a new tab [here](slides/wrangling.html).
 
 # Resources
 
-- `quarto` [tutorials]()
+- `quarto` [tutorials](https://quarto.org/docs/get-started/hello/rstudio.html)
 - `dplyr` [cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
 - Here's [more info](https://tidyselect.r-lib.org/reference/select_helpers.html) on the `select()` helpers
 - Here are some [useful functions](https://dplyr.tidyverse.org/reference/mutate.html#useful-mutate-functions) for use with `mutate()`
