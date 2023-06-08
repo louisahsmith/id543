@@ -1,33 +1,44 @@
 ---
 title: "Day 3"
 toc-location: left
-filters:
-  - webr
-webr:
-  show-startup-message: false
 ---
+# In class
 
+Download some exercises to go along with these slides [here](exercises/_exercises_day_3.qmd).
+
+# Slides
+
+Open the slides in a new tab [here](slides/data-files.html).
+<div>
 ```{=html}
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female")))
-`)
-</script>	
+<iframe class="slide-deck" src="slides/data-files.html"></iframe>
 ```
+
+</div>
+
+Open the slides in a new tab [here](slides/joins.html).
+<div>
+```{=html}
+<iframe class="slide-deck" src="slides/joins.html"></iframe>
+```
+
+</div>
+
+Open the slides in a new tab [here](slides/summarize.html).
+<div>
+```{=html}
+<iframe class="slide-deck" src="slides/summarize.html"></iframe>
+```
+
+</div>
+
+# Readings
+
+- [R for Data Science Ch. 7](https://r4ds.hadley.nz/workflow-scripts.html)
+- [R for Data Science Ch. 8](https://r4ds.hadley.nz/data-import.html)
+- [R for Data Science Ch. 20](https://r4ds.hadley.nz/joins.html)
+
+# Resources
+
+- [`_join` gifs](https://github.com/gadenbuie/tidyexplain#mutating-joins)
+- A famous [blog post](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/) about workflows in R

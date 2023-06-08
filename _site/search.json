@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "day_3/index.html",
+    "href": "day_3/index.html",
+    "title": "Day 3",
+    "section": "",
+    "text": "In class\nDownload some exercises to go along with these slides here.\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\nOpen the slides in a new tab here.\n\n\n\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 7\nR for Data Science Ch. 8\nR for Data Science Ch. 20\n\n\n\nResources\n\n_join gifs\nA famous blog post about workflows in R"
+  },
+  {
+    "objectID": "day_3/exercises/exercises_day_3.html",
+    "href": "day_3/exercises/exercises_day_3.html",
+    "title": "Day 3 Exercises",
+    "section": "",
+    "text": "Download this document here.\n\nExercises 1\nRead the Stata or SAS dataset of your choice into R. Investigate it a bit – look at the variables, etc. (I have no idea what any of these datasets are!). Save it as an .rds file and/or a .csv file.\n\n\nExercises 2\nCreate an R project!\nCopy and paste https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds into your browser to download the data as an .rds file. Create a data/ directory in your R project and move it there. Move this .qmd folder into your R project as well. Now this code should read in the data:\n\nnlsy &lt;- readr::read_rds(here::here(\"data\", \"nlsy.rds\"))\n\nMove the dataset you created in the previous exercise into the data/ directory as well. Write code to read it in:\nCreate a plot – of anything! – using the dataset you downloaded. Save it as a .png file using ggsave() to a figures/ directory that you create.\n\n\nExercises 3\nRead in the nlsy dataset if it’s not already in your environment. Replace the sleep variables with NA if they are 12 or greater. Create a dataset with id, the sleep variables, and the income variables, and restrict it to complete cases. Save that dataset as a csv file in your code/ directory.\n\n\nExercises 4\nRead in the kids dataset. You’ll have to fill in the rest of the code for reading in the .csv file.\n\nkids_cols &lt;- c(\"id_kid\", \"id_mom\", \"sex_kid\", \"dob_kid\",\"agebir_mom\", \"bwt_kid\")\n\nnlsy_kids &lt;- read_csv(\"https://github.com/louisahsmith/id543/raw/main/data/nlsy-child.csv\", \n                      ...)\n\nCreate the smaller version of the dataset we were using:\n\nnlsy_sleep &lt;- read_rds(\"https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds\") |&gt; \n  select(id, contains(\"sleep\"), age_bir, sex)\n\nPractice the joins we did: left, right, full, and inner. Look at the differences in the data that results.\nWhen we wanted to join on the mom’s first birth, we used join_by(id == id_mom, age_bir == agebir_mom). Read the documentation for join_by() to help you create a dataset that has only the kids from the mom’s later births.\n\n\nExercises 5\nWithin the nlsy_kids dataset, calculate summary statistics for the kids:\n\nthe minimum and maximum year of birth\nthe mean birthweight in grams (you will have to convert first!)\nbonus: the proportion of kids who were less than 2500g at birth (hint: what is the mean of a binary variable? You will need to create that binary variable)\n\n\n\nExercises 6\nDo the same as above, but separately for male and female children. First, however, turn the sex_kid variable into a factor variable with “male” = 1, “female” = 2."
+  },
+  {
     "objectID": "day_2/index.html",
     "href": "day_2/index.html",
     "title": "Day 2",

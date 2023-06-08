@@ -1,0 +1,358 @@
+---
+title: "Load and save data"
+format: 
+  revealjs:
+    theme: 
+      - ../../www/custom.scss
+order: 1
+execute: 
+  echo: true
+---
+
+## Getting data into R
+
+```{r}
+#| include: false
+library(tidyverse)
+nlsy <- read_csv("../../data/nlsy.csv",
+                 skip = 1,
+                 col_names = c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+                               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                               "income", "res_1980", "res_2002", "age_bir"))
+```
+
+We read in data as an `.rds` file:
+```{r}
+nlsy_rds <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds")
+```
+
+and as a `.csv` file:
+```{r}
+nlsy_csv <- read_csv("../../data/nlsy-cc.csv")
+```
+
+## What do you notice about the differences?
+
+::::columns
+::: {.column width=50%}
+```{r}
+glimpse(nlsy_rds)
+```
+:::
+::: {.column width=50%}
+```{r}
+glimpse(nlsy_csv)
+```
+:::
+::::
+
+## `.rds` is an R-specific file for a single object
+
+```{r}
+#| eval: false
+write_rds(nlsy_rds, "nlsy.rds")
+```
+
+You can save any object, not just a dataframe:
+```{r}
+#| eval: false
+x <- c(4, 5, 6)
+write_rds(x, "numbers.rds")
+```
+
+What is `y` going to print?
+
+```{r}
+#| eval: false
+y <- read_rds("numbers.rds")
+y
+```
+
+## `.csv` files are much more general but don't maintain things like factors
+
+:::center
+![](../../img/csv.png)
+:::
+
+## `.csv` files might need a little more specification to read in
+
+```{r}
+read_csv("../../data/nlsy.csv") |> print(n = 2)
+nlsy <- read_csv("../../data/nlsy.csv",
+                 skip = 1,
+                 col_names = c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+                               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                               "income", "res_1980", "res_2002", "age_bir"))
+print(nlsy, n = 2)
+```
+
+## Other functions come from the `{haven}` package
+
+```{r}
+medical_dta <- haven::read_dta("http://www.principlesofeconometrics.com/stata/medical.dta")
+```
+
+```{r}
+medical_sas <- haven::read_sas("http://www.principlesofeconometrics.com/sas/medical.sas7bdat")
+```
+
+::::columns
+::: .column{width=50%}
+```{r}
+glimpse(medical_dta)
+```
+:::
+::: .column{width=50%}
+```{r}
+glimpse(medical_sas)
+```
+:::
+::::
+
+## Or `{readxl}`
+
+```{r}
+# find the example file
+data_file <- readxl::readxl_example("datasets.xls")
+data_file
+
+# read it in
+dat <- readxl::read_excel(data_file)
+```
+
+All these functions take arguments, but `read_excel()` takes *a ton* of arguments -- which sheet, how many rows to read, whether there are column names, a specific range to read in, etc....
+
+- See `help(read_excel)` for details!
+
+# Exercise
+
+## File paths
+
+```{r}
+list.files()
+getwd()
+file.path("data", "my_dataset.csv")
+file.path("~", "Downloads", "my_dataset.csv")
+file.path("C:", "Users", "Downloads", "my_dataset.csv")
+# file.choose()
+```
+
+## It can be difficult to navigate the file system
+
+```{r}
+#| eval: false
+proj_wd <- getwd()
+```
+Go down two levels from the top-level directory to where the super important figures are stored 
+```{r}
+#| eval: false
+setwd("figures/super important")
+read_rds("important_plot.rds")
+```
+Now that you're there, go up two levels and down two different levels to access the data
+```{r}
+#| eval: false
+nlsy <- read_csv("../../data/raw/nlsy.csv")
+```
+Go back to where we started!
+```{r}
+#| eval: false
+setwd(proj_wd)
+```
+
+## R Projects
+
+:::: {.columns}
+
+::: {.column width="30%"}
+```
+my-project/
+├─ my-project.Rproj
+├─ README
+├─ data/
+│   ├── raw/
+│   └── processed/
+├─ R/
+├─ results/
+│   ├── tables/
+│   ├── figures/
+│   └── output/
+└─ docs/
+```
+
+:::
+
+::: {.column width="70%"}
+- An `.Rproj` file is mostly just a placeholder. It remembers various options, and makes it easy to open a new RStudio session that starts up in the correct working directory. You never need to edit it directly.
+
+- A README file can just be a text file that includes notes for yourself or future users.
+
+- I like to have a folder for raw data -- which I never touch -- and a folder(s) for datasets that I create along the way.
+
+:::
+
+::::
+
+## R Projects
+
+Demo
+
+
+## Referring to files with the `here` package {.smaller}
+
+```{r, eval = FALSE}
+source(here::here("R", "functions.R"))
+
+dat <- read_csv(here::here("data", "raw", "data.csv"))
+
+p <- ggplot(dat) + geom_point(aes(x, y))
+
+ggsave(plot = p, 
+       filename = here::here("results", "figures", "fig.pdf"))
+```
+
+- The `here` package lets you refer to files without worrying too much about relative paths.
+
+- Construct file paths with reference to the top directory holding your `.Rproj` file.
+
+- `here::here("data", "raw", "data.csv")` for me, here, becomes `"/Users/l.smith/Documents/Teaching/Harvard/ID543/data/raw/data.csv"`
+
+- But if I send you my code to run, it will become whatever file path *you* need it to be.
+
+
+## Referring to the `here` package
+
+```{r, eval = FALSE}
+here::here()
+```
+
+is equivalent to
+```{r, eval = FALSE}
+library(here)
+here()
+```
+I just prefer to write out the package name whenever I need it, but you can load the package for your entire session if you want.
+
+Note that you can refer to any function without loading the whole package this way
+
+
+## The `source()` function
+
+Will run code from another file.
+```{r, eval = FALSE}
+# run the code in script.R
+# assuming it's in my current working directory
+source("script.R")
+
+# run the code in my-project/R/functions.R 
+# from wherever I am in my-project
+source(here::here("R", "functions.R"))
+```
+All the objects will be created, packages loaded, etc. as if you had run the code directly from the console.
+
+# Exercise
+
+
+## Missing values
+
+- R uses `NA` for missing values
+- Unlike some other statistical software, it will return `NA` to any logical statement
+- This makes it somewhat harder to deal with but also harder to make mistakes
+
+```{r}
+3 < NA
+mean(c(1, 2, NA))
+mean(c(1, 2, NA), na.rm = TRUE)
+```
+
+## Special `NA` functions
+Certain functions deal with missing values explicitly
+```{r}
+vals <- c(1, 2, NA)
+is.na(vals)
+anyNA(vals)
+```
+```{r, eval = FALSE}
+na.omit(vals)
+```
+```{r, echo = FALSE}
+c(1,2)
+```
+
+## Read in NA's directly
+
+In NLSY, -1 = Refused, -2 = Don't know, -3 = Invalid missing, -4 = Valid missing, -5 = Non-interview
+
+Other files might have "." for missing, or 999.
+
+```{r, eval = FALSE}
+nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+               "income", "res_1980", "res_2002", "age_bir")
+nlsy <- read_csv(here::here("data", "nlsy.csv"), 
+                 na = c("-1", "-2", "-3", "-4", "-5"),
+                 skip = 1, col_names = nlsy_cols)
+```
+
+- You have to write the values as strings, even if they're numbers
+
+## Reasons for missingness
+
+Caveat: This previous way, you lose the info about the reason for missingness. If that's important, read in the data first, create a variable for missingness reason (e.g., use `fct_recode()`), then changes the values to `NA`.
+
+```{r}
+#| echo: false
+nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+               "income", "res_1980", "res_2002", "age_bir")
+```
+
+```{r}
+nlsy <- read_csv(here::here("data", "nlsy.csv"),
+                 skip = 1, col_names = nlsy_cols) |> 
+  mutate(age_bir_missing = ifelse(age_bir > 0, NA, age_bir),
+         age_bir_missing = fct_recode(factor(age_bir_missing),
+                                      "Refused" = "-1", 
+                                      "Don't know" = "-2", 
+                                      "Invalid missing" = "-3",
+                                      "Valid missing" = "-4",
+                                      "Non-interview" = "-5",
+                                      "Other missing" = "-998"))
+summary(nlsy$age_bir_missing)
+```
+
+## Specific missingness
+
+You know some value is implausible, whether for everyone or for a specific observation
+
+```{r}
+nlsy <- nlsy |>
+  mutate(sleep_wknd = ifelse(sleep_wknd > 24, NA, sleep_wknd),
+         income = ifelse(id == 283, NA, income),
+         nsibs = na_if(nsibs, 99))
+```
+
+`na_if(x, y)` will replace values in `x` that are equal to `y` with NA
+
+```{r}
+na_if(c(1, 2, 99), 99)
+```
+
+## Complete cases
+
+Sometimes you may just want to get rid of all the rows with missing values.
+
+```{r, message = FALSE}
+nrow(nlsy)
+nlsy_cc <- nlsy |> filter(complete.cases(nlsy))
+nrow(nlsy_cc)
+nlsy2 <- nlsy |> na.omit()
+nrow(nlsy2)
+```
+
+::: {.callout-important}
+Don't do this without good reason!
+:::
+
+# Exercise
+

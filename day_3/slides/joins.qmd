@@ -1,0 +1,154 @@
+---
+title: "Arranging and merging data"
+format: 
+  revealjs:
+    theme: 
+      - ../../www/custom.scss
+order: 2
+execute: 
+  echo: true
+---
+
+## Sorting a dataframe
+
+```{r}
+library(tidyverse)
+nlsy_sleep <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds") |> 
+  select(id, contains("sleep"), age_bir, sex)
+```
+
+Use `arrange(data, sorting_column)` to sort data (in increasing order)
+
+```{r}
+arrange(nlsy_sleep, sleep_wknd)
+```
+
+## Additional sorting
+
+:::: columns
+::: {.column width=50%}
+Sort in descending order
+
+```{r}
+arrange(nlsy_sleep, 
+        desc(sleep_wkdy))
+```
+:::
+::: {.column width=50%}
+Sort by two variables
+
+```{r}
+arrange(nlsy_sleep, 
+        age_bir, sleep_wknd)
+```
+:::
+::::
+
+## Joins
+
+There are multiple functions in the `tidyverse` (specifically, the `{dplyr}` package) for joining/merging data
+
+**Mutating joins** merge two datasets based on matching variable(s), adding together the new columns from the joined dataframe
+
+```{r}
+#| eval: false
+left_join(x, y, by = join_by(xcol == ycol))
+```
+
+::: callout-note
+We will also refer to the `x` dataframe as the left-hand side (LHS) and the `y` dataframe as the right-hand side (RHS)
+:::
+
+## Merging with kids
+
+```{r}
+#| echo: false
+nlsy_kids <- read_csv(here::here("data", "nlsy-child.csv"),
+                      skip = 1, col_names = c("id_kid", "id_mom",
+                                             "sex_kid", "dob_kid",
+                                             "agebir_mom", "bwt_kid"),
+                      na = c("-1", "-2", "-3", "-4", "-5"))
+```
+
+```{r}
+nlsy_kids
+```
+
+## Left join
+
+```{r}
+#| error: true
+left_join(nlsy_sleep, nlsy_kids)
+```
+
+It will automatically look for matching columns (can be dangerous!) but if none, need to specify:
+
+```{r}
+left_join(nlsy_sleep, nlsy_kids, 
+          by = join_by(id == id_mom))
+```
+
+## Left join
+
+LHS rows are duplicated if we have multiple matches, but we lose any rows in the RHS dataset that don't have a match
+
+```{r}
+length(unique(nlsy_kids$id_kid))
+
+nlsy_left <- left_join(nlsy_sleep, nlsy_kids,
+                       by = join_by(id == id_mom))
+
+length(unique(nlsy_left$id_kid))
+```
+
+In this case, the moms of some of the kids aren't in the `nlsy_sleep` dataset, so kids without moms are lost
+
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/left-join-extra.gif?raw=true"}
+
+## Right join
+
+```{r}
+right_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
+```
+
+- Now we don't have the dads, because there are no matching ids in the RHS dataset
+
+- But we do keep all the kids
+
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/right-join.gif?raw=true"}
+
+## Full join: we want everything!
+
+```{r}
+full_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
+```
+
+This dataset is larger than either of the initial datasets alone: it has the dads without kids and the kids without moms
+
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/full-join.gif?raw=true"}
+
+## Inner join: we *only* want matches
+
+```{r}
+inner_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
+```
+
+- This dataset has only the moms with kids (no dads) and the kids with moms
+- It still has multiple rows per mom -- one for each kid
+
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/inner-join.gif?raw=true"}
+
+## Join by multiple variables
+
+- I only want the kid that was the mom's first
+- I'm going to match on the age at first birth on the RHS
+```{r}
+first_births <- inner_join(nlsy_sleep, nlsy_kids, 
+           by = join_by(id == id_mom,
+                                              age_bir == agebir_mom))
+
+first_births
+```
+
+# Exercise
+

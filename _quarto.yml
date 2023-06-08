@@ -45,7 +45,7 @@ website:
 
     - id: day_3
       title: "Day 3"
-      # contents: day_3
+      contents: day_3
 
     - id: day_4
       title: "Day 4"
@@ -98,7 +98,7 @@ format:
     preview-links: auto
     hash-type: number
     hash-one-based-index: true
-    pdf-max-pages-per-slide: 1
+    # pdf-max-pages-per-slide: 1
     theme: 
       - www/custom.scss
     pointer:

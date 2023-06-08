@@ -1,0 +1,193 @@
+---
+title: "Grouping and summarizing data"
+format: 
+  revealjs:
+    theme: 
+      - ../../www/custom.scss
+order: 2
+execute: 
+  echo: true
+---
+
+## Summary statistics
+
+We have seen that we can get certain summary statistics about our data with the `summary()` function, which we can use either on an entire dataframe/tibble, or on a single variable.
+
+```{r}
+#| include: false
+library(tidyverse)
+nlsy <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds") 
+nlsy_sleep <- nlsy |> 
+  select(id, contains("sleep"), age_bir, sex)
+```
+
+```{r}
+summary(nlsy_sleep)
+summary(nlsy$income)
+```
+
+## Summary statistics
+
+We can also apply certain functions to a variable(s) to get a single statistic: `mean()`, `median()`, `var()`, `sd()`, `cov`, `cor()`, `min()`, `max()`, `quantile()`, etc.
+
+```{r}
+median(nlsy$age_bir)
+cor(nlsy$sleep_wkdy, nlsy$sleep_wknd)
+quantile(nlsy$income, probs = c(0.1, 0.9))
+```
+
+## Summary statistics {.smaller}
+
+But what if we want a lot of summary statistics -- just not those that come with the `summary()` function?
+
+- For example, it doesn't give us a standard deviation!
+
+### Introducing `summarize()`
+
+```{r}
+summarize(nlsy, 
+          med_age_bir = median(age_bir),
+          cor_sleep = cor(sleep_wkdy, sleep_wknd),
+          ten_pctle_inc = quantile(income, probs = 0.1),
+          ninety_pctle_inc = quantile(income, probs = 0.9))
+```
+
+## `summarize()` specifics
+
+Important to note:
+
+- Takes a dataframe as its first argument. That means we can use pipes!
+- Returns a tibble -- helpful if you want to use those values in a figure or table.
+- Can give the summary statistics names.
+- Can ask for any type of function of the variables (including one you make up yourself).
+
+## Combining summarize with other functions
+
+Because we can pipe, we can also look at statistics of variables that we make using `mutate()`, in a dataset we've subsetted with `filter()`.
+
+```{r}
+nlsy %>%
+  mutate(age_bir_stand = (age_bir - mean(age_bir)) / sd(age_bir)) %>%
+  filter(sex == 1) %>%
+  summarize(mean_men = mean(age_bir_stand))
+```
+
+::: callout-note
+Note that we're standardizing the data *before* filtering, so the statistics are relative to the total distribution, not to the distribution among men
+:::
+
+# Exercise
+
+## What if we want both groups at once?
+
+```{r}
+nlsy %>%
+  filter(sex == 1) %>%
+  summarize(age_bir_men = mean(age_bir))
+
+nlsy %>%
+  filter(sex == 2) %>%
+  summarize(age_bir_women = mean(age_bir))
+```
+
+## We can "group" tibbles using `group_by()`
+
+We can tell it's "grouped" and how many groups there are by printing out the data.
+
+The data itself won't look different, but we'll be able to perform grouped functions on it.
+
+```{r}
+nlsy_by_region <- group_by(nlsy, region)
+nlsy_by_region
+```
+
+## `group_by()`
+
+Like the other functions we've seen, we can use pipes:
+
+```{r}
+nlsy %>%
+  mutate(income_stand = (income - mean(income))/sd(income)) %>%
+  select(id, region, income_stand, race_eth, sex) %>%
+  group_by(race_eth)
+```
+
+## Stratify with `group_by() %>% summarize()`
+
+This function is especially important when calculating summary statistics, which we often want to be stratified.
+
+```{r}
+nlsy %>%
+  mutate(income_stand = (income - mean(income))/sd(income)) %>%
+  group_by(region) %>%
+  summarize(mean_inc = mean(income_stand),
+            sd_inc = sd(income_stand))
+```
+
+## Multiple layers of groups
+
+:::: {.columns}
+
+::: {.column width="62%"}
+We can group by multiple variables:
+
+```{r}
+nlsy %>%
+  group_by(region, sex) %>%
+  summarize(mean_inc = mean(income),
+            sd_inc = sd(income),
+            .groups = "drop")
+```
+
+:::
+  
+::: {.column width="35%"}
+- This would be much easier to read if we had made region and sex into factor variables with labels!
+- We're telling it we don't want the resulting dataframe to be grouped
+
+:::
+
+:::
+
+## Group within `summarize()`
+
+```{r}
+nlsy %>%
+  summarize(mean_inc = mean(income),
+            sd_inc = sd(income),
+            .by = c(region, sex))
+```
+
+This is a relatively new feature of this function and is very handy!
+
+## Counting groups
+
+
+:::: {.columns}
+
+::: {.column width="49%"}
+Sometimes we just want to know how many observations are in a group. We can do that (at least) three ways!
+```{r}
+nlsy %>%
+  group_by(sex) %>%
+  summarize(n = n())
+```
+
+:::
+  
+::: {.column width="48%"}
+```{r}
+nlsy %>%
+  group_by(sex) %>%
+  tally()
+```
+```{r}
+nlsy %>% 
+  count(sex)
+```
+
+:::
+  
+::::
+
+# Exercise
