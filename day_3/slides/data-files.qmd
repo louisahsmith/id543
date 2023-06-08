@@ -235,7 +235,8 @@ library(here)
 here()
 ```
 I just prefer to write out the package name whenever I need it, but you can load the package for your entire session if you want.
-:::callout-note
+
+::: callout-note
 Note that you can refer to any function without loading the whole package this way, e.g. `haven::read_dta()`
 :::
 
