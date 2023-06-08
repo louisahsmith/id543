@@ -14,7 +14,7 @@ Download some exercises to go along with these slides [here](exercises/exercises
 Open the slides in a new tab [here](slides/intro-course.html).
 <div>
 ```{=html}
-<iframe class="slide-deck" src="slides/intro-course.html"></iframe>
+<iframe class="slide-deck" src="slides/intro-course.html" target="_blank"></iframe>
 ```
 
 </div>
@@ -24,7 +24,7 @@ Open the slides in a new tab [here](slides/intro-ggplot.html).
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="slides/intro-ggplot.html"></iframe>
+<iframe class="slide-deck" src="slides/intro-ggplot.html" target="_blank"></iframe>
 ```
 
 </div>
@@ -33,7 +33,7 @@ Open the slides in a new tab [here](slides/factor-variables.html).
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="slides/factor-variables.html"></iframe>
+<iframe class="slide-deck" src="slides/factor-variables.html" target="_blank"></iframe>
 ```
 
 </div>

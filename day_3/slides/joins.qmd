@@ -61,18 +61,24 @@ We will also refer to the `x` dataframe as the left-hand side (LHS) and the `y` 
 
 ## Merging with kids
 
+The NLSY also included the kids of the moms in the NLSY79 survey that we're using.
+
 ```{r}
 #| echo: false
 nlsy_kids <- read_csv(here::here("data", "nlsy-child.csv"),
                       skip = 1, col_names = c("id_kid", "id_mom",
-                                             "sex_kid", "dob_kid",
-                                             "agebir_mom", "bwt_kid"),
+                                              "sex_kid", "dob_kid",
+                                              "agebir_mom", "bwt_kid"),
                       na = c("-1", "-2", "-3", "-4", "-5"))
 ```
 
 ```{r}
 nlsy_kids
 ```
+
+::: callout-note
+Birthweight is in ounces
+:::
 
 ## Left join
 
@@ -103,7 +109,7 @@ length(unique(nlsy_left$id_kid))
 
 In this case, the moms of some of the kids aren't in the `nlsy_sleep` dataset, so kids without moms are lost
 
-## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/left-join-extra.gif?raw=true"}
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/left-join-extra.gif?raw=true" background-size=contain}
 
 ## Right join
 
@@ -113,9 +119,9 @@ right_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
 
 - Now we don't have the dads, because there are no matching ids in the RHS dataset
 
-- But we do keep all the kids
+- But we do keep all the kids, even those without moms in the LHS
 
-## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/right-join.gif?raw=true"}
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/right-join.gif?raw=true" background-size=contain}
 
 ## Full join: we want everything!
 
@@ -125,7 +131,7 @@ full_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
 
 This dataset is larger than either of the initial datasets alone: it has the dads without kids and the kids without moms
 
-## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/full-join.gif?raw=true"}
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/full-join.gif?raw=true" background-size=contain}
 
 ## Inner join: we *only* want matches
 
@@ -136,7 +142,7 @@ inner_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
 - This dataset has only the moms with kids (no dads) and the kids with moms
 - It still has multiple rows per mom -- one for each kid
 
-## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/inner-join.gif?raw=true"}
+## {background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/inner-join.gif?raw=true" background-size=contain}
 
 ## Join by multiple variables
 
@@ -144,8 +150,8 @@ inner_join(nlsy_sleep, nlsy_kids, by = join_by(id == id_mom))
 - I'm going to match on the age at first birth on the RHS
 ```{r}
 first_births <- inner_join(nlsy_sleep, nlsy_kids, 
-           by = join_by(id == id_mom,
-                                              age_bir == agebir_mom))
+                           by = join_by(id == id_mom,
+                                        age_bir == agebir_mom))
 
 first_births
 ```

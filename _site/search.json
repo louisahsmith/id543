@@ -18,7 +18,7 @@
     "href": "day_2/index.html",
     "title": "Day 2",
     "section": "",
-    "text": "In class\nDownload some exercises to go along with these slides here. Here is the completed .qmd document (you can find the rendered version in the sidebar).\nDownload the example quarto document here\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 4.1-4.3\nR for Data Science Ch. 5\n\n\n\nResources\n\nquarto tutorials\ndplyr cheat sheet\nHere’s more info on the select() helpers\nHere are some useful functions for use with mutate()"
+    "text": "In class\nDownload some exercises to go along with these slides here.\nHere is the completed .qmd document (you can find the rendered version in the sidebar).\nDownload the example quarto document here\n\n\nSlides\nOpen the slides in a new tab here.\n\n\n\n\n\nReadings\n\nR for Data Science Ch. 4.1-4.3\nR for Data Science Ch. 5\n\n\n\nResources\n\nquarto tutorials\ndplyr cheat sheet\nHere’s more info on the select() helpers\nHere are some useful functions for use with mutate()"
   },
   {
     "objectID": "day_2/exercises/exercises_day_2_inclass.html",

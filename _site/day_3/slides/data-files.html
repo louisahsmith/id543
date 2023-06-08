@@ -404,7 +404,7 @@
 </div>
 <p>and as a <code>.csv</code> file:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>nlsy_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data/nlsy-cc.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>nlsy_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy-cc.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -412,56 +412,42 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">glimpse</span>(nlsy_rds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>nlsy_rds <span class="sc">|&gt;</span> <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"cat"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1,205
-Columns: 19
-$ glasses      &lt;dbl&gt; 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …
-$ eyesight     &lt;dbl&gt; 1, 2, 2, 3, 3, 2, 1, 1, 2, 1, 3, 5, 1, 1, 1, 1, 3, 2, 3, …
-$ sleep_wkdy   &lt;dbl&gt; 5, 6, 7, 6, 10, 7, 8, 8, 7, 8, 8, 7, 7, 7, 8, 7, 7, 8, 8,…
-$ sleep_wknd   &lt;dbl&gt; 7, 7, 9, 7, 10, 8, 8, 8, 8, 8, 8, 7, 8, 7, 8, 7, 4, 8, 8,…
-$ id           &lt;dbl&gt; 3, 6, 8, 16, 18, 20, 27, 49, 57, 67, 86, 96, 97, 98, 117,…
-$ nsibs        &lt;dbl&gt; 3, 1, 7, 3, 2, 2, 1, 6, 1, 1, 7, 2, 7, 2, 2, 4, 9, 2, 2, …
-$ samp         &lt;dbl&gt; 5, 1, 6, 5, 1, 5, 5, 5, 5, 1, 7, 6, 5, 6, 1, 5, 6, 5, 5, …
-$ race_eth     &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, …
-$ sex          &lt;dbl&gt; 2, 1, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, …
-$ region       &lt;dbl&gt; 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ income       &lt;dbl&gt; 22390, 35000, 7227, 48000, 4510, 50000, 20000, 23900, 232…
-$ res_1980     &lt;dbl&gt; 11, 3, 11, 11, 11, 3, 11, 11, 11, 3, 11, 11, 11, 11, 6, 3…
-$ res_2002     &lt;dbl&gt; 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 19, 11, 11, 11, 1…
-$ age_bir      &lt;dbl&gt; 19, 30, 17, 31, 19, 30, 27, 24, 21, 36, 17, 19, 29, 30, 2…
-$ eyesight_cat &lt;fct&gt; Excellent, Very Good, Very Good, Good, Good, Very Good, E…
-$ glasses_cat  &lt;fct&gt; Doesn't wear glasses, Wears glasses/contacts, Doesn't wea…
-$ race_eth_cat &lt;fct&gt; "Non-Black, Non-Hispanic", "Non-Black, Non-Hispanic", "No…
-$ sex_cat      &lt;fct&gt; Female, Male, Female, Female, Male, Female, Female, Femal…
-$ slp_cat_wkdy &lt;chr&gt; "some", "some", "ideal", "some", "lots", "ideal", "ideal"…</code></pre>
+<pre><code># A tibble: 1,205 × 6
+      id eyesight_cat glasses_cat            race_eth_cat   sex_cat slp_cat_wkdy
+   &lt;dbl&gt; &lt;fct&gt;        &lt;fct&gt;                  &lt;fct&gt;          &lt;fct&gt;   &lt;chr&gt;       
+ 1     3 Excellent    Doesn't wear glasses   Non-Black, No… Female  some        
+ 2     6 Very Good    Wears glasses/contacts Non-Black, No… Male    some        
+ 3     8 Very Good    Doesn't wear glasses   Non-Black, No… Female  ideal       
+ 4    16 Good         Wears glasses/contacts Non-Black, No… Female  some        
+ 5    18 Good         Doesn't wear glasses   Non-Black, No… Male    lots        
+ 6    20 Very Good    Wears glasses/contacts Non-Black, No… Female  ideal       
+ 7    27 Excellent    Doesn't wear glasses   Non-Black, No… Female  ideal       
+ 8    49 Excellent    Wears glasses/contacts Non-Black, No… Female  ideal       
+ 9    57 Very Good    Wears glasses/contacts Non-Black, No… Female  ideal       
+10    67 Excellent    Doesn't wear glasses   Non-Black, No… Male    ideal       
+# ℹ 1,195 more rows</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">glimpse</span>(nlsy_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>nlsy_csv <span class="sc">|&gt;</span> <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"cat"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1,205
-Columns: 19
-$ glasses      &lt;dbl&gt; 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, …
-$ eyesight     &lt;dbl&gt; 1, 2, 2, 3, 3, 2, 1, 1, 2, 1, 3, 5, 1, 1, 1, 1, 3, 2, 3, …
-$ sleep_wkdy   &lt;dbl&gt; 5, 6, 7, 6, 10, 7, 8, 8, 7, 8, 8, 7, 7, 7, 8, 7, 7, 8, 8,…
-$ sleep_wknd   &lt;dbl&gt; 7, 7, 9, 7, 10, 8, 8, 8, 8, 8, 8, 7, 8, 7, 8, 7, 4, 8, 8,…
-$ id           &lt;dbl&gt; 3, 6, 8, 16, 18, 20, 27, 49, 57, 67, 86, 96, 97, 98, 117,…
-$ nsibs        &lt;dbl&gt; 3, 1, 7, 3, 2, 2, 1, 6, 1, 1, 7, 2, 7, 2, 2, 4, 9, 2, 2, …
-$ samp         &lt;dbl&gt; 5, 1, 6, 5, 1, 5, 5, 5, 5, 1, 7, 6, 5, 6, 1, 5, 6, 5, 5, …
-$ race_eth     &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, …
-$ sex          &lt;dbl&gt; 2, 1, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, …
-$ region       &lt;dbl&gt; 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ income       &lt;dbl&gt; 22390, 35000, 7227, 48000, 4510, 50000, 20000, 23900, 232…
-$ res_1980     &lt;dbl&gt; 11, 3, 11, 11, 11, 3, 11, 11, 11, 3, 11, 11, 11, 11, 6, 3…
-$ res_2002     &lt;dbl&gt; 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 19, 11, 11, 11, 1…
-$ age_bir      &lt;dbl&gt; 19, 30, 17, 31, 19, 30, 27, 24, 21, 36, 17, 19, 29, 30, 2…
-$ eyesight_cat &lt;chr&gt; "Excellent", "Very Good", "Very Good", "Good", "Good", "V…
-$ glasses_cat  &lt;chr&gt; "Doesn't wear glasses", "Wears glasses/contacts", "Doesn'…
-$ race_eth_cat &lt;chr&gt; "Non-Black, Non-Hispanic", "Non-Black, Non-Hispanic", "No…
-$ sex_cat      &lt;chr&gt; "Female", "Male", "Female", "Female", "Male", "Female", "…
-$ slp_cat_wkdy &lt;chr&gt; "some", "some", "ideal", "some", "lots", "ideal", "ideal"…</code></pre>
+<pre><code># A tibble: 1,205 × 6
+      id eyesight_cat glasses_cat            race_eth_cat   sex_cat slp_cat_wkdy
+   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;                  &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;       
+ 1     3 Excellent    Doesn't wear glasses   Non-Black, No… Female  some        
+ 2     6 Very Good    Wears glasses/contacts Non-Black, No… Male    some        
+ 3     8 Very Good    Doesn't wear glasses   Non-Black, No… Female  ideal       
+ 4    16 Good         Wears glasses/contacts Non-Black, No… Female  some        
+ 5    18 Good         Doesn't wear glasses   Non-Black, No… Male    lots        
+ 6    20 Very Good    Wears glasses/contacts Non-Black, No… Female  ideal       
+ 7    27 Excellent    Doesn't wear glasses   Non-Black, No… Female  ideal       
+ 8    49 Excellent    Wears glasses/contacts Non-Black, No… Female  ideal       
+ 9    57 Very Good    Wears glasses/contacts Non-Black, No… Female  ideal       
+10    67 Excellent    Doesn't wear glasses   Non-Black, No… Male    ideal       
+# ℹ 1,195 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -469,6 +455,7 @@ $ slp_cat_wkdy &lt;chr&gt; "some", "some", "ideal", "some", "lots", "ideal", "id
 </section>
 <section class="slide level2">
 <h2><code>.rds</code> is an R-specific file for a single object</h2>
+<p>It will be the exact same object when you read it back in.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">write_rds</span>(nlsy_rds, <span class="st">"nlsy.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -489,45 +476,47 @@ $ slp_cat_wkdy &lt;chr&gt; "some", "some", "ideal", "some", "lots", "ideal", "id
 <p><img data-src="../../img/csv.png"></p>
 </div>
 </section>
-<section class="slide level2">
+<section class="slide level2 smaller">
 <h2><code>.csv</code> files might need a little more specification to read in</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">read_csv</span>(<span class="st">"../../data/nlsy.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">read_csv</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy-cc.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12,686 × 14
-  H0012400 H0012500 H0022300 H0022500 R0000100 R0009100 R0173600 R0214700
-     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1       -4       -4       -4       -4        1        1        5        3
-2        0        1        4        3        2        8        5        3
-# ℹ 12,684 more rows
-# ℹ 6 more variables: R0214800 &lt;dbl&gt;, R0216400 &lt;dbl&gt;, R0217900 &lt;dbl&gt;,
-#   R0402800 &lt;dbl&gt;, R7090700 &lt;dbl&gt;, T4120500 &lt;dbl&gt;</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data/nlsy.csv"</span>,</span>
-<span id="cb12-2"><a href="#cb12-2"></a>                 <span class="at">skip =</span> <span class="dv">1</span>,</span>
-<span id="cb12-3"><a href="#cb12-3"></a>                 <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"glasses"</span>, <span class="st">"eyesight"</span>, <span class="st">"sleep_wkdy"</span>, <span class="st">"sleep_wknd"</span>, </span>
-<span id="cb12-4"><a href="#cb12-4"></a>                               <span class="st">"id"</span>, <span class="st">"nsibs"</span>, <span class="st">"samp"</span>, <span class="st">"race_eth"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span>, </span>
-<span id="cb12-5"><a href="#cb12-5"></a>                               <span class="st">"income"</span>, <span class="st">"res_1980"</span>, <span class="st">"res_2002"</span>, <span class="st">"age_bir"</span>))</span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">print</span>(nlsy, <span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12,686 × 14
+<pre><code># A tibble: 1,205 × 19
   glasses eyesight sleep_wkdy sleep_wknd    id nsibs  samp race_eth   sex region
     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1      -4       -4         -4         -4     1     1     5        3     2      1
-2       0        1          4          3     2     8     5        3     2      1
-# ℹ 12,684 more rows
-# ℹ 4 more variables: income &lt;dbl&gt;, res_1980 &lt;dbl&gt;, res_2002 &lt;dbl&gt;,
-#   age_bir &lt;dbl&gt;</code></pre>
+1       0        1          5          7     3     3     5        3     2      1
+2       1        2          6          7     6     1     1        3     1      1
+# ℹ 1,203 more rows
+# ℹ 9 more variables: income &lt;dbl&gt;, res_1980 &lt;dbl&gt;, res_2002 &lt;dbl&gt;,
+#   age_bir &lt;dbl&gt;, eyesight_cat &lt;chr&gt;, glasses_cat &lt;chr&gt;, race_eth_cat &lt;chr&gt;,
+#   sex_cat &lt;chr&gt;, slp_cat_wkdy &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy-cc.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>,</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"glasses"</span>, <span class="st">"eyesight"</span>, <span class="st">"sleep_wkdy"</span>, <span class="st">"sleep_wknd"</span>, </span>
+<span id="cb12-4"><a href="#cb12-4"></a>                <span class="st">"id"</span>, <span class="st">"nsibs"</span>, <span class="st">"samp"</span>, <span class="st">"race_eth"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span>, </span>
+<span id="cb12-5"><a href="#cb12-5"></a>                <span class="st">"income"</span>, <span class="st">"res_1980"</span>, <span class="st">"res_2002"</span>, <span class="st">"age_bir"</span>))</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">print</span>(nlsy, <span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,205 × 19
+  glasses eyesight sleep_wkdy sleep_wknd    id nsibs  samp race_eth   sex region
+    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1       0        1          5          7     3     3     5        3     2      1
+2       1        2          6          7     6     1     1        3     1      1
+# ℹ 1,203 more rows
+# ℹ 9 more variables: income &lt;dbl&gt;, res_1980 &lt;dbl&gt;, res_2002 &lt;dbl&gt;,
+#   age_bir &lt;dbl&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;, X17 &lt;chr&gt;, X18 &lt;chr&gt;, X19 &lt;chr&gt;</code></pre>
 </div>
 </div>
 </section>
 <section class="slide level2">
 <h2>Other functions come from the <code>{haven}</code> package</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>medical_dta <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"http://www.principlesofeconometrics.com/stata/medical.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>medical_dta <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"http://www.principlesofeconometrics.com/stata/medical.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>medical_sas <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_sas</span>(<span class="st">"http://www.principlesofeconometrics.com/sas/medical.sas7bdat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>medical_sas <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">"http://www.principlesofeconometrics.com/sas/medical.sas7bdat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class=".column{width=50%}">
@@ -564,14 +553,15 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <section class="slide level2">
 <h2>Or <code>{readxl}</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># find the example file</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>data_file <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">readxl_example</span>(<span class="st">"datasets.xls"</span>)</span>
-<span id="cb20-3"><a href="#cb20-3"></a>data_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co"># this just finds the path to an example file</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>data_file <span class="ot">&lt;-</span> <span class="fu">readxl_example</span>(<span class="st">"datasets.xls"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4"></a>data_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "/Users/l.smith/Library/Caches/org.R-project.R/R/renv/cache/v5/R-4.3/aarch64-apple-darwin20/readxl/1.4.2/2e6020b1399d95f947ed867045e9ca17/readxl/extdata/datasets.xls"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># read it in</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(data_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-2"><a href="#cb22-2"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(data_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>All these functions take arguments, but <code>read_excel()</code> takes <em>a ton</em> of arguments – which sheet, how many rows to read, whether there are column names, a specific range to read in, etc….</p>
 <ul>
@@ -633,7 +623,7 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <section class="slide level2">
 <h2>R Projects</h2>
 <div class="columns">
-<div class="column" style="width:30%;">
+<div class="column" style="width:28%;">
 <pre><code>my-project/
 ├─ my-project.Rproj
 ├─ README
@@ -646,7 +636,7 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 │   ├── figures/
 │   └── output/
 └─ docs/</code></pre>
-</div><div class="column" style="width:70%;">
+</div><div class="column" style="width:72%;">
 <ul>
 <li><p>An <code>.Rproj</code> file is mostly just a placeholder. It remembers various options, and makes it easy to open a new RStudio session that starts up in the correct working directory. You never need to edit it directly.</p></li>
 <li><p>A README file can just be a text file that includes notes for yourself or future users.</p></li>
@@ -672,10 +662,10 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <span id="cb39-8"><a href="#cb39-8"></a>       <span class="at">filename =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"results"</span>, <span class="st">"figures"</span>, <span class="st">"fig.pdf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li><p>The <code>here</code> package lets you refer to files without worrying too much about relative paths.</p></li>
+<li><p>The <code>here</code> package lets you refer to files without worrying too much about relative file paths.</p></li>
 <li><p>Construct file paths with reference to the top directory holding your <code>.Rproj</code> file.</p></li>
 <li><p><code>here::here("data", "raw", "data.csv")</code> for me, here, becomes <code>"/Users/l.smith/Documents/Teaching/Harvard/ID543/data/raw/data.csv"</code></p></li>
-<li><p>But if I send you my code to run, it will become whatever file path <em>you</em> need it to be.</p></li>
+<li><p>But if I send you my code to run, it will become whatever file path <em>you</em> need it to be, as long as you’re running it within the R Project.</p></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -688,8 +678,7 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb41-2"><a href="#cb41-2"></a><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>I just prefer to write out the package name whenever I need it, but you can load the package for your entire session if you want.</p>
-<p>Note that you can refer to any function without loading the whole package this way</p>
+<p>I just prefer to write out the package name whenever I need it, but you can load the package for your entire session if you want. :::callout-note Note that you can refer to any function without loading the whole package this way, e.g.&nbsp;<code>haven::read_dta()</code> :::</p>
 </section>
 <section class="slide level2">
 <h2>The <code>source()</code> function</h2>
@@ -699,7 +688,7 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <span id="cb42-2"><a href="#cb42-2"></a><span class="co"># assuming it's in my current working directory</span></span>
 <span id="cb42-3"><a href="#cb42-3"></a><span class="fu">source</span>(<span class="st">"script.R"</span>)</span>
 <span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a><span class="co"># run the code in my-project/R/functions.R </span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="co"># run the code in my-project/R/functions.R script</span></span>
 <span id="cb42-6"><a href="#cb42-6"></a><span class="co"># from wherever I am in my-project</span></span>
 <span id="cb42-7"><a href="#cb42-7"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"R"</span>, <span class="st">"functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -758,7 +747,7 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <section class="slide level2">
 <h2>Read in NA’s directly</h2>
 <p>In NLSY, -1 = Refused, -2 = Don’t know, -3 = Invalid missing, -4 = Valid missing, -5 = Non-interview</p>
-<p>Other files might have “.” for missing, or 999.</p>
+<p>Other files might have <code>.</code> for missing, or <code>999</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>nlsy_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"glasses"</span>, <span class="st">"eyesight"</span>, <span class="st">"sleep_wkdy"</span>, <span class="st">"sleep_wknd"</span>, </span>
 <span id="cb55-2"><a href="#cb55-2"></a>               <span class="st">"id"</span>, <span class="st">"nsibs"</span>, <span class="st">"samp"</span>, <span class="st">"race_eth"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span>, </span>
@@ -778,14 +767,12 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>nlsy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"nlsy.csv"</span>),</span>
 <span id="cb56-2"><a href="#cb56-2"></a>                 <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">col_names =</span> nlsy_cols) <span class="sc">|&gt;</span> </span>
 <span id="cb56-3"><a href="#cb56-3"></a>  <span class="fu">mutate</span>(<span class="at">age_bir_missing =</span> <span class="fu">ifelse</span>(age_bir <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="cn">NA</span>, age_bir),</span>
-<span id="cb56-4"><a href="#cb56-4"></a>         <span class="at">age_bir_missing =</span> <span class="fu">fct_recode</span>(<span class="fu">factor</span>(age_bir_missing),</span>
-<span id="cb56-5"><a href="#cb56-5"></a>                                      <span class="st">"Refused"</span> <span class="ot">=</span> <span class="st">"-1"</span>, </span>
-<span id="cb56-6"><a href="#cb56-6"></a>                                      <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="st">"-2"</span>, </span>
-<span id="cb56-7"><a href="#cb56-7"></a>                                      <span class="st">"Invalid missing"</span> <span class="ot">=</span> <span class="st">"-3"</span>,</span>
-<span id="cb56-8"><a href="#cb56-8"></a>                                      <span class="st">"Valid missing"</span> <span class="ot">=</span> <span class="st">"-4"</span>,</span>
-<span id="cb56-9"><a href="#cb56-9"></a>                                      <span class="st">"Non-interview"</span> <span class="ot">=</span> <span class="st">"-5"</span>,</span>
-<span id="cb56-10"><a href="#cb56-10"></a>                                      <span class="st">"Other missing"</span> <span class="ot">=</span> <span class="st">"-998"</span>))</span>
-<span id="cb56-11"><a href="#cb56-11"></a><span class="fu">summary</span>(nlsy<span class="sc">$</span>age_bir_missing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-4"><a href="#cb56-4"></a>         <span class="at">age_bir_missing =</span> <span class="fu">fct_recode</span>(</span>
+<span id="cb56-5"><a href="#cb56-5"></a>           <span class="fu">factor</span>(age_bir_missing), <span class="st">"Refused"</span> <span class="ot">=</span> <span class="st">"-1"</span>, </span>
+<span id="cb56-6"><a href="#cb56-6"></a>           <span class="st">"Don't know"</span> <span class="ot">=</span> <span class="st">"-2"</span>, <span class="st">"Invalid missing"</span> <span class="ot">=</span> <span class="st">"-3"</span>,</span>
+<span id="cb56-7"><a href="#cb56-7"></a>           <span class="st">"Valid missing"</span> <span class="ot">=</span> <span class="st">"-4"</span>, <span class="st">"Non-interview"</span> <span class="ot">=</span> <span class="st">"-5"</span>,</span>
+<span id="cb56-8"><a href="#cb56-8"></a>           <span class="st">"Other missing"</span> <span class="ot">=</span> <span class="st">"-998"</span>))</span>
+<span id="cb56-9"><a href="#cb56-9"></a><span class="fu">summary</span>(nlsy<span class="sc">$</span>age_bir_missing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Other missing   Non-interview Invalid missing            NA's 
            1343            5385              15            5943 </code></pre>
@@ -828,16 +815,16 @@ $ INSUR  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
 <pre><code>[1] 6743</code></pre>
 </div>
 </div>
-<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Important</strong></p>
+<p><strong>Caution</strong></p>
 </div>
 <div class="callout-content">
-<p>Don’t do this without good reason!</p>
+<p>Don’t do this without good reason! It will exlude rows with <em>any</em> missing values, even in variables you’re not using.</p>
 </div>
 </div>
 </div>

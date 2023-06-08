@@ -398,7 +398,7 @@
 </section>
 <section class="slide level2">
 <h2>Summary statistics</h2>
-<p>We have seen that we can get certain summary statistics about our data with the <code>summary()</code> function, which we can use either on an entire dataframe/tibble, or on a single variable.</p>
+<p>We can get certain summary statistics about our data with <code>summary()</code>, which we can use either on an entire dataframe or on a single variable</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">summary</span>(nlsy_sleep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -426,7 +426,7 @@
 </section>
 <section class="slide level2">
 <h2>Summary statistics</h2>
-<p>We can also apply certain functions to a variable(s) to get a single statistic: <code>mean()</code>, <code>median()</code>, <code>var()</code>, <code>sd()</code>, <code>cov</code>, <code>cor()</code>, <code>min()</code>, <code>max()</code>, <code>quantile()</code>, etc.</p>
+<p>We can also apply certain functions to a variable(s) to get a single statistic: <code>mean()</code>, <code>median()</code>, <code>var()</code>, <code>sd()</code>, <code>cov()</code>, <code>cor()</code>, <code>min()</code>, <code>max()</code>, <code>quantile()</code>, etc.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">median</span>(nlsy<span class="sc">$</span>age_bir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -443,13 +443,12 @@
 </div>
 </div>
 </section>
-<section class="slide level2 smaller">
+<section class="slide level2">
 <h2>Summary statistics</h2>
 <p>But what if we want a lot of summary statistics – just not those that come with the <code>summary()</code> function?</p>
 <ul>
 <li>For example, it doesn’t give us a standard deviation!</li>
 </ul>
-<h3>Introducing <code>summarize()</code></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">summarize</span>(nlsy, </span>
 <span id="cb11-2"><a href="#cb11-2"></a>          <span class="at">med_age_bir =</span> <span class="fu">median</span>(age_bir),</span>
@@ -478,9 +477,9 @@
 <h2>Combining summarize with other functions</h2>
 <p>Because we can pipe, we can also look at statistics of variables that we make using <code>mutate()</code>, in a dataset we’ve subsetted with <code>filter()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">mutate</span>(<span class="at">age_bir_stand =</span> (age_bir <span class="sc">-</span> <span class="fu">mean</span>(age_bir)) <span class="sc">/</span> <span class="fu">sd</span>(age_bir)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">mutate</span>(<span class="at">age_bir_stand =</span> (age_bir <span class="sc">-</span> <span class="fu">mean</span>(age_bir)) <span class="sc">/</span> <span class="fu">sd</span>(age_bir)) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">summarize</span>(<span class="at">mean_men =</span> <span class="fu">mean</span>(age_bir_stand))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -498,7 +497,7 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Note that we’re standardizing the data <em>before</em> filtering, so the statistics are relative to the total distribution, not to the distribution among men</p>
+<p>Note that we’re standardizing the data <em>before</em> filtering.</p>
 </div>
 </div>
 </div>
@@ -511,8 +510,8 @@
 <section class="slide level2">
 <h2>What if we want both groups at once?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">summarize</span>(<span class="at">age_bir_men =</span> <span class="fu">mean</span>(age_bir))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -520,8 +519,8 @@
         &lt;dbl&gt;
 1        25.1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">summarize</span>(<span class="at">age_bir_women =</span> <span class="fu">mean</span>(age_bir))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -564,9 +563,9 @@
 <h2><code>group_by()</code></h2>
 <p>Like the other functions we’ve seen, we can use pipes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">mutate</span>(<span class="at">income_stand =</span> (income <span class="sc">-</span> <span class="fu">mean</span>(income))<span class="sc">/</span><span class="fu">sd</span>(income)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">select</span>(id, region, income_stand, race_eth, sex) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">mutate</span>(<span class="at">income_stand =</span> (income <span class="sc">-</span> <span class="fu">mean</span>(income))<span class="sc">/</span><span class="fu">sd</span>(income)) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">select</span>(id, region, income_stand, race_eth, sex) <span class="sc">|&gt;</span></span>
 <span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">group_by</span>(race_eth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,205 × 5
@@ -588,12 +587,12 @@
 </div>
 </section>
 <section class="slide level2">
-<h2>Stratify with <code>group_by() %&gt;% summarize()</code></h2>
+<h2>Stratify with <code>group_by() |&gt; summarize()</code></h2>
 <p>This function is especially important when calculating summary statistics, which we often want to be stratified.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">mutate</span>(<span class="at">income_stand =</span> (income <span class="sc">-</span> <span class="fu">mean</span>(income))<span class="sc">/</span><span class="fu">sd</span>(income)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">mutate</span>(<span class="at">income_stand =</span> (income <span class="sc">-</span> <span class="fu">mean</span>(income))<span class="sc">/</span><span class="fu">sd</span>(income)) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
 <span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income_stand),</span>
 <span id="cb23-5"><a href="#cb23-5"></a>            <span class="at">sd_inc =</span> <span class="fu">sd</span>(income_stand))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -613,8 +612,8 @@
 <div class="column" style="width:62%;">
 <p>We can group by multiple variables:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">group_by</span>(region, sex) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">group_by</span>(region, sex) <span class="sc">|&gt;</span></span>
 <span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
 <span id="cb25-4"><a href="#cb25-4"></a>            <span class="at">sd_inc =</span> <span class="fu">sd</span>(income),</span>
 <span id="cb25-5"><a href="#cb25-5"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -643,7 +642,7 @@
 <section class="slide level2">
 <h2>Group within <code>summarize()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>nlsy <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>nlsy <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">summarize</span>(<span class="at">mean_inc =</span> <span class="fu">mean</span>(income),</span>
 <span id="cb27-3"><a href="#cb27-3"></a>            <span class="at">sd_inc =</span> <span class="fu">sd</span>(income),</span>
 <span id="cb27-4"><a href="#cb27-4"></a>            <span class="at">.by =</span> <span class="fu">c</span>(region, sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -669,8 +668,8 @@
 <div class="column" style="width:49%;">
 <p>Sometimes we just want to know how many observations are in a group. We can do that (at least) three ways!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
 <span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
@@ -682,8 +681,8 @@
 </div>
 </div><div class="column" style="width:48%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>nlsy <span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>nlsy <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
 <span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
@@ -694,7 +693,7 @@
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>nlsy <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>nlsy <span class="sc">|&gt;</span> </span>
 <span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">count</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
