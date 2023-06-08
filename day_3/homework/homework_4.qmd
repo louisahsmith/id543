@@ -5,6 +5,8 @@ execute:
   eval: false
 ---
 
+Download the homework as a quarto document [here](homework/_homework_4.qmd) or as a Word document [here](homework/_homework_4.docx).
+
 Include all of your code in a quarto document (`echo: true`). Render your document to html, docx, or pdf and submit. As always, there are many different ways to solve these problems, but focus on the functions and skills we have been learning in class.
 
 ```{r}

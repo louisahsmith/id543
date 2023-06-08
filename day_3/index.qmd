@@ -6,6 +6,8 @@ toc-location: left
 
 Download some exercises to go along with these slides [here](exercises/_exercises_day_3.qmd).
 
+[Here](exercises/_exercises_day_3_inclass.qmd) is the completed `.qmd` document (you can find the rendered version in the sidebar).
+
 # Slides
 
 Open the slides in a new tab [here](slides/data-files.html).

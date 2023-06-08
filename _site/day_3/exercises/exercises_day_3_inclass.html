@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Day 3 Exercises</title>
+<title>Solutions to Day 3 Exercises</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../day_3/index.html">Day 3</a></li><li class="breadcrumb-item"><a href="../../day_3/exercises/exercises_day_3.html">Exercises</a></li><li class="breadcrumb-item"><a href="../../day_3/exercises/exercises_day_3.html">Day 3 Exercises</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../day_3/index.html">Day 3</a></li><li class="breadcrumb-item"><a href="../../day_3/exercises/exercises_day_3.html">Exercises</a></li><li class="breadcrumb-item"><a href="../../day_3/exercises/exercises_day_3_inclass.html">Solutions to Day 3 Exercises</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -186,13 +186,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../day_3/exercises/exercises_day_3.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../day_3/exercises/exercises_day_3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 3 Exercises</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../day_3/exercises/exercises_day_3_inclass.html" class="sidebar-item-text sidebar-link">
+  <a href="../../day_3/exercises/exercises_day_3_inclass.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Solutions to Day 3 Exercises</span></a>
   </div>
 </li>
@@ -270,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Day 3 Exercises</h1>
+<h1 class="title">Solutions to Day 3 Exercises</h1>
 </div>
 
 
@@ -285,20 +285,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Download this document <a href="_exercises_day_3.qmd">here</a>.</p>
 <section id="exercises-1" class="level1">
 <h1>Exercises 1</h1>
 <p>Read the <a href="http://www.principlesofeconometrics.com/stata.htm">Stata</a> or <a href="http://www.principlesofeconometrics.com/sas.htm">SAS</a> dataset of your choice into R. Investigate it a bit – look at the variables, etc. (I have no idea what any of these datasets are!). Save it as an <code>.rds</code> file and/or a <code>.csv</code> file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vacation <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"http://www.principlesofeconometrics.com/stata/vacation.dta"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(vacation, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"vacation.rds"</span>)) <span class="co"># then move manually</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>alcohol <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"http://www.principlesofeconometrics.com/stata/alcohol.dta"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(alcohol, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"vacation.cvs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="exercises-2" class="level1">
 <h1>Exercises 2</h1>
 <p>Create an R project!</p>
 <p>Copy and paste <a href="https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds" class="uri">https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds</a> into your browser to download the data as an <code>.rds</code> file. Create a <code>data/</code> directory in your R project and move it there. Move this <code>.qmd</code> folder into your R project as well. Now this code should read in the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nlsy <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"nlsy.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nlsy <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"nlsy.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Move the dataset you created in the previous exercise into the <code>data/</code> directory as well. Write code to read it in:</p>
 <p>Create a plot – of anything! – using the dataset you downloaded. Save it as a <code>.png</code> file using <code>ggsave()</code> to a <code>figures/</code> directory that you create.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vacation) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(miles))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="exercises_day_3_inclass_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"figures"</span>, <span class="st">"best-plots"</span>, <span class="st">"plot.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+</div>
 </section>
 <section id="exercises-3" class="level1">
 <h1>Exercises 3</h1>
@@ -308,18 +342,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Exercises 4</h1>
 <p>Read in the kids dataset. You’ll have to fill in the rest of the code for reading in the <code>.csv</code> file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>kids_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"id_kid"</span>, <span class="st">"id_mom"</span>, <span class="st">"sex_kid"</span>, <span class="st">"dob_kid"</span>,<span class="st">"agebir_mom"</span>, <span class="st">"bwt_kid"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy-child.csv"</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                      ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>kids_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"id_kid"</span>, <span class="st">"id"</span>, <span class="st">"sex_kid"</span>, <span class="st">"dob_kid"</span>,<span class="st">"agebir_mom"</span>, <span class="st">"bwt_kid"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy-child.csv"</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">skip =</span> <span class="dv">1</span>, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col_names =</span> kids_cols, </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"-5"</span>, <span class="st">"-4"</span>, <span class="st">"-3"</span>, <span class="st">"-2"</span>, <span class="st">"-1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 11551 Columns: 6
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (6): id_kid, id, sex_kid, dob_kid, agebir_mom, bwt_kid
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nlsy_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11,551 × 6
+   id_kid    id sex_kid dob_kid agebir_mom bwt_kid
+    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+ 1    201     2       2    1993         34     139
+ 2    202     2       2    1994         35      NA
+ 3    301     3       2    1981         19     162
+ 4    302     3       2    1983         22     144
+ 5    303     3       2    1986         24     112
+ 6    401     4       1    1980         18     107
+ 7    403     4       2    1997         34      NA
+ 8    801     8       2    1976         17     119
+ 9    802     8       1    1979         20     107
+10    803     8       2    1982         24     146
+# ℹ 11,541 more rows</code></pre>
+</div>
 </div>
 <p>Create the smaller version of the dataset we were using:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nlsy_sleep <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), age_bir, sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nlsy_sleep <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, <span class="fu">contains</span>(<span class="st">"sleep"</span>), age_bir, sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Practice the joins we did: left, right, full, and inner. Look at the differences in the data that results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>joined_data <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(nlsy_sleep, nlsy_kids, <span class="at">by =</span> <span class="fu">join_by</span>(id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>When we wanted to join on the mom’s first birth, we used <code>join_by(id == id_mom, age_bir == agebir_mom)</code>. Read the documentation for <code>join_by()</code> to help you create a dataset that has only the kids from the mom’s <em>later</em> births.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>joined_data <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(nlsy_sleep, nlsy_kids, <span class="at">by =</span> <span class="fu">join_by</span>(id <span class="sc">==</span> id, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                                              age_bir <span class="sc">==</span> agebir_mom))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="exercises-5" class="level1">
 <h1>Exercises 5</h1>
@@ -329,10 +398,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>the mean birthweight in grams (you will have to convert first!)</li>
 <li>bonus: the proportion of kids who were less than 2500g at birth (hint: what is the mean of a binary variable? You will need to create that binary variable)</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bwt_g =</span> bwt_kid <span class="sc">*</span> <span class="fl">28.3495</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">lbw =</span> bwt_g <span class="sc">&lt;</span> <span class="dv">2500</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min_yob =</span> <span class="fu">min</span>(dob_kid),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_yob =</span> <span class="fu">max</span>(dob_kid),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bwt =</span> <span class="fu">mean</span>(bwt_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">prop_lbwt =</span> <span class="fu">mean</span>(lbw, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  min_yob max_yob mean_bwt prop_lbwt
+    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1    1970    2014    3249.     0.103</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bwt_g =</span> bwt_kid <span class="sc">*</span> <span class="fl">28.3495</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">lbw =</span> bwt_g <span class="sc">&lt;</span> <span class="dv">2500</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min_yob =</span> <span class="fu">min</span>(dob_kid),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_yob =</span> <span class="fu">max</span>(dob_kid),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bwt =</span> <span class="fu">mean</span>(<span class="fu">na.omit</span>(bwt_g)),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">prop_lbwt =</span> <span class="fu">mean</span>(<span class="fu">na.omit</span>(lbw)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  min_yob max_yob mean_bwt prop_lbwt
+    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1    1970    2014    3249.     0.103</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min_yob =</span> <span class="fu">min</span>(dob_kid),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_yob =</span> <span class="fu">max</span>(dob_kid),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bwt =</span> <span class="fu">mean</span>(bwt_kid <span class="sc">*</span> <span class="fl">28.3495</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">prop_lbwt =</span> <span class="fu">mean</span>(bwt_kid <span class="sc">*</span> <span class="fl">28.3495</span> <span class="sc">&lt;</span> <span class="dv">2500</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  min_yob max_yob mean_bwt prop_lbwt
+    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1    1970    2014    3249.     0.103</code></pre>
+</div>
+</div>
 </section>
 <section id="exercises-6" class="level1">
 <h1>Exercises 6</h1>
 <p>Do the same as above, but separately for male and female children. First, however, turn the <code>sex_kid</code> variable into a factor variable with “male” = 1, “female” = 2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex_kid =</span> <span class="fu">factor</span>(sex_kid, </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>)),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">bwt_g =</span> bwt_kid <span class="sc">*</span> <span class="fl">28.3495</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">lbw =</span> bwt_g <span class="sc">&lt;</span> <span class="dv">2500</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min_yob =</span> <span class="fu">min</span>(dob_kid),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_yob =</span> <span class="fu">max</span>(dob_kid),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bwt =</span> <span class="fu">mean</span>(bwt_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">prop_lbwt =</span> <span class="fu">mean</span>(lbw, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> sex_kid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  sex_kid min_yob max_yob mean_bwt prop_lbwt
+  &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 female     1970    2011    3194.    0.109 
+2 male       1972    2014    3302.    0.0968
+3 &lt;NA&gt;       1975    1976    1233.    0.5   </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nlsy_kids <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,943 × 1
+      id
+   &lt;dbl&gt;
+ 1     2
+ 2     3
+ 3     4
+ 4     8
+ 5    10
+ 6    12
+ 7    16
+ 8    19
+ 9    20
+10    25
+# ℹ 4,933 more rows</code></pre>
+</div>
+</div>
 
 
 </section>
