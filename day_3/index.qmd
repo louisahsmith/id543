@@ -11,7 +11,7 @@ Download some exercises to go along with these slides [here](exercises/_exercise
 Open the slides in a new tab [here](slides/data-files.html).
 <div>
 ```{=html}
-<iframe class="slide-deck" src="slides/data-files.html"></iframe>
+<iframe class="slide-deck" src="slides/data-files.html" target="_blank"></iframe>
 ```
 
 </div>
@@ -19,7 +19,7 @@ Open the slides in a new tab [here](slides/data-files.html).
 Open the slides in a new tab [here](slides/joins.html).
 <div>
 ```{=html}
-<iframe class="slide-deck" src="slides/joins.html"></iframe>
+<iframe class="slide-deck" src="slides/joins.html" target="_blank"></iframe>
 ```
 
 </div>
@@ -27,7 +27,7 @@ Open the slides in a new tab [here](slides/joins.html).
 Open the slides in a new tab [here](slides/summarize.html).
 <div>
 ```{=html}
-<iframe class="slide-deck" src="slides/summarize.html"></iframe>
+<iframe class="slide-deck" src="slides/summarize.html" target="_blank"></iframe>
 ```
 
 </div>

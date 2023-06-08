@@ -497,6 +497,7 @@
 </section>
 <section class="slide level2">
 <h2>Merging with kids</h2>
+<p>The NLSY also included the kids of the moms in the NLSY79 survey that we’re using.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>nlsy_kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -514,6 +515,19 @@
  9    802      8       1    1979         20     107
 10    803      8       2    1982         24     146
 # ℹ 11,541 more rows</code></pre>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Birthweight is in ounces</p>
+</div>
 </div>
 </div>
 </section>
@@ -568,7 +582,7 @@
 </div>
 <p>In this case, the moms of some of the kids aren’t in the <code>nlsy_sleep</code> dataset, so kids without moms are lost</p>
 </section>
-<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/left-join-extra.gif?raw=true">
+<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/left-join-extra.gif?raw=true" data-background-size="contain">
 <h2></h2>
 </section>
 <section class="slide level2">
@@ -595,10 +609,10 @@
 </div>
 <ul>
 <li><p>Now we don’t have the dads, because there are no matching ids in the RHS dataset</p></li>
-<li><p>But we do keep all the kids</p></li>
+<li><p>But we do keep all the kids, even those without moms in the LHS</p></li>
 </ul>
 </section>
-<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/right-join.gif?raw=true">
+<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/right-join.gif?raw=true" data-background-size="contain">
 <h2></h2>
 </section>
 <section class="slide level2">
@@ -625,7 +639,7 @@
 </div>
 <p>This dataset is larger than either of the initial datasets alone: it has the dads without kids and the kids without moms</p>
 </section>
-<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/full-join.gif?raw=true">
+<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/full-join.gif?raw=true" data-background-size="contain">
 <h2></h2>
 </section>
 <section class="slide level2">
@@ -655,7 +669,7 @@
 <li>It still has multiple rows per mom – one for each kid</li>
 </ul>
 </section>
-<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/inner-join.gif?raw=true">
+<section class="slide level2" data-background-image="https://github.com/gadenbuie/tidyexplain/blob/main/images/inner-join.gif?raw=true" data-background-size="contain">
 <h2></h2>
 </section>
 <section class="slide level2">
@@ -666,8 +680,8 @@
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>first_births <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(nlsy_sleep, nlsy_kids, </span>
-<span id="cb25-2"><a href="#cb25-2"></a>           <span class="at">by =</span> <span class="fu">join_by</span>(id <span class="sc">==</span> id_mom,</span>
-<span id="cb25-3"><a href="#cb25-3"></a>                                              age_bir <span class="sc">==</span> agebir_mom))</span>
+<span id="cb25-2"><a href="#cb25-2"></a>                           <span class="at">by =</span> <span class="fu">join_by</span>(id <span class="sc">==</span> id_mom,</span>
+<span id="cb25-3"><a href="#cb25-3"></a>                                        age_bir <span class="sc">==</span> agebir_mom))</span>
 <span id="cb25-4"><a href="#cb25-4"></a></span>
 <span id="cb25-5"><a href="#cb25-5"></a>first_births</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

@@ -28,7 +28,7 @@ nlsy_rds <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.r
 
 and as a `.csv` file:
 ```{r}
-nlsy_csv <- read_csv("../../data/nlsy-cc.csv")
+nlsy_csv <- read_csv("https://github.com/louisahsmith/id543/raw/main/data/nlsy-cc.csv")
 ```
 
 ## What do you notice about the differences?
@@ -36,18 +36,19 @@ nlsy_csv <- read_csv("../../data/nlsy-cc.csv")
 ::::columns
 ::: {.column width=50%}
 ```{r}
-glimpse(nlsy_rds)
+nlsy_rds |> select(id, contains("cat"))
 ```
 :::
 ::: {.column width=50%}
 ```{r}
-glimpse(nlsy_csv)
+nlsy_csv |> select(id, contains("cat"))
 ```
 :::
 ::::
 
 ## `.rds` is an R-specific file for a single object
 
+It will be the exact same object when you read it back in.
 ```{r}
 #| eval: false
 write_rds(nlsy_rds, "nlsy.rds")
@@ -74,26 +75,27 @@ y
 ![](../../img/csv.png)
 :::
 
-## `.csv` files might need a little more specification to read in
+## `.csv` files might need a little more specification to read in {.smaller}
 
 ```{r}
-read_csv("../../data/nlsy.csv") |> print(n = 2)
-nlsy <- read_csv("../../data/nlsy.csv",
-                 skip = 1,
-                 col_names = c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
-                               "id", "nsibs", "samp", "race_eth", "sex", "region", 
-                               "income", "res_1980", "res_2002", "age_bir"))
+read_csv("https://github.com/louisahsmith/id543/raw/main/data/nlsy-cc.csv") |> print(n = 2)
+nlsy <- read_csv(
+  "https://github.com/louisahsmith/id543/raw/main/data/nlsy-cc.csv", skip = 1,
+  col_names = c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+                "id", "nsibs", "samp", "race_eth", "sex", "region", 
+                "income", "res_1980", "res_2002", "age_bir"))
 print(nlsy, n = 2)
 ```
 
 ## Other functions come from the `{haven}` package
 
 ```{r}
-medical_dta <- haven::read_dta("http://www.principlesofeconometrics.com/stata/medical.dta")
+library(haven)
+medical_dta <- read_dta("http://www.principlesofeconometrics.com/stata/medical.dta")
 ```
 
 ```{r}
-medical_sas <- haven::read_sas("http://www.principlesofeconometrics.com/sas/medical.sas7bdat")
+medical_sas <- read_sas("http://www.principlesofeconometrics.com/sas/medical.sas7bdat")
 ```
 
 ::::columns
@@ -112,12 +114,13 @@ glimpse(medical_sas)
 ## Or `{readxl}`
 
 ```{r}
-# find the example file
-data_file <- readxl::readxl_example("datasets.xls")
+library(readxl)
+# this just finds the path to an example file
+data_file <- readxl_example("datasets.xls")
 data_file
 
 # read it in
-dat <- readxl::read_excel(data_file)
+dat <- read_excel(data_file)
 ```
 
 All these functions take arguments, but `read_excel()` takes *a ton* of arguments -- which sheet, how many rows to read, whether there are column names, a specific range to read in, etc....
@@ -164,7 +167,7 @@ setwd(proj_wd)
 
 :::: {.columns}
 
-::: {.column width="30%"}
+::: {.column width="28%"}
 ```
 my-project/
 ├─ my-project.Rproj
@@ -182,7 +185,7 @@ my-project/
 
 :::
 
-::: {.column width="70%"}
+::: {.column width="72%"}
 - An `.Rproj` file is mostly just a placeholder. It remembers various options, and makes it easy to open a new RStudio session that starts up in the correct working directory. You never need to edit it directly.
 
 - A README file can just be a text file that includes notes for yourself or future users.
@@ -211,13 +214,13 @@ ggsave(plot = p,
        filename = here::here("results", "figures", "fig.pdf"))
 ```
 
-- The `here` package lets you refer to files without worrying too much about relative paths.
+- The `here` package lets you refer to files without worrying too much about relative file paths.
 
 - Construct file paths with reference to the top directory holding your `.Rproj` file.
 
 - `here::here("data", "raw", "data.csv")` for me, here, becomes `"/Users/l.smith/Documents/Teaching/Harvard/ID543/data/raw/data.csv"`
 
-- But if I send you my code to run, it will become whatever file path *you* need it to be.
+- But if I send you my code to run, it will become whatever file path *you* need it to be, as long as you're running it within the R Project.
 
 
 ## Referring to the `here` package
@@ -232,9 +235,9 @@ library(here)
 here()
 ```
 I just prefer to write out the package name whenever I need it, but you can load the package for your entire session if you want.
-
-Note that you can refer to any function without loading the whole package this way
-
+:::callout-note
+Note that you can refer to any function without loading the whole package this way, e.g. `haven::read_dta()`
+:::
 
 ## The `source()` function
 
@@ -244,7 +247,7 @@ Will run code from another file.
 # assuming it's in my current working directory
 source("script.R")
 
-# run the code in my-project/R/functions.R 
+# run the code in my-project/R/functions.R script
 # from wherever I am in my-project
 source(here::here("R", "functions.R"))
 ```
@@ -283,7 +286,7 @@ c(1,2)
 
 In NLSY, -1 = Refused, -2 = Don't know, -3 = Invalid missing, -4 = Valid missing, -5 = Non-interview
 
-Other files might have "." for missing, or 999.
+Other files might have `.` for missing, or `999`.
 
 ```{r, eval = FALSE}
 nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
@@ -311,13 +314,11 @@ nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd",
 nlsy <- read_csv(here::here("data", "nlsy.csv"),
                  skip = 1, col_names = nlsy_cols) |> 
   mutate(age_bir_missing = ifelse(age_bir > 0, NA, age_bir),
-         age_bir_missing = fct_recode(factor(age_bir_missing),
-                                      "Refused" = "-1", 
-                                      "Don't know" = "-2", 
-                                      "Invalid missing" = "-3",
-                                      "Valid missing" = "-4",
-                                      "Non-interview" = "-5",
-                                      "Other missing" = "-998"))
+         age_bir_missing = fct_recode(
+           factor(age_bir_missing), "Refused" = "-1", 
+           "Don't know" = "-2", "Invalid missing" = "-3",
+           "Valid missing" = "-4", "Non-interview" = "-5",
+           "Other missing" = "-998"))
 summary(nlsy$age_bir_missing)
 ```
 
@@ -350,8 +351,8 @@ nlsy2 <- nlsy |> na.omit()
 nrow(nlsy2)
 ```
 
-::: {.callout-important}
-Don't do this without good reason!
+::: {.callout-caution}
+Don't do this without good reason! It will exlude rows with *any* missing values, even in variables you're not using.
 :::
 
 # Exercise

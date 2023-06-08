@@ -24,7 +24,7 @@ Open the slides in a new tab [here](slides/intro-to-R.html){target="_blank"} or 
 <div>
 
 ```{=html}
-<iframe class="slide-deck" src="slides/intro-to-R.html"></iframe>
+<iframe class="slide-deck" src="slides/intro-to-R.html" target="_blank"></iframe>
 ```
 
 </div>

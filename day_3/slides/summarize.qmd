@@ -11,7 +11,7 @@ execute:
 
 ## Summary statistics
 
-We have seen that we can get certain summary statistics about our data with the `summary()` function, which we can use either on an entire dataframe/tibble, or on a single variable.
+We can get certain summary statistics about our data with `summary()`, which we can use either on an entire dataframe or on a single variable
 
 ```{r}
 #| include: false
@@ -28,7 +28,7 @@ summary(nlsy$income)
 
 ## Summary statistics
 
-We can also apply certain functions to a variable(s) to get a single statistic: `mean()`, `median()`, `var()`, `sd()`, `cov`, `cor()`, `min()`, `max()`, `quantile()`, etc.
+We can also apply certain functions to a variable(s) to get a single statistic: `mean()`, `median()`, `var()`, `sd()`, `cov()`, `cor()`, `min()`, `max()`, `quantile()`, etc.
 
 ```{r}
 median(nlsy$age_bir)
@@ -36,13 +36,11 @@ cor(nlsy$sleep_wkdy, nlsy$sleep_wknd)
 quantile(nlsy$income, probs = c(0.1, 0.9))
 ```
 
-## Summary statistics {.smaller}
+## Summary statistics
 
 But what if we want a lot of summary statistics -- just not those that come with the `summary()` function?
 
 - For example, it doesn't give us a standard deviation!
-
-### Introducing `summarize()`
 
 ```{r}
 summarize(nlsy, 
@@ -66,14 +64,14 @@ Important to note:
 Because we can pipe, we can also look at statistics of variables that we make using `mutate()`, in a dataset we've subsetted with `filter()`.
 
 ```{r}
-nlsy %>%
-  mutate(age_bir_stand = (age_bir - mean(age_bir)) / sd(age_bir)) %>%
-  filter(sex == 1) %>%
+nlsy |>
+  mutate(age_bir_stand = (age_bir - mean(age_bir)) / sd(age_bir)) |>
+  filter(sex == 1) |>
   summarize(mean_men = mean(age_bir_stand))
 ```
 
 ::: callout-note
-Note that we're standardizing the data *before* filtering, so the statistics are relative to the total distribution, not to the distribution among men
+Note that we're standardizing the data *before* filtering.
 :::
 
 # Exercise
@@ -81,12 +79,12 @@ Note that we're standardizing the data *before* filtering, so the statistics are
 ## What if we want both groups at once?
 
 ```{r}
-nlsy %>%
-  filter(sex == 1) %>%
+nlsy |>
+  filter(sex == 1) |>
   summarize(age_bir_men = mean(age_bir))
 
-nlsy %>%
-  filter(sex == 2) %>%
+nlsy |>
+  filter(sex == 2) |>
   summarize(age_bir_women = mean(age_bir))
 ```
 
@@ -106,20 +104,20 @@ nlsy_by_region
 Like the other functions we've seen, we can use pipes:
 
 ```{r}
-nlsy %>%
-  mutate(income_stand = (income - mean(income))/sd(income)) %>%
-  select(id, region, income_stand, race_eth, sex) %>%
+nlsy |>
+  mutate(income_stand = (income - mean(income))/sd(income)) |>
+  select(id, region, income_stand, race_eth, sex) |>
   group_by(race_eth)
 ```
 
-## Stratify with `group_by() %>% summarize()`
+## Stratify with `group_by() |> summarize()`
 
 This function is especially important when calculating summary statistics, which we often want to be stratified.
 
 ```{r}
-nlsy %>%
-  mutate(income_stand = (income - mean(income))/sd(income)) %>%
-  group_by(region) %>%
+nlsy |>
+  mutate(income_stand = (income - mean(income))/sd(income)) |>
+  group_by(region) |>
   summarize(mean_inc = mean(income_stand),
             sd_inc = sd(income_stand))
 ```
@@ -132,8 +130,8 @@ nlsy %>%
 We can group by multiple variables:
 
 ```{r}
-nlsy %>%
-  group_by(region, sex) %>%
+nlsy |>
+  group_by(region, sex) |>
   summarize(mean_inc = mean(income),
             sd_inc = sd(income),
             .groups = "drop")
@@ -152,7 +150,7 @@ nlsy %>%
 ## Group within `summarize()`
 
 ```{r}
-nlsy %>%
+nlsy |>
   summarize(mean_inc = mean(income),
             sd_inc = sd(income),
             .by = c(region, sex))
@@ -168,8 +166,8 @@ This is a relatively new feature of this function and is very handy!
 ::: {.column width="49%"}
 Sometimes we just want to know how many observations are in a group. We can do that (at least) three ways!
 ```{r}
-nlsy %>%
-  group_by(sex) %>%
+nlsy |>
+  group_by(sex) |>
   summarize(n = n())
 ```
 
@@ -177,12 +175,12 @@ nlsy %>%
   
 ::: {.column width="48%"}
 ```{r}
-nlsy %>%
-  group_by(sex) %>%
+nlsy |>
+  group_by(sex) |>
   tally()
 ```
 ```{r}
-nlsy %>% 
+nlsy |> 
   count(sex)
 ```
 
