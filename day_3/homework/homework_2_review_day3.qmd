@@ -1,0 +1,122 @@
+---
+title: "Homework 2, review examples"
+format: docx
+---
+
+This is a collection of the different possible solutions to some of the HW2 questions in regards to ggplot I demonstrated in class on day 3. Please consider there is always more options that also work. 
+I did not add any labels etc. to keep the minimal and for the differences in code to be more easily readable.
+
+```{r}
+#loading libraries
+library(tidyverse)
+
+#Loading data
+nlsy <- read_rds("https://github.com/louisahsmith/id543/raw/main/data/nlsy.rds")
+```
+
+
+1. Using the NLSY data, make a scatter plot of the relationship between hours of sleep on weekends and weekdays. Color it according to region (where 1 = northeast, 2 = north central, 3 = south, and 4 = west).
+
+```{r}
+library(ggplot2)
+nlsy |> ggplot(aes(x = sleep_wknd, y = sleep_wkdy, 
+           color = factor(region))) + geom_point() 
+```
+
+
+2. Replace `geom_point()` with `geom_jitter()`. What does this do? Why might this be a good choice for this graph? Play with the `width = ` and `height = ` options. This site may help: https://ggplot2.tidyverse.org/reference/geom_jitter.html
+
+```{r}
+nlsy |> ggplot(aes(x = sleep_wknd, y = sleep_wkdy, 
+           color = factor(region))) + geom_jitter(width=1, height=1)
+nlsy |> ggplot(aes(x = sleep_wknd, y = sleep_wkdy, 
+           color = factor(region))) + geom_jitter(width=3, height=3)
+ nlsy |> ggplot(aes(x = sleep_wknd, y = sleep_wkdy, 
+           color = factor(region))) + geom_jitter(width=5, height=5)
+```
+
+3. Use the `shape = ` argument to map the sex variable to different shapes. Change the shapes to squares and diamonds. (Hint: how did we manually change colors to certain values? This might help: https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
+
+```{r}
+#filled square = 15, filled diamond = 18
+ggplot(nlsy, aes(x = sleep_wknd, y = sleep_wkdy, shape = factor(sex))) + geom_point() +
+  scale_shape_manual(values = c("square", "diamond"))
+
+ggplot(nlsy, aes(x = sleep_wknd, y = sleep_wkdy, shape = factor(sex))) + geom_point() +
+  scale_shape_manual(values=c(15, 18))
+```
+
+4. When we're comparing distributions with very different numbers of observations, instead of scaling the y-axis like we did with the `facet_grid()` function, we might want to make density histograms. Use google to figure out how to make a density histogram of income. Facet it by region.
+```{r}
+#smooth density curve
+ggplot(nlsy, aes(x = income)) + geom_density() +  facet_wrap(~region) 
+#histogram displaying bar, just changing the scale to density
+#v1 - old notation
+ggplot(data = nlsy, aes(x = income, y = ..density..)) + geom_histogram() +
+  facet_wrap(vars(region))
+#v2 - new notation
+ggplot(data = nlsy, aes(x = income, after_stat(density))) + geom_histogram() +
+  facet_wrap(vars(region))
+#combining smooth curve and bar histogram with density on y-scale
+ggplot(data = nlsy, aes(x = income)) + geom_histogram(aes(y = ..density..)) +
+  facet_wrap(vars(region)) + geom_density() 
+```
+
+5. Make each of the regions in your histogram a different color and square-root transform the x-axis.
+
+```{r}
+#bar histogram, using scale_x_sqrt()
+ggplot(data = nlsy, aes(x = income)) +
+  geom_histogram(aes(y = ..density.., fill=factor(region))) +
+  facet_wrap(vars(region)) + 
+   scale_x_sqrt()
+#smooth curve, using scale_x_sqrt()
+ggplot(nlsy, aes(x = income)) +
+  geom_density(aes(fill = factor(region)), alpha = 0.5) +
+  facet_wrap(~region, nrow = 2) + 
+  scale_x_sqrt()
+
+#bar histogram, using scale_x_continuous(trans = "sqrt") 
+ggplot(data = nlsy, aes(x = income)) +
+  geom_histogram(aes(y = ..density.., fill=factor(region))) +
+  facet_wrap(vars(region)) + 
+  scale_x_continuous(trans = "sqrt") 
+
+#bar histogram, using x=sqrt(income) -> NOTE: this changes what the values on the x-axis means
+ggplot(nlsy, aes(x = sqrt(income))) +
+  geom_histogram(aes(y = ..density.., fill=factor(region))) +
+  facet_wrap(~region, nrow = 2)
+
+```
+
+6. Doing part 3 squishes the labels on the x-axis. Using the `breaks = ` argument that all the `scale_x_()` functions have, make labels at 1000, 10000, 25000, and 50000.
+
+```{r}
+#call library within code using syntax "library::package"
+ggplot(data = nlsy, aes(x = income)) +
+  geom_histogram(aes(y = ..density.., fill=factor(region)), col = "black") +
+  facet_wrap(vars(region))+
+scale_x_sqrt( breaks=c(0,1000,10000,25000, 50000), labels = scales::comma)
+
+#call library before code 
+library(scales)
+ggplot(data = nlsy, aes(x = income)) +
+  geom_histogram(aes(y = ..density.., fill=factor(region)), col = "black") +
+  facet_wrap(vars(region))+
+  scale_x_continuous(trans = "sqrt", breaks = c(1000, 10000, 25000, 50000),labels = comma)
+```
+
+10. Create a new variable called `race_reor`, reordering the levels such that "Non-Black, Non-Hispanic" would automatically be used as reference level in analyses. Use a function to check the order of these two variables.
+
+```{r}
+#v1
+#using relevel, saving in separate vector object (outside dataframe)
+race_reor <- relevel(nlsy$race_eth_cat, ref = "Non-Black, Non-Hispanic")
+#integrating new vector object as variable (column) in existing data frame
+nlsy$race_reor <- race_reor
+
+#v2
+#using fct_relevel using mutate and the pipe
+nlsy <- nlsy |> mutate(race_reor=fct_relevel(race_eth, "other", "hispanic", "black"))
+
+```
