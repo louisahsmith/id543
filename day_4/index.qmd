@@ -1,33 +1,43 @@
 ---
 title: "Day 4"
 toc-location: left
-filters:
-  - webr
-webr:
-  show-startup-message: false
 ---
+# In class
 
+Download some exercises to go along with these slides [here](exercises/_exercises_day_4.qmd).
+
+<!-- [Here](exercises/_exercises_day_3_inclass.qmd) is the completed `.qmd` document (you can find the rendered version in the sidebar). -->
+
+# Slides
+
+Open the slides in a new tab [here](slides/tables.html).
+<div>
 ```{=html}
-<script type="module">
-await globalThis.webR.evalRVoid(`
-download.file(
-  'https://raw.githubusercontent.com/louisahsmith/intro-to-R-2023/main/data/nlsy_cc.csv',
-  'nlsy_cc.csv'
-)
-
-webr::install(c("ggplot2", "dplyr", "readr", "forcats"))
-
-library(ggplot2)
-nlsy <- readr::read_csv("nlsy_cc.csv") |> 
-  dplyr::mutate(eyesight_cat = factor(eyesight, labels = c("Excellent", "Very Good",
-               "Good", "Fair", "Poor")),
-    glasses_cat = factor(glasses, labels = c("Doesn't wear glasses",
-                     "Wears glasses/contacts")),
-    race_eth_cat = forcats::fct_recode(as.character(race_eth),
-    "Hispanic" = "1",
-    "Black" = "2",
-    "Non-Black, Non-Hispanic" = "3"),
-    sex_cat = factor(sex, labels = c("Male", "Female")))
-`)
-</script>	
+<iframe class="slide-deck" src="slides/tables.html" target="_blank"></iframe>
 ```
+
+</div>
+
+Open the slides in a new tab [here](slides/joins.html).
+<div>
+```{=html}
+<iframe class="slide-deck" src="slides/joins.html" target="_blank"></iframe>
+```
+
+</div>
+
+Open the slides in a new tab [here](slides/summarize.html).
+<div>
+```{=html}
+<iframe class="slide-deck" src="slides/summarize.html" target="_blank"></iframe>
+```
+
+</div>
+
+# Readings
+
+- [R for Data Science Ch 4.5-4.6](https://r4ds.hadley.nz/data-transform.html#groups)
+- [`{gtsummary}` site](https://www.danieldsjoberg.com/gtsumma ry/)
+
+# Resources
+

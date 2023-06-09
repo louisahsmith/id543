@@ -39,6 +39,7 @@ Open the slides in a new tab [here](slides/summarize.html).
 - [R for Data Science Ch. 7](https://r4ds.hadley.nz/workflow-scripts.html)
 - [R for Data Science Ch. 8](https://r4ds.hadley.nz/data-import.html)
 - [R for Data Science Ch. 20](https://r4ds.hadley.nz/joins.html)
+- [R for Data Science Ch 4.5-4.6](https://r4ds.hadley.nz/data-transform.html#groups)
 
 # Resources
 

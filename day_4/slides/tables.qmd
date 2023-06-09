@@ -1,0 +1,450 @@
+---
+title: "Tables and statistics"
+format: 
+  revealjs:
+    theme: 
+      - ../../www/custom.scss
+order: 1
+execute: 
+  echo: true
+---
+
+## Prepare data
+```{r}
+#| include: false
+library(gtsummary)
+library(janitor)
+```
+
+```{r}
+#| message: false
+library(tidyverse)
+nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+               "income", "res_1980", "res_2002", "age_bir")
+nlsy <- read_csv(here::here("data", "nlsy.csv"), 
+                 na = c("-1", "-2", "-3", "-4", "-5", "-998"),
+                 skip = 1, col_names = nlsy_cols) |> 
+  mutate(region_cat = factor(region, labels = c("Northeast", "North Central", "South", "West")),
+         sex_cat = factor(sex, labels = c("Male", "Female")),
+         race_eth_cat = factor(race_eth, labels = c("Hispanic", "Black", "Non-Black, Non-Hispanic")),
+         eyesight_cat = factor(eyesight, labels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
+```
+
+## Tables
+
+We saw that we could compute summary statistics using `summarize()`:
+
+```{r}
+nlsy |> 
+  group_by(sex_cat) |> 
+  summarise(prop_glasses = mean(glasses, na.rm = TRUE),
+            mean_age_bir = mean(age_bir, na.rm = TRUE),
+            n_vg_eye = sum(eyesight_cat == "Very good", na.rm = TRUE),
+            prop_vg_eye = mean(eyesight_cat == "Very good", na.rm = TRUE),
+            n_g_eye = sum(eyesight_cat == "Good", na.rm = TRUE),
+            prop_g_eye = mean(eyesight_cat == "Good", na.rm = TRUE)
+  )
+```
+
+## Easier way to make frequency tables
+
+The `{janitor}` package has nice functionality to create tables:
+
+```{r}
+#| eval: false
+install.packages("janitor")
+library(janitor)
+```
+
+Just like many of our other functions, it takes a dataset as its first argument so can pipe
+```{r}
+tabyl(nlsy, sex_cat, eyesight_cat)
+```
+
+## `tabyl()`
+
+```{r}
+two_by_two <- nlsy |> 
+  tabyl(sex_cat, eyesight_cat, show_na = FALSE) |> 
+  adorn_percentages("row") |> 
+  adorn_pct_formatting()
+two_by_two
+```
+
+These are just dataframes, so we can save as csv, etc.
+```{r}
+#| eval: false
+write_csv(here::here("results", "sex-eyesight-table.csv"))
+```
+
+## We might as well do a chi-squared test
+
+```{r}
+tabyl(nlsy, sex_cat, eyesight_cat) |> 
+  chisq.test()
+```
+
+## Making more complex tables
+
+There are lots of packages for making tables in R
+
+One of my favorites is `{gtsummary}`
+
+```{r}
+#| eval: false
+install.packages("gtsummary")
+library(gtsummary)
+```
+
+## `gtsummary::tbl_summary()`
+
+```{r}
+#| output-location: column
+tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir))
+```
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir),
+  label = list(
+    race_eth_cat ~ "Race/ethnicity",
+    region_cat ~ "Region",
+    eyesight_cat ~ "Eyesight",
+    glasses ~ "Wears glasses",
+    age_bir ~ "Age at first birth"
+  ),
+  missing_text = "Missing")
+```
+
+## {.smaller}
+
+```{r}
+#| output-location: column
+tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat,
+              eyesight_cat, glasses, age_bir),
+  label = list(
+    race_eth_cat ~ "Race/ethnicity",
+    eyesight_cat ~ "Eyesight",
+    glasses ~ "Wears glasses",
+    age_bir ~ "Age at first birth"
+  ),
+  missing_text = "Missing") |> 
+  add_p(test = list(all_continuous() ~ "t.test", 
+                    all_categorical() ~ "chisq.test")) |> 
+  add_overall(col_label = "**Total**") |> 
+  bold_labels() |> 
+  modify_footnote(update = everything() ~ NA) |> 
+  modify_header(label = "**Variable**", p.value = "**P**")
+```
+
+## `tbl_summary()`
+
+- Incredibly customizeable
+- Really helpful with Table 1
+- I often just view in the web browser and copy and paste into a Word document
+- Can also be used within quarto/R Markdown
+- If output is Word, I use `as_flex_table()`
+- Make even more customizeable with `as_gt()`
+
+# Exercise
+
+## Univariate regressions
+
+Fit a series of univariate regressions of income on other variables.
+```{r}
+#| output-location: column
+tbl_uvregression(
+  nlsy, 
+  y = income,
+  include = c(sex_cat, race_eth_cat,
+              eyesight_cat, income, age_bir),
+  method = lm)
+```
+
+## Can also do logistic regression
+
+
+```{r}
+#| output-location: column
+tbl_uvregression(
+  nlsy, 
+  y = glasses,
+  include = c(sex_cat, race_eth_cat,
+              eyesight_cat, glasses, age_bir),
+  method = glm,
+  method.args = list(family = binomial()),
+  exponentiate = TRUE)
+```
+Customizable just like `tbl_summary()`
+
+## Regression
+
+To fit a linear regression (by ordinary least squares), use the `lm()` function
+
+To fit a generalized linear model (e.g., logistic regression, Poisson regression) use `glm()` and specify the `family = ` argument
+
+- `family = gaussian()` is the default: another way of fitting a linear regresion
+- `family = binomial()` gives you logistic regression
+- `family = poisson()` is Poisson regression
+
+We tell R what dataset to pull the variables from with `data = `
+
+## Regression
+
+Regressions take a formula: `y ~ x1 + x2 + x3`
+
+- Include interaction terms between `x1` and `x2` with `y ~ x1*x2 + x3`
+- Main effects of `x1` and `x2` will be included too
+- Indicator ("dummy") variables will automatically be created for factors
+- The first level will be the reference level
+- If you want to include a squared term (for example), you can make the squared variable first, or wrap in `I()`: `y ~ x1 + I(x1^2)`
+
+## Regression
+
+```{r}
+linear_model <- lm(income ~ sex_cat*age_bir + race_eth_cat, 
+                   data = nlsy)
+```
+
+```{r}
+logistic_model <- glm(glasses ~ eyesight_cat + sex_cat + income, 
+                      data = nlsy, family = binomial())
+```
+
+## Regression
+
+```{r}
+coef(linear_model)
+confint(linear_model)
+```
+
+## Regression
+
+```{r}
+exp(coef(logistic_model))
+summary(logistic_model)
+```
+
+# Exercise
+
+## Helpful regression packages
+
+`{broom}` helps "tidy" regression results
+
+```{r}
+library(broom)
+tidy(linear_model)
+```
+
+## `broom::tidy()`
+
+```{r}
+tidy(logistic_model, conf.int = TRUE, exponentiate = TRUE)
+```
+
+## `broom::tidy()` can also help other statistics
+
+```{r}
+tabyl(nlsy, sex_cat, eyesight_cat) |> 
+  chisq.test() |> 
+  tidy()
+
+t.test(income ~ sex_cat, data = nlsy) |> 
+  tidy()
+```
+
+## `gtsummary::tbl_regression()` {.smaller}
+
+```{r}
+#| output-location: column
+tbl_regression(
+  linear_model, 
+  intercept = TRUE,
+  label = list(
+    sex_cat ~ "Sex",
+    race_eth_cat ~ "Race/ethnicity",
+    age_bir ~ "Age at first birth",
+    `sex_cat:age_bir` ~ "Sex/age interaction"
+  ))
+```
+
+```{r}
+#| output-location: column
+tbl_regression(
+  logistic_model, 
+  exponentiate = TRUE,
+  label = list(
+    sex_cat ~ "Sex",
+    eyesight_cat ~ "Eyesight",
+    income ~ "Income"
+  ))
+```
+
+## You could put several together
+
+```{r}
+linear_model_no_int <- lm(income ~ sex_cat + age_bir + race_eth_cat, data = nlsy)
+
+tbl_no_int <- tbl_regression(
+  linear_model_no_int, 
+                             intercept = TRUE,
+                             label = list(
+                               sex_cat ~ "Sex",
+                               race_eth_cat ~ "Race/ethnicity",
+                               age_bir ~ "Age at first birth"
+                             ))
+
+tbl_int <- tbl_regression(
+  linear_model, 
+                          intercept = TRUE,
+                          label = list(
+                            sex_cat ~ "Sex",
+                            race_eth_cat ~ "Race/ethnicity",
+                            age_bir ~ "Age at first birth",
+                            `sex_cat:age_bir` ~ "Sex/age interaction"
+                          ))
+```
+
+## You could put several together
+
+```{r}
+tbl_merge(list(tbl_no_int, tbl_int), 
+          tab_spanner = c("**Model 1**", "**Model 2**"))
+```
+
+# Exercise
+
+## Regression on ggplot
+
+```{r}
+#| output-location: column
+#| fig-width: 6
+#| fig-asp: .7
+ggplot(data = nlsy, 
+       aes(x = age_bir, y = income)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+This corresponds to 
+```{r}
+lm(income ~ age_bir, data = nlsy)
+```
+
+## Stratified regression
+
+```{r}
+#| fig-width: 6
+#| fig-asp: .7
+#| output-location: column
+ggplot(data = nlsy, 
+       aes(x = age_bir, y = income)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_grid(cols = vars(sex_cat),
+             rows = vars(race_eth_cat))
+```
+
+This corresponds to 
+```{r}
+linear_model <- lm(income ~ sex_cat*age_bir*race_eth_cat, 
+                   data = nlsy)
+```
+
+## Other models
+
+```{r}
+#| fig-width: 6
+#| fig-asp: .7
+#| output-location: column
+ggplot(data = nlsy, 
+       aes(x = age_bir, 
+           y = income)) +
+  geom_point() +
+  geom_smooth(formula = y ~ x +
+                I(x^2) + I(x^3),
+              method = "lm")
+```
+
+## Other models
+
+```{r}
+#| fig-width: 6
+#| fig-asp: .7
+#| output-location: column
+ggplot(data = nlsy, 
+       aes(x = age_bir, 
+           y = income)) +
+  geom_point() +
+  geom_smooth(method = "loess")
+```
+
+## Logistic model
+
+```{r}
+#| fig-width: 6
+#| fig-asp: .7
+#| output-location: column
+ggplot(data = nlsy, 
+       aes(x = income, 
+           y = glasses)) +
+  geom_point() +
+  geom_smooth(method = "glm",
+              method.args =
+                list(family =
+                       binomial()))
+```
+
+## Logistic model
+
+```{r}
+#| fig-width: 6
+#| fig-asp: .7
+#| output-location: column
+ggplot(data = nlsy, 
+       aes(x = income, 
+           y = glasses)) +
+  geom_jitter() +
+  geom_smooth(method = "glm",
+              method.args =
+                list(family =
+                       binomial()))
+```
+
+# Exercise
+
+## Other packages {.smaller}
+
+- The `{epitools}` package has some nice functions for calculating risk ratios, odds ratios, etc. from two-by-two tables.
+
+```{r}
+epitools::epitab(nlsy$eyesight, nlsy$glasses, 
+                 method = "riskratio")$tab
+```
+
+- The [`{marginaleffects}` package](https://vincentarelbundock.github.io/marginaleffects/) has really great functionality allowing you to compute statistics similar to Stata's `margins`^[See a discussion [here](https://stats.stackexchange.com/questions/596035/statas-margins-and-rs-marginal-effects-comparisons)]
+
+- The [`tidymodels` packages](https://www.tidymodels.org/) (work well with `tidyverse`) allow for more complex and principled machine learning modeling
+
+## Other resources
+
+- ["Tidy Tuesday"](https://github.com/rfordatascience/tidytuesday#readme) is a data visualization project
+- See lots of really cool visualizations on [Twitter](https://twitter.com/search?q=%23tidytuesday)
+
+- The RStudio::conf (now [posit::conf](https://posit.co/blog/rstudio-conf-watch-on-youtube/)) talks are all recorded
+- Here's a [YouTube playlist](https://www.youtube.com/watch?v=y_zkI-LkS58&list=PL9HYL-VRX0oTw-6TQri7Fr97G3IX0tHh8) of all the years
+

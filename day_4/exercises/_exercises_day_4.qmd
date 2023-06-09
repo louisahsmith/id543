@@ -1,0 +1,59 @@
+---
+title: "Day 4 Exercises"
+execute: 
+  eval: false
+---
+
+```{r}
+library(tidyverse)
+nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+               "income", "res_1980", "res_2002", "age_bir")
+nlsy <- read_csv(here::here("data", "nlsy.csv"), 
+                 na = c("-1", "-2", "-3", "-4", "-5", "-998"),
+                 skip = 1, col_names = nlsy_cols) |> 
+  mutate(region_cat = factor(region, labels = c("Northeast", "North Central", "South", "West")),
+         sex_cat = factor(sex, labels = c("Male", "Female")),
+         race_eth_cat = factor(race_eth, labels = c("Hispanic", "Black", "Non-Black, Non-Hispanic")),
+         eyesight_cat = factor(eyesight, labels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
+```
+
+# Exercises 1
+
+Make a `tbl_summary()`. Include (at least) number of hours of sleep on weekdays and weekends, categorical region, and income and make sure they are nicely labeled. Play around with the extra functions from the example in the slides.
+
+```{r}
+
+```
+
+
+# Exercises 2
+
+Fit a Poisson regression for the number of siblings, using at least 3 predictors of your choice. Calculate the exponentiated coefficients and confidence intervals.
+
+```{r}
+
+```
+
+# Exercises 3
+
+Create a nice table displaying your Poisson regression.
+
+```{r}
+
+```
+
+The `{broom}` package has a couple of other major functions: `glance()` and `augment()`. Try out each of them on your regression model. Look at the documentation for each to help you figure out what they do.
+
+```{r}
+
+```
+
+## Exercises 4
+
+Create a scatterplot for `nsibs` on the y-axis and `income` on the x-axis. Add a regression line from a Poisson regression to it.
+
+```{r}
+
+```
+
