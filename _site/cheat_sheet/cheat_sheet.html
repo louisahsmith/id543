@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Click on the “New File” icon in the top left of RStudio, then select “R Script”.</li>
 <li>File -&gt; New File -&gt; R Script</li>
-<li><p><kbd data-mac="Shift-Command-N" data-linux="Shift-Ctrl-N" data-windows="Shift-Control-N"></kbd></p></li>
+<li><p><kbd data-windows="Shift-Control-N" data-mac="Shift-Command-N" data-linux="Shift-Ctrl-N"></kbd></p></li>
 </ol>
 </section>
 <section id="installing-packages" class="level2 unnumbered">
@@ -830,9 +830,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(model)</span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The <code>glance()</code> function from the <code>{broom}</code> package will also give you goodness-of-fit statistics:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>To run a likelihood ratio test comparing two nested models:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>lmtest<span class="sc">::</span><span class="fu">lrtest</span>(mod_full, mod_nested)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>lmtest<span class="sc">::</span><span class="fu">lrtest</span>(mod_full, mod_nested)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

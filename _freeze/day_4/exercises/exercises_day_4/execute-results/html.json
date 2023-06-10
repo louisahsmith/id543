@@ -1,0 +1,16 @@
+{
+  "hash": "475ac9b128789a48c429aea4871a6d4a",
+  "result": {
+    "markdown": "---\ntitle: \"Day 4 Exercises\"\nexecute: \n  eval: false\n---\n\n\nDownload this document [here](_exercises_day_4.qmd).\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nnlsy_cols <- c(\"glasses\", \"eyesight\", \"sleep_wkdy\", \"sleep_wknd\", \n               \"id\", \"nsibs\", \"samp\", \"race_eth\", \"sex\", \"region\", \n               \"income\", \"res_1980\", \"res_2002\", \"age_bir\")\nnlsy <- read_csv(\"https://raw.githubusercontent.com/louisahsmith/id543/main/data/nlsy.csv\", \n                 na = c(\"-1\", \"-2\", \"-3\", \"-4\", \"-5\", \"-998\"),\n                 skip = 1, col_names = nlsy_cols) |> \n  mutate(region_cat = factor(region, labels = c(\"Northeast\", \"North Central\", \"South\", \"West\")),\n         sex_cat = factor(sex, labels = c(\"Male\", \"Female\")),\n         race_eth_cat = factor(race_eth, labels = c(\"Hispanic\", \"Black\", \"Non-Black, Non-Hispanic\")),\n         eyesight_cat = factor(eyesight, labels = c(\"Excellent\", \"Very good\", \"Good\", \"Fair\", \"Poor\"))) \n```\n:::\n\n\n# Exercises 1\n\nMake a `tbl_summary()`. Include (at least) number of hours of sleep on weekdays and weekends, categorical region, and income and make sure they are nicely labeled. Play around with the extra functions from the example in the slides.\n\n\n::: {.cell}\n\n:::\n\n\n\n# Exercises 2\n\nFit a Poisson regression for the number of siblings, using at least 3 predictors of your choice. Calculate the exponentiated coefficients and confidence intervals.\n\n\n::: {.cell}\n\n:::\n\n\n# Exercises 3\n\nCreate a nice table displaying your Poisson regression.\n\n\n::: {.cell}\n\n:::\n\n\nThe `{broom}` package has a couple of other major functions: `glance()` and `augment()`. Try out each of them on your regression model. Look at the documentation for each to help you figure out what they do.\n\n\n::: {.cell}\n\n:::\n\n\n# Exercises 4\n\nCreate a scatterplot for `nsibs` on the y-axis and `income` on the x-axis. Add a regression line from a Poisson regression to it.\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [
+      "exercises_day_4_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

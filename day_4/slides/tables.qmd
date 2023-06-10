@@ -301,22 +301,22 @@ linear_model_no_int <- lm(income ~ sex_cat + age_bir + race_eth_cat, data = nlsy
 
 tbl_no_int <- tbl_regression(
   linear_model_no_int, 
-                             intercept = TRUE,
-                             label = list(
-                               sex_cat ~ "Sex",
-                               race_eth_cat ~ "Race/ethnicity",
-                               age_bir ~ "Age at first birth"
-                             ))
+  intercept = TRUE,
+  label = list(
+    sex_cat ~ "Sex",
+    race_eth_cat ~ "Race/ethnicity",
+    age_bir ~ "Age at first birth"
+  ))
 
 tbl_int <- tbl_regression(
   linear_model, 
-                          intercept = TRUE,
-                          label = list(
-                            sex_cat ~ "Sex",
-                            race_eth_cat ~ "Race/ethnicity",
-                            age_bir ~ "Age at first birth",
-                            `sex_cat:age_bir` ~ "Sex/age interaction"
-                          ))
+  intercept = TRUE,
+  label = list(
+    sex_cat ~ "Sex",
+    race_eth_cat ~ "Race/ethnicity",
+    age_bir ~ "Age at first birth",
+    `sex_cat:age_bir` ~ "Sex/age interaction"
+  ))
 ```
 
 ## You could put several together
@@ -332,7 +332,7 @@ tbl_merge(list(tbl_no_int, tbl_int),
 
 ```{r}
 #| output-location: column
-#| fig-width: 6
+#| fig-width: 5
 #| fig-asp: .7
 ggplot(data = nlsy, 
        aes(x = age_bir, y = income)) +
@@ -348,7 +348,7 @@ lm(income ~ age_bir, data = nlsy)
 ## Stratified regression
 
 ```{r}
-#| fig-width: 6
+#| fig-width: 5
 #| fig-asp: .7
 #| output-location: column
 ggplot(data = nlsy, 
@@ -368,7 +368,7 @@ linear_model <- lm(income ~ sex_cat*age_bir*race_eth_cat,
 ## Other models
 
 ```{r}
-#| fig-width: 6
+#| fig-width: 5
 #| fig-asp: .7
 #| output-location: column
 ggplot(data = nlsy, 
@@ -383,7 +383,7 @@ ggplot(data = nlsy,
 ## Other models
 
 ```{r}
-#| fig-width: 6
+#| fig-width: 5
 #| fig-asp: .7
 #| output-location: column
 ggplot(data = nlsy, 
@@ -396,7 +396,7 @@ ggplot(data = nlsy,
 ## Logistic model
 
 ```{r}
-#| fig-width: 6
+#| fig-width: 5
 #| fig-asp: .7
 #| output-location: column
 ggplot(data = nlsy, 
@@ -412,7 +412,7 @@ ggplot(data = nlsy,
 ## Logistic model
 
 ```{r}
-#| fig-width: 6
+#| fig-width: 5
 #| fig-asp: .7
 #| output-location: column
 ggplot(data = nlsy, 
@@ -444,7 +444,6 @@ epitools::epitab(nlsy$eyesight, nlsy$glasses,
 
 - ["Tidy Tuesday"](https://github.com/rfordatascience/tidytuesday#readme) is a data visualization project
 - See lots of really cool visualizations on [Twitter](https://twitter.com/search?q=%23tidytuesday)
-
 - The RStudio::conf (now [posit::conf](https://posit.co/blog/rstudio-conf-watch-on-youtube/)) talks are all recorded
 - Here's a [YouTube playlist](https://www.youtube.com/watch?v=y_zkI-LkS58&list=PL9HYL-VRX0oTw-6TQri7Fr97G3IX0tHh8) of all the years
 

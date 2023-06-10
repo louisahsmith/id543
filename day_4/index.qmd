@@ -6,7 +6,7 @@ toc-location: left
 
 Download some exercises to go along with these slides [here](exercises/_exercises_day_4.qmd).
 
-<!-- [Here](exercises/_exercises_day_3_inclass.qmd) is the completed `.qmd` document (you can find the rendered version in the sidebar). -->
+[Here](exercises/_exercises_day_4_inclass.qmd) is the completed `.qmd` document (you can find the rendered version in the sidebar).
 
 # Slides
 
@@ -18,26 +18,19 @@ Open the slides in a new tab [here](slides/tables.html).
 
 </div>
 
-Open the slides in a new tab [here](slides/joins.html).
-<div>
-```{=html}
-<iframe class="slide-deck" src="slides/joins.html" target="_blank"></iframe>
-```
-
-</div>
-
-Open the slides in a new tab [here](slides/summarize.html).
-<div>
-```{=html}
-<iframe class="slide-deck" src="slides/summarize.html" target="_blank"></iframe>
-```
-
-</div>
-
 # Readings
 
 - [R for Data Science Ch 4.5-4.6](https://r4ds.hadley.nz/data-transform.html#groups)
-- [`{gtsummary}` site](https://www.danieldsjoberg.com/gtsumma ry/)
+- [`{gtsummary}` site](https://www.danieldsjoberg.com/gtsummary/)
 
 # Resources
+
+- The `{epitools}` package has some nice functions for calculating risk ratios, odds ratios, etc. from two-by-two tables.
+- The [`{marginaleffects}` package](https://vincentarelbundock.github.io/marginaleffects/) has really great functionality allowing you to compute statistics similar to Stata's `margins`^[See a discussion [here](https://stats.stackexchange.com/questions/596035/statas-margins-and-rs-marginal-effects-comparisons)]
+- The [`tidymodels` packages](https://www.tidymodels.org/) (work well with `tidyverse`) allow for more complex and principled machine learning modeling
+- ["Tidy Tuesday"](https://github.com/rfordatascience/tidytuesday#readme) is a data visualization project
+  - See lots of really cool visualizations on [Twitter](https://twitter.com/search?q=%23tidytuesday)
+- The RStudio::conf (now [posit::conf](https://posit.co/blog/rstudio-conf-watch-on-youtube/)) talks are all recorded
+  - Here's a [YouTube playlist](https://www.youtube.com/watch?v=y_zkI-LkS58&list=PL9HYL-VRX0oTw-6TQri7Fr97G3IX0tHh8) of all the years
+
 
