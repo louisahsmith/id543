@@ -727,6 +727,11 @@ AIC(model)
 BIC(model)
 ```
 
+The `glance()` function from the `{broom}` package will also give you goodness-of-fit statistics:
+```{r}
+broom::glance(model)
+```
+
 To run a likelihood ratio test comparing two nested models:
 
 ```{r}

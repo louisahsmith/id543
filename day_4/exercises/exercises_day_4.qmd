@@ -4,6 +4,8 @@ execute:
   eval: false
 ---
 
+Download this document [here](_exercises_day_4.qmd).
+
 ```{r}
 library(tidyverse)
 nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 

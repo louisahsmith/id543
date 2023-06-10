@@ -145,12 +145,35 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
- <span class="menu-text">Final</span></a>
+ <span class="menu-text">Exercises</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../day_4/exercises/exercises_day_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 4 Exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../day_4/exercises/exercises_day_4_inclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solutions: Day 4 Exercises</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Final</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../day_4/final/final_project.docx" class="sidebar-item-text sidebar-link">
@@ -161,13 +184,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
  <span class="menu-text">Slides</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../day_4/slides/tables.html" class="sidebar-item-text sidebar-link">
@@ -218,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="in-class" class="level1">
 <h1>In class</h1>
 <p>Download some exercises to go along with these slides <a href="exercises/_exercises_day_4.qmd">here</a>.</p>
-<!-- [Here](exercises/_exercises_day_3_inclass.qmd) is the completed `.qmd` document (you can find the rendered version in the sidebar). -->
+<p><a href="exercises/_exercises_day_4_inclass.qmd">Here</a> is the completed <code>.qmd</code> document (you can find the rendered version in the sidebar).</p>
 </section>
 <section id="slides" class="level1">
 <h1>Slides</h1>
@@ -227,29 +250,40 @@ Open the slides in a new tab <a href="slides/tables.html">here</a>.
 
 <iframe class="slide-deck" src="slides/tables.html" target="_blank"></iframe>
 </div>
-Open the slides in a new tab <a href="slides/joins.html">here</a>.
-<div>
-<iframe class="slide-deck" src="slides/joins.html" target="_blank"></iframe>
-</div>
-Open the slides in a new tab <a href="slides/summarize.html">here</a>.
-<div>
-<iframe class="slide-deck" src="slides/summarize.html" target="_blank"></iframe>
-</div>
 </section>
 <section id="readings" class="level1">
 <h1>Readings</h1>
 <ul>
 <li><a href="https://r4ds.hadley.nz/data-transform.html#groups">R for Data Science Ch 4.5-4.6</a></li>
-<li><a href="https://www.danieldsjoberg.com/gtsumma%20ry/"><code>{gtsummary}</code> site</a></li>
+<li><a href="https://www.danieldsjoberg.com/gtsummary/"><code>{gtsummary}</code> site</a></li>
 </ul>
 </section>
 <section id="resources" class="level1">
 <h1>Resources</h1>
+<ul>
+<li>The <code>{epitools}</code> package has some nice functions for calculating risk ratios, odds ratios, etc. from two-by-two tables.</li>
+<li>The <a href="https://vincentarelbundock.github.io/marginaleffects/"><code>{marginaleffects}</code> package</a> has really great functionality allowing you to compute statistics similar to Stata’s <code>margins</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>The <a href="https://www.tidymodels.org/"><code>tidymodels</code> packages</a> (work well with <code>tidyverse</code>) allow for more complex and principled machine learning modeling</li>
+<li><a href="https://github.com/rfordatascience/tidytuesday#readme">“Tidy Tuesday”</a> is a data visualization project
+<ul>
+<li>See lots of really cool visualizations on <a href="https://twitter.com/search?q=%23tidytuesday">Twitter</a></li>
+</ul></li>
+<li>The RStudio::conf (now <a href="https://posit.co/blog/rstudio-conf-watch-on-youtube/">posit::conf</a>) talks are all recorded
+<ul>
+<li>Here’s a <a href="https://www.youtube.com/watch?v=y_zkI-LkS58&amp;list=PL9HYL-VRX0oTw-6TQri7Fr97G3IX0tHh8">YouTube playlist</a> of all the years</li>
+</ul></li>
+</ul>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>See a discussion <a href="https://stats.stackexchange.com/questions/596035/statas-margins-and-rs-marginal-effects-comparisons">here</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

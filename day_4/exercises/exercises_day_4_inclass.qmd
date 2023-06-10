@@ -1,0 +1,111 @@
+---
+title: "Solutions: Day 4 Exercises"
+---
+
+Download this document [here](_exercises_day_4_inclass.qmd).
+
+
+```{r}
+library(tidyverse)
+nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
+               "id", "nsibs", "samp", "race_eth", "sex", "region", 
+               "income", "res_1980", "res_2002", "age_bir")
+nlsy <- read_csv("https://raw.githubusercontent.com/louisahsmith/id543/main/data/nlsy.csv", 
+                 na = c("-1", "-2", "-3", "-4", "-5", "-998"),
+                 skip = 1, col_names = nlsy_cols) |> 
+  mutate(region_cat = factor(region, labels = c("Northeast", "North Central", "South", "West")),
+         sex_cat = factor(sex, labels = c("Male", "Female")),
+         race_eth_cat = factor(race_eth, labels = c("Hispanic", "Black", "Non-Black, Non-Hispanic")),
+         eyesight_cat = factor(eyesight, labels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
+```
+
+# Exercises 1
+
+Make a `tbl_summary()`. Include (at least) number of hours of sleep on weekdays and weekends, categorical region, and income and make sure they are nicely labeled. Play around with the extra functions from the example in the slides.
+
+```{r}
+# install.packages("gtsummary")
+library(gtsummary)
+tbl_summary(nlsy, 
+            by = sex_cat,
+            include = c(contains("sleep"), income, region_cat, sex_cat),
+            label = list(sleep_wkdy ~ "Weekday sleep (hrs)",
+                         sleep_wknd ~ "Weekend sleep (hrs)",
+                         region_cat ~ "Region",
+                         income ~ "Income ($)"),
+                            # change all continuous variables to mean, sd
+            statistic = list(all_continuous() ~ "{mean} ({sd})",
+                             # change income to specific statistic
+                             income ~ "10th pctle: ${p10}; 90th pctle: ${p90}",
+                             all_categorical() ~ "{n} ({p}%)"),
+            # remove missingness
+            missing = "no",
+            # change to row percentages
+            percent = "row") |> 
+  # add p-value
+  add_p()
+```
+
+
+# Exercises 2
+
+Fit a Poisson regression for the number of siblings, using at least 3 predictors of your choice. Calculate the exponentiated coefficients and confidence intervals.
+
+```{r}
+poisson_model <- glm(nsibs ~ income + I(income^2) + region_cat*age_bir,
+                     family = poisson(), data = nlsy)
+
+exp(coef(poisson_model))
+exp(confint(poisson_model))
+
+# OR can pipe those nested functions
+poisson_model |> coef() |> exp()
+poisson_model |> confint() |> exp()
+
+# cannot exponentiate the summary function
+summary(poisson_model)
+```
+
+# Exercises 3
+
+Create a nice table displaying your Poisson regression.
+
+```{r}
+library(broom)
+tidy(poisson_model)
+
+tbl_regression(poisson_model,
+               exponentiate = TRUE,
+               label = list(income ~ "Income",
+                            `I(income^2)` ~ "Income^2",
+                            region_cat ~ "Region",
+                            age_bir ~ "Age at first birth",
+                            `region_cat:age_bir` ~ "Region/age interaction")) |> 
+  bold_labels()
+```
+
+The `{broom}` package has a couple of other major functions: `glance()` and `augment()`. Try out each of them on your regression model. Look at the documentation for each to help you figure out what they do.
+
+```{r}
+# this will output some model statistics
+glance(poisson_model)
+
+# this will add fitted/predicted values, residuals, and some other
+# stats to the original dataframe
+augment(poisson_model)
+```
+
+# Exercises 4
+
+Create a scatterplot for `nsibs` on the y-axis and `income` on the x-axis. Add a regression line from a Poisson regression to it.
+
+```{r}
+ggplot(data = nlsy, 
+       aes(x = income, 
+           y = nsibs, 
+           color = region_cat)) + # stratify by region
+  geom_point() +
+  geom_smooth(method = "glm",
+              method.args = list(family = poisson()))
+```
+

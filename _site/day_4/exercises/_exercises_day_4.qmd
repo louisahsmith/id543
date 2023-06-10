@@ -9,7 +9,7 @@ library(tidyverse)
 nlsy_cols <- c("glasses", "eyesight", "sleep_wkdy", "sleep_wknd", 
                "id", "nsibs", "samp", "race_eth", "sex", "region", 
                "income", "res_1980", "res_2002", "age_bir")
-nlsy <- read_csv(here::here("data", "nlsy.csv"), 
+nlsy <- read_csv("https://raw.githubusercontent.com/louisahsmith/id543/main/data/nlsy.csv", 
                  na = c("-1", "-2", "-3", "-4", "-5", "-998"),
                  skip = 1, col_names = nlsy_cols) |> 
   mutate(region_cat = factor(region, labels = c("Northeast", "North Central", "South", "West")),
@@ -49,7 +49,7 @@ The `{broom}` package has a couple of other major functions: `glance()` and `aug
 
 ```
 
-## Exercises 4
+# Exercises 4
 
 Create a scatterplot for `nsibs` on the y-axis and `income` on the x-axis. Add a regression line from a Poisson regression to it.
 
